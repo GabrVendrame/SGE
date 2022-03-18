@@ -1,0 +1,53 @@
+.header {
+  width: 100%;
+  height: 71px;
+  top: 0px;
+  left: 32.5%;
+  font-family: 'Roboto';
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.1px;
+  color: #DEC0F7;
+}
+
+.projectName {
+  position: relative;
+  left: 7px;
+}
+
+.buttonsWrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  left: 25px;
+  padding: 10px 12px;
+  width: 260px;
+
+}
+
+.loginButton {
+  position: absolute;
+  left: 86.11%;
+  right: 1.88%;
+}
+
+.logo {
+  background-image: url(./logo.png);
+  background: #DEC0F7;
+  height: 50px;
+  width: 50px;
+  border-radius: 15px;
+}
+
+body {
+  /* position: absolute; */
+  width: 1440px;
+  height: 940px;
+  /* left: 0px; */
+  /* top: 0px;  */
+
+  background: linear-gradient(238deg, rgba(0,0,0,1) 0%, rgba(61,8,69,1) 100%);
+}
+
