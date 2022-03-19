@@ -10,16 +10,19 @@ function Header() {
   return (
     <ThemeProvider theme={theme}>
       <Box className='header'>
-        <img src={logo} alt="S-logo" className='logo'/>
-        <Box className='projectName'>
-          SOGEI Project
+        <Box className='logoAndName'>
+          <img src={logo} alt="S-logo" className='logo'/>
+          <Box className='projectName'>SOGEI Project</Box>
         </Box>
           <Box className='buttonsWrapper'>
             <Button>Sobre nós</Button>
             <Button>FAQ</Button>
             <Button>Contato</Button>
           </Box>
-        <Button className='loginButton' variant="contained" >Login/Cadastro</Button>
+            <Button variant="contained" sx={{
+              position: 'absolute',
+              right: '10px',
+            }}>Login/Cadastro</Button>
       </Box>
     </ThemeProvider>
   );

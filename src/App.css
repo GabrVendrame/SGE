@@ -1,8 +1,13 @@
+.drawer{
+  position: relative;
+  width: 190px;
+  height: 100%;
+  padding: 2px;
+}
+
 .header {
   width: 100%;
   height: 71px;
-  top: 0px;
-  left: 32.5%;
   font-family: 'Roboto';
   font-size: 20px;
   display: flex;
@@ -11,9 +16,17 @@
   color: #DEC0F7;
 }
 
+.logoAndName {
+  display: flex;
+  align-items: center;
+  width: 181.91px;
+  height: 50.49px;
+}
+
 .projectName {
   position: relative;
   left: 7px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .buttonsWrapper {
@@ -27,11 +40,10 @@
 
 }
 
-.loginButton {
+/* .loginButton {
   position: absolute;
-  left: 86.11%;
-  right: 1.88%;
-}
+  right: 10px;
+} */
 
 .logo {
   background-image: url(./logo.png);
