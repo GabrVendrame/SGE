@@ -1,13 +1,8 @@
-import './App.css';
-import Header from './components/Header';
-import Drawer from './components/Drawer';
+import Routes from './routes';
 
 function App() {
   return (
-    <>
-      <Header/>
-      <Drawer/>
-    </>
+    <Routes/>
   );
 }
 

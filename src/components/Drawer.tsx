@@ -1,3 +1,4 @@
+import '../styles/Drawer.css';
 import { Box, Button, Divider } from '@mui/material';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
@@ -11,7 +12,7 @@ function Drawer() {
     <ThemeProvider theme={theme}>
       <Box className="drawer">
         <Divider sx={{ background: '#C3BFC3' }}/>
-        <Box className="ButtonsWrapperTop">
+        <Box className="DrawerButtonsWrapperTop">
           <Button size='large' startIcon={<HomeOutlinedIcon color='secondary'/>}>Home</Button>
           <Button size='large' startIcon={<StarOutlinedIcon color='secondary'/>}>Favoritos</Button>
           <Button size='large' startIcon={<ShoppingBagOutlinedIcon color='secondary'/>}>Minhas compras</Button>

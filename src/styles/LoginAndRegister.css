@@ -1,0 +1,8 @@
+.body {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px; 
+  background: linear-gradient(116.48deg, #050505 15.65%, #32115A 68.57%);
+}
