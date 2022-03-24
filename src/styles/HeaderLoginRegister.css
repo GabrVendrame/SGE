@@ -1,0 +1,20 @@
+.fon {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 1.769em;
+  margin-bottom: 15px;
+}
+
+.subtitle {
+  font-size: 1.169em;
+  margin-top: 2px;
+  margin-bottom: 10px;
+}
+
+.color {
+  color: #dec0f7;
+}
