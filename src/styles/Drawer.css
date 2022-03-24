@@ -1,7 +1,8 @@
 .drawer{
   margin: 10px;
-
-  position: relative;
+  overflow: hidden;
+  /* position: fixed; */
+  /* margin-top: 72px; */
   width: 190px;
   height: 100%;
   padding: 2px;
