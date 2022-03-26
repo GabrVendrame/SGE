@@ -37,11 +37,12 @@ export const BoxLogin: React.FC<Props> = ({ handlesubmit, handlechange }) => {
             type="submit"
             sx={{
               borderRadius: "30px",
-              background: "#6750A4",
+              // background: "#6750A4",
               width: "100%",
               paddingBottom: "10px",
               height: "43px",
             }}
+            color="secondary"
             variant="contained"
           >
             Login

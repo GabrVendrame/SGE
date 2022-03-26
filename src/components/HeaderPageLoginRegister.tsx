@@ -25,13 +25,6 @@ function Header() {
             <Button>FAQ</Button>
             <Button>Contato</Button>
           </Box>
-            <Link to={'/LoginAndRegister'}>
-              <Button color="secondary" variant="contained" sx={{
-                position: 'absolute',
-                right: '10px',
-                top: 15,
-              }}>Login/Cadastro</Button>
-            </Link>
       </Box>
     </ThemeProvider>
   );

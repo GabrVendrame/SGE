@@ -56,12 +56,13 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
             type="submit"
             sx={{
               borderRadius: "30px",
-              background: "#6750A4",
+              // background: "#6750A4",
               width: "100%",
               paddingBottom: "10px",
               height: "43px",
               marginBottom: "10px",
             }}
+            color="secondary"
             variant="contained"
           >
             Cadastrar
@@ -70,12 +71,13 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
             onClick={() => handleclick()}
             sx={{
               borderRadius: "30px",
-              background: "#6750A4",
+              // background: "#6750A4",
               width: "100%",
               paddingBottom: "10px",
               height: "43px",
               marginBottom: "10px",
             }}
+            color="secondary"
             variant="contained"
           >
             Voltar

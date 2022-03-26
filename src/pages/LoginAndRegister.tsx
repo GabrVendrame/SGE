@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { useState } from "react";
 
-import Header from "../components/Header";
+import Header from "../components/HeaderPageLoginRegister";
 
 import "../styles/LoginAndRegister.css";
 import BoxLogin from "../components/BoxLogin";
