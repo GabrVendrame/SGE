@@ -1,10 +1,12 @@
-import { Button } from "@mui/material";
-import React from "react";
+import { Button, InputLabel, MenuItem } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import React, { useState } from "react";
 import BoxInputPadrao from "./BoxInputPadrao";
 import HeaderLoginRegister from "./HeaderLoginRegister";
 import "../styles/BoxLoginStyles.css";
 import ButtonStyles from "../styles/ButtonStyles";
 import { ThemeProvider } from "@material-ui/styles";
+import BoxInputSelect from "./BoxInputSelect";
 
 export interface Props {
   handleclick: () => void;
@@ -17,6 +19,14 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
   handlechange,
   handlesubmit,
 }) => {
+  const [userType, setUserType] = useState("Usuario Comum");
+
+  const handleChangeSeletc = (event: SelectChangeEvent) => {
+    setUserType(event.target.value as string);
+    console.log(event.target.value as string);
+    console.log(event.target.name as string);
+  };
+
   const theme = ButtonStyles;
   return (
     <ThemeProvider theme={theme}>
@@ -29,29 +39,49 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
           />
 
           <BoxInputPadrao
-            name={"cpf"}
+            name={"cpfCnpj"}
             onchange={handlechange}
             tipo={"text"}
-            placeHolder={"Cpf"}
+            placeHolder={"Cpf/Cnpj"}
           />
-          <BoxInputPadrao
+          {/* <BoxInputPadrao
             name={"cnpj"}
             onchange={handlechange}
             tipo={""}
             placeHolder={"Cnpj"}
-          />
+          /> */}
           <BoxInputPadrao
             name={"cell"}
             onchange={handlechange}
             tipo={"cell"}
             placeHolder={"Celular"}
           />
-          <BoxInputPadrao
-            name={"select"}
-            onchange={handlechange}
-            tipo={""}
-            placeHolder={"Select"}
-          />
+
+          <Select
+            name={"selectUser"}
+            value={userType}
+            onChange={handleChangeSeletc}
+            sx={{
+              textTransform: "inherit",
+              textDecoration: "inherit",
+
+              width: "100%",
+              border: "1px solid",
+              borderColor: "#C3BFC3",
+              color: "#C3BFC3",
+              paddingBottom: "10px",
+              height: "50px",
+              marginBottom: "10px",
+            }}
+          >
+            <MenuItem value={"Usuario Comum"}>Usuario Comum</MenuItem>
+            <MenuItem value={"Usuario Palestrante"}>
+              Usuario Palestrante
+            </MenuItem>
+            <MenuItem value={"Usuario Criador de Evento"}>
+              Usuario Criador de Evento
+            </MenuItem>
+          </Select>
           <Button
             type="submit"
             sx={{

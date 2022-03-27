@@ -32,6 +32,7 @@ export const BoxInputPadrao: React.FC<Props> = ({
       InputProps={{
         endAdornment: <InputAdornment position="end">kg</InputAdornment>,
       }}
+      required
     />
   );
 };
