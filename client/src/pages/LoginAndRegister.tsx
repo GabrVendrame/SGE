@@ -41,7 +41,7 @@ function LoginAndRegister() {
     setData((prev) => ({ ...prev, ...newData }));
     if (final) {
       //makeRequest(newData);
-      console.log(newData);
+      console.log("fazer o request no bd aqui", newData);
 
       return;
     }

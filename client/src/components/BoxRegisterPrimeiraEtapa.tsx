@@ -83,7 +83,7 @@ export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
             helperText={formik.touched.email && formik.errors.email}
           />
           <BoxInputPadrao
-            tipo="text"
+            tipo="password"
             placeHolder="Senha"
             name="password"
             value={formik.values.password}
@@ -92,7 +92,7 @@ export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
             helperText={formik.touched.password && formik.errors.password}
           />
           <BoxInputPadrao
-            tipo="text"
+            tipo="password"
             placeHolder="Confirme sua senha"
             name="confirmPassword"
             value={formik.values.confirmPassword}
