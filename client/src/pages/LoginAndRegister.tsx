@@ -12,10 +12,6 @@ import BoxRegisterSegundaEtapa from "../components/BoxRegisterSegundaEtapa";
 
 function LoginAndRegister() {
   const [next, setNext] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({
     name: "",
@@ -26,6 +22,19 @@ function LoginAndRegister() {
     cell: "",
     userType: "",
   });
+
+  const reqRegister = (data: any) => {
+    Axios.post("http://localhost:3001/LoginAndRegister", data)
+      .then((res: any) => {
+        if (!res) alert("penis");
+        else alert("usuario registrado");
+        window.location.reload();
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
   const handleNextStep = (
     newData: {
       name: string;
@@ -42,7 +51,7 @@ function LoginAndRegister() {
     if (final) {
       //makeRequest(newData);
       console.log("fazer o request no bd aqui", newData);
-
+      reqRegister(newData);
       return;
     }
 
@@ -71,67 +80,11 @@ function LoginAndRegister() {
     />,
   ];
 
-  const handleClick = () => {
-    setNext(!next);
-  };
-
-  const handleChange = (e: React.ChangeEvent<any>) => {
-    switch (e.target.name) {
-      case "nome":
-        setName(e.target.value);
-        break;
-      case "email":
-        setEmail(e.target.value);
-        break;
-      case "password":
-        setPassword(e.target.value);
-        break;
-      case "confirmPassword":
-        setConfirmPassword(e.target.value);
-        break;
-
-      default:
-        break;
-    }
-  };
-
-  const handleSubmit = (e: React.ChangeEvent<any>) => {
-    e.preventDefault();
-    let formdata = new FormData(e.target);
-    if (next === true) {
-      formdata.append("name", name);
-      formdata.append("email", email);
-      formdata.append("password", password);
-      formdata.append("confirmpassword", confirmpassword);
-    }
-
-    const data = Object.fromEntries(formdata);
-    console.log(data);
-    if (!data.name || !data.email || !data.password || !data.confirmpassword) {
-      alert("Existem campos a preencher");
-    } else {
-      console.log("aaaa");
-
-      console.log(data);
-      Axios.post("http://localhost:3001/LoginAndRegister", data)
-        .then((res: any) => {
-          if (!res) alert("penis");
-          else alert("usuario registrado");
-          // window.location.reload();
-        })
-        .catch((error: any) => {
-          console.log(error);
-        });
-    }
-    console.log(data.name);
-    console.log(data.cell);
-  };
-
   return (
     <Box className="body">
       <Header />
       <section className="main">
-        <BoxLogin handlesubmit={handleSubmit} handlechange={handleChange} />
+        <BoxLogin />
         {steps[currentStep]}
       </section>
     </Box>

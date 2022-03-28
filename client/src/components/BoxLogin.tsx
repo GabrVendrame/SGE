@@ -7,12 +7,9 @@ import { ThemeProvider } from "@mui/material";
 import ButtonStyles from "../styles/ButtonStyles";
 import * as yup from "yup";
 import { useFormik } from "formik";
-export interface Props {
-  handlesubmit: (e: React.ChangeEvent<any>) => void;
-  handlechange: (e: React.ChangeEvent<any>) => void;
-}
+export interface Props {}
 
-export const BoxLogin: React.FC<Props> = ({ handlesubmit, handlechange }) => {
+export const BoxLogin: React.FC = () => {
   const [data, setData] = useState({
     userLogin: "",
     password: "",

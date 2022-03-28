@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-const uri = "mongodb+srv://admin:tanygay@sogeidb.envsm.mongodb.net/test";
+const uri = "mongodb+srv://admin:tanygay@sogeidb.envsm.mongodb.net/bdsogei";
 mongoose.connect(
   uri,
   { useNewUrlParser: true, useUnifiedTopology: true },

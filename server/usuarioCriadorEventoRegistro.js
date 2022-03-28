@@ -10,5 +10,8 @@ const dataSchema = new mongoose.Schema({
   selectUser: String,
 });
 
-const product = mongoose.model("Users", dataSchema);
-module.exports = product;
+const registrousuariocriadorevento = mongoose.model(
+  "UsuarioCriadoreEvento",
+  dataSchema
+);
+module.exports = registrousuariocriadorevento;
