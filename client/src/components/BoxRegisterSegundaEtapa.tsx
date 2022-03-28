@@ -1,66 +1,103 @@
-import { Button, InputLabel, MenuItem } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import React, { useState } from "react";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
+import React from "react";
+import "../styles/BoxLoginStyles.css";
+import { ThemeProvider } from "@material-ui/system";
+import ButtonStyles from "../styles/ButtonStyles";
+import { useFormik } from "formik";
+import InputField from "../styles/BoxInput";
 import BoxInputPadrao from "./BoxInputPadrao";
 import HeaderLoginRegister from "./HeaderLoginRegister";
-import "../styles/BoxLoginStyles.css";
-import ButtonStyles from "../styles/ButtonStyles";
-import { ThemeProvider } from "@material-ui/styles";
-import BoxInputSelect from "./BoxInputSelect";
+import * as yup from "yup";
 
 export interface Props {
-  handleclick: () => void;
-  handlechange: (e: React.ChangeEvent<any>) => void;
-  handlesubmit: (e: React.ChangeEvent<any>) => void;
+  next: (
+    newData: {
+      name: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+      cpfCnpj: string;
+      cell: string;
+      userType: string;
+    },
+    control: boolean
+  ) => void;
+  prev: (newData: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    cpfCnpj: string;
+    cell: string;
+    userType: string;
+  }) => void;
+  data: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    cpfCnpj: string;
+    cell: string;
+    userType: string;
+  };
 }
 
 export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
-  handleclick,
-  handlechange,
-  handlesubmit,
+  next,
+  prev,
+  data,
 }) => {
-  const [userType, setUserType] = useState("Usuario Comum");
+  const validationSchema = yup.object({
+    cpfCnpj: yup.string().required("Campo obrigatorio"),
+    cell: yup.string().required("Campo obrigatorio"),
+    userType: yup.string().required("Campo obrigatorio"),
+  });
 
-  const handleChangeSeletc = (event: SelectChangeEvent) => {
-    setUserType(event.target.value as string);
-    console.log(event.target.value as string);
-    console.log(event.target.name as string);
-  };
+  const formik = useFormik({
+    initialValues: data,
+
+    onSubmit: (data) => {
+      console.log("segunda etapa", data);
+      next(data, true);
+    },
+
+    validationSchema: validationSchema,
+  });
 
   const theme = ButtonStyles;
   return (
     <ThemeProvider theme={theme}>
       <div className="boxlogin">
-        <form name={"registerForm"} onSubmit={(e) => handlesubmit(e)}>
+        <form onSubmit={formik.handleSubmit}>
           <HeaderLoginRegister
             title={"Crie uma de graça"}
             subtitle={"Não possui uma conta?"}
             local={"register"}
           />
-
           <BoxInputPadrao
-            name={"cpfCnpj"}
-            onchange={handlechange}
-            tipo={"text"}
-            placeHolder={"Cpf/Cnpj"}
+            tipo="text"
+            placeHolder="Cpf ou Cnpj"
+            name="cpfCnpj"
+            value={formik.values.cpfCnpj}
+            onChange={formik.handleChange}
+            error={formik.touched.cpfCnpj && Boolean(formik.errors.cpfCnpj)}
+            helperText={formik.touched.cpfCnpj && formik.errors.cpfCnpj}
           />
-          {/* <BoxInputPadrao
-            name={"cnpj"}
-            onchange={handlechange}
-            tipo={""}
-            placeHolder={"Cnpj"}
-          /> */}
           <BoxInputPadrao
-            name={"cell"}
-            onchange={handlechange}
-            tipo={"cell"}
-            placeHolder={"Celular"}
+            tipo="text"
+            placeHolder="Cell"
+            name="cell"
+            value={formik.values.cell}
+            onChange={formik.handleChange}
+            error={formik.touched.cell && Boolean(formik.errors.cell)}
+            helperText={formik.touched.cell && formik.errors.cell}
           />
-
           <Select
-            name={"selectUser"}
-            value={userType}
-            onChange={handleChangeSeletc}
+            name="userType"
+            value={formik.values.userType}
+            onChange={formik.handleChange}
+            error={formik.touched.userType && Boolean(formik.errors.userType)}
+            //helperText={formik.touched.userType && formik.errors.userType}
             sx={{
               textTransform: "inherit",
               textDecoration: "inherit",
@@ -82,6 +119,7 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
               Usuario Criador de Evento
             </MenuItem>
           </Select>
+
           <Button
             type="submit"
             sx={{
@@ -90,15 +128,24 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
               width: "100%",
               paddingBottom: "10px",
               height: "43px",
-              marginBottom: "10px",
             }}
             color="secondary"
             variant="contained"
           >
-            Cadastrar
+            Enviar
           </Button>
           <Button
-            onClick={() => handleclick()}
+            onClick={() =>
+              prev({
+                name: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+                cpfCnpj: "",
+                cell: "",
+                userType: "",
+              })
+            }
             sx={{
               borderRadius: "30px",
               // background: "#6750A4",
@@ -106,6 +153,7 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
               paddingBottom: "10px",
               height: "43px",
               marginBottom: "10px",
+              marginTop: "10px",
             }}
             color="secondary"
             variant="contained"

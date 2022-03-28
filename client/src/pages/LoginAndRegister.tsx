@@ -16,7 +16,60 @@ function LoginAndRegister() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  //const [confirmpassword, setConfirmPassword] = useState("");
+  const [currentStep, setCurrentStep] = useState(0);
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    cpfCnpj: "",
+    cell: "",
+    userType: "",
+  });
+  const handleNextStep = (
+    newData: {
+      name: string;
+      email: string;
+      password: string;
+      confirmPassword: string;
+      cpfCnpj: string;
+      cell: string;
+      userType: string;
+    },
+    final = false
+  ) => {
+    setData((prev) => ({ ...prev, ...newData }));
+    if (final) {
+      //makeRequest(newData);
+      console.log(newData);
+
+      return;
+    }
+
+    setCurrentStep((prev) => prev + 1);
+  };
+  const handlePrevStep = (newData: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    cpfCnpj: string;
+    cell: string;
+    userType: string;
+  }) => {
+    setData((prev) => ({ ...prev, ...newData }));
+    setCurrentStep((prev) => prev - 1);
+  };
+
+  const steps = [
+    <BoxRegisterPrimeiraEtapa next={handleNextStep} data={data} />,
+
+    <BoxRegisterSegundaEtapa
+      next={handleNextStep}
+      prev={handlePrevStep}
+      data={data}
+    />,
+  ];
 
   const handleClick = () => {
     setNext(!next);
@@ -79,19 +132,7 @@ function LoginAndRegister() {
       <Header />
       <section className="main">
         <BoxLogin handlesubmit={handleSubmit} handlechange={handleChange} />
-
-        {next === true ? (
-          <BoxRegisterSegundaEtapa
-            handleclick={handleClick}
-            handlechange={handleChange}
-            handlesubmit={handleSubmit}
-          />
-        ) : (
-          <BoxRegisterPrimeiraEtapa
-            handleclick={handleClick}
-            handlechange={handleChange}
-          />
-        )}
+        {steps[currentStep]}
       </section>
     </Box>
   );

@@ -5,35 +5,42 @@ import BoxInputStyle from "../styles/BoxInput";
 export interface Props {
   tipo: string;
   placeHolder: string;
-  onchange: (e: React.ChangeEvent<any>) => void;
+  onChange: (e: React.ChangeEvent<any>) => void;
   name: string;
+  value: any;
+  error: any;
+  helperText: any;
 }
 
 export const BoxInputPadrao: React.FC<Props> = ({
   tipo,
   placeHolder,
-  onchange,
+  onChange,
   name,
+  helperText,
 }) => {
   return (
-    <BoxInputStyle
-      name={name}
-      onChange={onchange}
-      sx={{
-        width: "100%",
-        paddingBottom: "10px",
-        color: "#fff",
-        caretColor: "#fff",
-      }}
-      type={tipo}
-      id="outlined-basic"
-      variant="outlined"
-      placeholder={placeHolder}
-      InputProps={{
-        endAdornment: <InputAdornment position="end">kg</InputAdornment>,
-      }}
-      required
-    />
+    <>
+      <BoxInputStyle
+        name={name}
+        onChange={onChange}
+        sx={{
+          width: "100%",
+          paddingBottom: "10px",
+          color: "#fff",
+          caretColor: "#fff",
+        }}
+        type={tipo}
+        id="outlined-basic"
+        variant="outlined"
+        placeholder={placeHolder}
+        // InputProps={{
+        //   endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+        // }}
+      />
+
+      <div>{helperText}</div>
+    </>
   );
 };
 
