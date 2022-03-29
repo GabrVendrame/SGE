@@ -28,7 +28,7 @@ function LoginAndRegister() {
       .then((res: any) => {
         if (!res) alert("penis");
         else alert("usuario registrado");
-        window.location.reload();
+        //window.location.reload();
       })
       .catch((error: any) => {
         console.log(error);

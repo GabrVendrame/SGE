@@ -7,11 +7,8 @@ const dataSchema = new mongoose.Schema({
   cell: String,
   password: String,
   confirmpassword: String,
-  selectUser: String,
+  userType: String,
 });
 
-const registrousuariocriadorevento = mongoose.model(
-  "UsuarioCriadoreEvento",
-  dataSchema
-);
-module.exports = registrousuariocriadorevento;
+const registrousuariocomum = mongoose.model("Users", dataSchema);
+module.exports = registrousuariocomum;

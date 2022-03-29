@@ -8,5 +8,6 @@ routes.get("/", (req, res) => {
 });
 
 routes.post("/LoginAndRegister", registerController.store);
+routes.get("/LoginAndRegister/:userLogin&:password", registerController.login);
 
 module.exports = routes;

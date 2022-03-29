@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material";
 import ButtonStyles from "../styles/ButtonStyles";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import Axios from "axios";
 export interface Props {}
 
 export const BoxLogin: React.FC = () => {
@@ -20,10 +21,33 @@ export const BoxLogin: React.FC = () => {
     password: yup.string().required("Campo obrigatorio"),
   });
 
+  const reqLogion = (data: any) => {
+    const { userLogin, password } = data;
+    Axios.get(`http://localhost:3001/LoginAndRegister/${userLogin}&${password}`)
+      .then((res: any) => {
+        console.log(res.data);
+
+        if (!res) alert("penis");
+        else {
+          if (res.data.user) {
+            alert(
+              `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
+            );
+            window.location.reload();
+          } else {
+            alert("Usuario nao encontrado");
+          }
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
   const formik = useFormik({
     initialValues: data,
     onSubmit: (values) => {
       console.log("Fazer requisicao do login aqui", values);
+      reqLogion(values);
     },
 
     validationSchema: validationSchema,
