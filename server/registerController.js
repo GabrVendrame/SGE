@@ -1,5 +1,10 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const Users = require("./Users");
+const jwt = require("jsonwebtoken");
+const JWT_SECRET =
+  "dadoaspdakodkasodkapdkpaodkpoaskdpoaskdpoaksd21313131dasdasd";
+const { promisify } = require("util");
 module.exports = {
   async store(req, res) {
     console.log(req.body);
@@ -34,13 +39,28 @@ module.exports = {
     }).exec();
     if (Res) {
       const { userType } = Res;
-      res.json({
-        msg: "Usuario encontrado",
-        user: email,
-        pass: password,
-        res: Res,
-        user: userType,
-      });
+
+      try {
+        const token = jwt.sign(
+          {
+            id: Res._id,
+            obj: Res,
+          },
+          JWT_SECRET,
+          { expiresIn: "30d" }
+        );
+
+        res.json({
+          msg: "Usuario encontrado ",
+          user: email,
+          pass: password,
+          res: Res,
+          userType: userType,
+          tk: token,
+        });
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       res.json({ msg: "Registro nao encontrado", user: false });
     }

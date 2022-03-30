@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
-import { Box } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import Axios from "axios";
+import { Box } from "@mui/material";
 
-import Header from '../components/HeaderPageLoginRegister';
-
-import '../styles/LoginAndRegister.css';
-import BoxLogin from '../components/BoxLogin';
-import BoxRegisterPrimeiraEtapa from '../components/BoxRegisterPrimeiraEtapa';
-import BoxRegisterSegundaEtapa from '../components/BoxRegisterSegundaEtapa';
+import Header from "../components/HeaderPageLoginRegister";
+import "../styles/LoginAndRegister.css";
+import BoxLogin from "../components/BoxLogin";
+import BoxRegisterPrimeiraEtapa from "../components/BoxRegisterPrimeiraEtapa";
+import BoxRegisterSegundaEtapa from "../components/BoxRegisterSegundaEtapa";
+import { useNavigate } from "react-router-dom";
 
 function LoginAndRegister() {
+  const navigate = useNavigate();
+
+  const [userTk, setUserTk] = useState<any | undefined>(undefined);
+  React.useEffect(() => {
+    setUserTk(localStorage.getItem("token"));
+    if (userTk) {
+      console.log(userTk);
+
+      // navigate( rota -><page info={tk}/>)
+      navigate("/HomeUser");
+    }
+  }, [userTk]);
+
   const [next, setNext] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    cpfCnpj: '',
-    cell: '',
-    userType: '',
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    cpfCnpj: "",
+    cell: "",
+    userType: "",
   });
 
   const reqRegister = (data: any) => {
-    Axios.post('http://localhost:3001/LoginAndRegister', data)
+    Axios.post("http://localhost:3001/LoginAndRegister", data)
       .then((res: any) => {
-        if (!res) alert('penis');
-        else alert('usuario registrado');
+        if (!res) alert("penis");
+        else alert("usuario registrado");
         // window.location.reload();
       })
       .catch((error: any) => {
@@ -44,12 +57,12 @@ function LoginAndRegister() {
       cell: string;
       userType: string;
     },
-    final = false,
+    final = false
   ) => {
     setData((prev) => ({ ...prev, ...newData }));
     if (final) {
       // makeRequest(newData);
-      console.log('fazer o request no bd aqui', newData);
+      console.log("fazer o request no bd aqui", newData);
       reqRegister(newData);
       return;
     }

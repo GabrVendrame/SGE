@@ -36,6 +36,9 @@ export const BoxLogin: React.FC = () => {
           alert(
             `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
           );
+          console.log(res.data);
+          localStorage.setItem("token", JSON.stringify(res.data.tk));
+          //console.log(res.data.tk);
           window.location.reload();
         } else {
           alert("Usuario nao encontrado");
