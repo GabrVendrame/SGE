@@ -1,13 +1,13 @@
-import { Button, TextField } from "@mui/material";
-import React from "react";
-import "../styles/BoxLoginStyles.css";
-import { ThemeProvider } from "@material-ui/system";
-import ButtonStyles from "../styles/ButtonStyles";
-import { useFormik } from "formik";
-import InputField from "../styles/BoxInput";
-import BoxInputPadrao from "./BoxInputPadrao";
-import HeaderLoginRegister from "./HeaderLoginRegister";
-import * as yup from "yup";
+import { Button, TextField } from '@mui/material';
+import React from 'react';
+import '../styles/BoxLoginStyles.css';
+import { ThemeProvider } from '@material-ui/system';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import ButtonStyles from '../styles/MuiStyles';
+import InputField from '../styles/BoxInput';
+import BoxInputPadrao from './BoxInputPadrao';
+import HeaderLoginRegister from './HeaderLoginRegister';
 
 export interface Props {
   next: (newData: {
@@ -32,26 +32,26 @@ export interface Props {
 
 export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
   const validationSchema = yup.object({
-    name: yup.string().required("Campo obrigatorio"),
-    email: yup.string().email("Email invalido").required("Campo obrigatorio"),
+    name: yup.string().required('Campo obrigatorio'),
+    email: yup.string().email('Email invalido').required('Campo obrigatorio'),
     password: yup
       .string()
-      .required("Campo obrigatorio")
-      .min(8, "Senha muito curta"),
+      .required('Campo obrigatorio')
+      .min(8, 'Senha muito curta'),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "As senhas nao sao iguais"),
+      .oneOf([yup.ref('password'), null], 'As senhas nao sao iguais'),
   });
 
   const formik = useFormik({
     initialValues: data,
 
     onSubmit: (values) => {
-      console.log("primeira etapa", values);
+      console.log('primeira etapa', values);
       next(values);
     },
 
-    validationSchema: validationSchema,
+    validationSchema,
   });
 
   const theme = ButtonStyles;
@@ -60,9 +60,9 @@ export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
       <div className="boxlogin">
         <form onSubmit={formik.handleSubmit}>
           <HeaderLoginRegister
-            title={"Crie uma de graça"}
-            subtitle={"Não possui uma conta?"}
-            local={"register"}
+            title={'Crie uma de graça'}
+            subtitle={'Não possui uma conta?'}
+            local={'register'}
           />
           <BoxInputPadrao
             tipo="text"
@@ -98,8 +98,8 @@ export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             error={
-              formik.touched.confirmPassword &&
-              Boolean(formik.errors.confirmPassword)
+              formik.touched.confirmPassword
+              && Boolean(formik.errors.confirmPassword)
             }
             helperText={
               formik.touched.confirmPassword && formik.errors.confirmPassword
@@ -108,11 +108,11 @@ export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
           <Button
             type="submit"
             sx={{
-              borderRadius: "30px",
+              borderRadius: '30px',
               // background: "#6750A4",
-              width: "100%",
-              paddingBottom: "10px",
-              height: "43px",
+              width: '100%',
+              paddingBottom: '10px',
+              height: '43px',
             }}
             color="secondary"
             variant="contained"

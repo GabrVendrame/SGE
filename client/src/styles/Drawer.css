@@ -1,4 +1,35 @@
-.drawer{
+@media screen and (min-width: 200px) and (max-width: 600px) {
+  .temporaryDrawer {
+    display: block;
+  }
+  .permanentDrawer {
+    display: none;
+  }
+  
+  .MuiDrawer-paper{
+    /* top: 70px; */
+    box-sizing: border-box;
+    /* width: 240px; */
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .temporaryDrawer {
+    display: none;
+  }
+  .permanentDrawer {
+    display: block;
+    top: 70px;
+  }
+
+  .MuiDrawer-paper{
+    /* top: 70px; */
+    box-sizing: border-box;
+    /* width: 240px; */
+  }
+
+}
+.drawer {
   margin: 10px;
   overflow: hidden;
   /* position: fixed; */
@@ -7,6 +38,7 @@
   height: 100%;
   padding: 2px;
 }
+
 
 .DrawerButtonsWrapperTop {
   row-gap: 25px;

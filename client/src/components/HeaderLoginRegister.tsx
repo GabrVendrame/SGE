@@ -1,11 +1,11 @@
-import React from "react";
-import "../styles/HeaderLoginRegister.css";
+import React from 'react';
+import '../styles/HeaderLoginRegister.css';
 
 export interface Props {
   title: string;
   subtitle: string;
   local: string;
-  //handleclick
+  // handleclick
 }
 
 export const HeaderLoginRegister: React.FC<Props> = ({
@@ -15,7 +15,7 @@ export const HeaderLoginRegister: React.FC<Props> = ({
 }) => {
   return (
     <>
-      {local === "login" ? (
+      {local === 'login' ? (
         <div className="fon">
           <div className="title">{title}</div>
           <div className="subtitle color">{subtitle}</div>

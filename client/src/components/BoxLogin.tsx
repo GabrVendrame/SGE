@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import HeaderLoginRegister from "./HeaderLoginRegister";
-import BoxInputPadrao from "./BoxInputPadrao";
-import { Button } from "@mui/material";
-import "../styles/BoxLoginStyles.css";
-import { ThemeProvider } from "@mui/material";
-import ButtonStyles from "../styles/ButtonStyles";
-import * as yup from "yup";
-import { useFormik } from "formik";
-import Axios from "axios";
-export interface Props {}
+import React, { useState } from 'react';
+import HeaderLoginRegister from './HeaderLoginRegister';
+import BoxInputPadrao from './BoxInputPadrao';
+import { Button, ThemeProvider } from '@mui/material';
+import '../styles/BoxLoginStyles.css';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import Axios from 'axios';
+import ButtonStyles from '../styles/MuiStyles';
+
+export interface Props { }
 
 export const BoxLogin: React.FC = () => {
   const [data, setData] = useState({
-    userLogin: "",
-    password: "",
+    userLogin: '',
+    password: '',
   });
 
   const validationSchema = yup.object({
-    userLogin: yup.string().required("Campo obrigatorio"),
-    password: yup.string().required("Campo obrigatorio"),
+    userLogin: yup.string().required('Campo obrigatorio'),
+    password: yup.string().required('Campo obrigatorio'),
   });
 
   const reqLogion = (data: any) => {
@@ -27,16 +27,14 @@ export const BoxLogin: React.FC = () => {
       .then((res: any) => {
         console.log(res.data);
 
-        if (!res) alert("penis");
-        else {
-          if (res.data.user) {
-            alert(
-              `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
-            );
-            window.location.reload();
-          } else {
-            alert("Usuario nao encontrado");
-          }
+        if (!res) alert('penis');
+        else if (res.data.user) {
+          alert(
+            `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`,
+          );
+          window.location.reload();
+        } else {
+          alert('Usuario nao encontrado');
         }
       })
       .catch((error: any) => {
@@ -46,11 +44,11 @@ export const BoxLogin: React.FC = () => {
   const formik = useFormik({
     initialValues: data,
     onSubmit: (values) => {
-      console.log("Fazer requisicao do login aqui", values);
+      console.log('Fazer requisicao do login aqui', values);
       reqLogion(values);
     },
 
-    validationSchema: validationSchema,
+    validationSchema,
   });
   const theme = ButtonStyles;
   return (
@@ -58,24 +56,24 @@ export const BoxLogin: React.FC = () => {
       <div className="boxlogin">
         <form onSubmit={formik.handleSubmit}>
           <HeaderLoginRegister
-            title={"Bem vindo de volta"}
-            subtitle={"Realize seu login"}
-            local={"login"}
+            title={'Bem vindo de volta'}
+            subtitle={'Realize seu login'}
+            local={'login'}
           />
 
           <BoxInputPadrao
-            name={"userLogin"}
+            name={'userLogin'}
             value={formik.values.userLogin}
             onChange={formik.handleChange}
-            tipo={"text"}
-            placeHolder={"Usuario"}
+            tipo={'text'}
+            placeHolder={'Usuario'}
             error={formik.touched.userLogin && Boolean(formik.errors.userLogin)}
             helperText={formik.touched.userLogin && formik.errors.userLogin}
           />
           <BoxInputPadrao
-            name={"password"}
-            tipo={"password"}
-            placeHolder={"Senha"}
+            name={'password'}
+            tipo={'password'}
+            placeHolder={'Senha'}
             value={formik.values.password}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
@@ -84,11 +82,11 @@ export const BoxLogin: React.FC = () => {
           <Button
             type="submit"
             sx={{
-              borderRadius: "30px",
+              borderRadius: '30px',
               // background: "#6750A4",
-              width: "100%",
-              paddingBottom: "10px",
-              height: "43px",
+              width: '100%',
+              paddingBottom: '10px',
+              height: '43px',
             }}
             color="secondary"
             variant="contained"

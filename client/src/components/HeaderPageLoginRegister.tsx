@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import Box from '@mui/material/Box/Box';
 import { Link } from 'react-router-dom';
-import ButtonStyles from '../styles/ButtonStyles';
+import ButtonStyles from '../styles/MuiStyles';
 import logo from '../images/logo.png';
 
 function Header() {
@@ -16,7 +16,7 @@ function Header() {
           <Link to="/">
             <img src={logo} alt="S-logo" className='logo'/>
           </Link>
-          <Link to="/" style={{textDecoration : 'none', color: 'inherit'}}>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
             <Box className='projectName'>SOGEI Project</Box>
           </Link>
         </Box>
