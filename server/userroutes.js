@@ -7,7 +7,7 @@ routes.get("/", (req, res) => {
   res.json({ msg: "ola" });
 });
 
-routes.post("/LoginAndRegister", registerController.store);
-routes.get("/LoginAndRegister/:userLogin&:password", registerController.login);
+routes.post("/LoginAndRegister/", registerController.store);
+routes.post("/LoginAndRegister/log", registerController.login);
 
 module.exports = routes;

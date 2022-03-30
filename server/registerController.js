@@ -25,16 +25,18 @@ module.exports = {
 
   async login(req, res) {
     console.log("reqlogin");
-    const { userLogin, password } = req.params;
+    const { email, password } = req.body;
+    console.log(email);
+    console.log(password);
     const Res = await Users.findOne({
-      email: userLogin,
+      email: email,
       password: password,
     }).exec();
     if (Res) {
       const { userType } = Res;
       res.json({
         msg: "Usuario encontrado",
-        user: userLogin,
+        user: email,
         pass: password,
         res: Res,
         user: userType,

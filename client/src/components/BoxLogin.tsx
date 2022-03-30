@@ -12,21 +12,24 @@ export interface Props {}
 
 export const BoxLogin: React.FC = () => {
   const [data, setData] = useState({
-    userLogin: "",
+    name: "",
+    email: "",
     password: "",
+    confirmPassword: "",
+    cpfCnpj: "",
+    cell: "",
+    userType: "",
   });
 
   const validationSchema = yup.object({
-    userLogin: yup.string().required("Campo obrigatorio"),
+    email: yup.string().required("Campo obrigatorio"),
     password: yup.string().required("Campo obrigatorio"),
   });
 
   const reqLogion = (data: any) => {
-    const { userLogin, password } = data;
-    Axios.get(`http://localhost:3001/LoginAndRegister/${userLogin}&${password}`)
+    console.log("asdasdasda", data);
+    Axios.post("http://localhost:3001/LoginAndRegister/log", data)
       .then((res: any) => {
-        console.log(res.data);
-
         if (!res) alert("penis");
         else {
           if (res.data.user) {
@@ -42,11 +45,30 @@ export const BoxLogin: React.FC = () => {
       .catch((error: any) => {
         console.log(error);
       });
+
+    // Axios.get("http://localhost:3001/LoginAndRegister", { data })
+    //   .then((res: any) => {
+    //     console.log("asdasdasda", res.data);
+    //     if (!res) alert("penis");
+    //     else {
+    //       if (res.data.user) {
+    //         alert(
+    //           `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
+    //         );
+    //         window.location.reload();
+    //       } else {
+    //         alert("Usuario nao encontrado");
+    //       }
+    //     }
+    //   })
+    //   .catch((error: any) => {
+    //     console.log(error);
+    //   });
   };
   const formik = useFormik({
     initialValues: data,
     onSubmit: (values) => {
-      console.log("Fazer requisicao do login aqui", values);
+      //console.log("Fazer requisicao do login aqui", values);
       reqLogion(values);
     },
 
@@ -64,13 +86,13 @@ export const BoxLogin: React.FC = () => {
           />
 
           <BoxInputPadrao
-            name={"userLogin"}
-            value={formik.values.userLogin}
+            name={"email"}
+            value={formik.values.email}
             onChange={formik.handleChange}
             tipo={"text"}
             placeHolder={"Usuario"}
-            error={formik.touched.userLogin && Boolean(formik.errors.userLogin)}
-            helperText={formik.touched.userLogin && formik.errors.userLogin}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
           <BoxInputPadrao
             name={"password"}
