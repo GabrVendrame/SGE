@@ -1,6 +1,6 @@
-import { InputAdornment } from "@mui/material";
-import React from "react";
-import BoxInputStyle from "../styles/BoxInput";
+import { InputAdornment } from '@mui/material';
+import React from 'react';
+import BoxInputStyle from '../styles/BoxInput';
 
 export interface Props {
   tipo: string;
@@ -25,18 +25,18 @@ export const BoxInputPadrao: React.FC<Props> = ({
         name={name}
         onChange={onChange}
         sx={{
-          width: "100%",
-          paddingBottom: "10px",
-          color: "#fff",
-          caretColor: "#fff",
+          width: '100%',
+          paddingBottom: '10px',
+          color: '#fff',
+          caretColor: '#fff',
         }}
         type={tipo}
         id="outlined-basic"
         variant="outlined"
         placeholder={placeHolder}
-        // InputProps={{
-        //   endAdornment: <InputAdornment position="end">kg</InputAdornment>,
-        // }}
+      // InputProps={{
+      //   endAdornment: <InputAdornment position="end">kg</InputAdornment>,
+      // }}
       />
 
       <div>{helperText}</div>

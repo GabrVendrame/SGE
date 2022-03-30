@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import Axios from "axios";
 import HeaderLoginRegister from "./HeaderLoginRegister";
 import BoxInputPadrao from "./BoxInputPadrao";
-import { Button } from "@mui/material";
+import { Button, ThemeProvider } from "@mui/material";
 import "../styles/BoxLoginStyles.css";
-import { ThemeProvider } from "@mui/material";
-import ButtonStyles from "../styles/ButtonStyles";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import Axios from "axios";
+
+import ButtonStyles from "../styles/MuiStyles";
+
 export interface Props {}
 
 export const BoxLogin: React.FC = () => {
@@ -31,15 +32,13 @@ export const BoxLogin: React.FC = () => {
     Axios.post("http://localhost:3001/LoginAndRegister/log", data)
       .then((res: any) => {
         if (!res) alert("penis");
-        else {
-          if (res.data.user) {
-            alert(
-              `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
-            );
-            window.location.reload();
-          } else {
-            alert("Usuario nao encontrado");
-          }
+        else if (res.data.user) {
+          alert(
+            `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
+          );
+          window.location.reload();
+        } else {
+          alert("Usuario nao encontrado");
         }
       })
       .catch((error: any) => {
@@ -68,11 +67,11 @@ export const BoxLogin: React.FC = () => {
   const formik = useFormik({
     initialValues: data,
     onSubmit: (values) => {
-      //console.log("Fazer requisicao do login aqui", values);
+      // console.log("Fazer requisicao do login aqui", values);
       reqLogion(values);
     },
 
-    validationSchema: validationSchema,
+    validationSchema,
   });
   const theme = ButtonStyles;
   return (

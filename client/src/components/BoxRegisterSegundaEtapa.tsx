@@ -1,13 +1,15 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material";
-import React from "react";
-import "../styles/BoxLoginStyles.css";
-import { ThemeProvider } from "@material-ui/system";
-import ButtonStyles from "../styles/ButtonStyles";
-import { useFormik } from "formik";
-import InputField from "../styles/BoxInput";
-import BoxInputPadrao from "./BoxInputPadrao";
-import HeaderLoginRegister from "./HeaderLoginRegister";
-import * as yup from "yup";
+import {
+  Button, MenuItem, Select, TextField,
+} from '@mui/material';
+import React from 'react';
+import '../styles/BoxLoginStyles.css';
+import { ThemeProvider } from '@material-ui/system';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import ButtonStyles from '../styles/MuiStyles';
+import InputField from '../styles/BoxInput';
+import BoxInputPadrao from './BoxInputPadrao';
+import HeaderLoginRegister from './HeaderLoginRegister';
 
 export interface Props {
   next: (
@@ -48,20 +50,20 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
   data,
 }) => {
   const validationSchema = yup.object({
-    cpfCnpj: yup.string().required("Campo obrigatorio"),
-    cell: yup.string().required("Campo obrigatorio"),
-    userType: yup.string().required("Campo obrigatorio"),
+    cpfCnpj: yup.string().required('Campo obrigatorio'),
+    cell: yup.string().required('Campo obrigatorio'),
+    userType: yup.string().required('Campo obrigatorio'),
   });
 
   const formik = useFormik({
     initialValues: data,
 
     onSubmit: (data) => {
-      console.log("segunda etapa", data);
+      console.log('segunda etapa', data);
       next(data, true);
     },
 
-    validationSchema: validationSchema,
+    validationSchema,
   });
 
   const theme = ButtonStyles;
@@ -70,9 +72,9 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
       <div className="boxlogin">
         <form onSubmit={formik.handleSubmit}>
           <HeaderLoginRegister
-            title={"Crie uma de graça"}
-            subtitle={"Não possui uma conta?"}
-            local={"register"}
+            title={'Crie uma de graça'}
+            subtitle={'Não possui uma conta?'}
+            local={'register'}
           />
           <BoxInputPadrao
             tipo="text"
@@ -97,25 +99,25 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
             value={formik.values.userType}
             onChange={formik.handleChange}
             error={formik.touched.userType && Boolean(formik.errors.userType)}
-            //helperText={formik.touched.userType && formik.errors.userType}
+            // helperText={formik.touched.userType && formik.errors.userType}
             sx={{
-              textTransform: "inherit",
-              textDecoration: "inherit",
+              textTransform: 'inherit',
+              textDecoration: 'inherit',
 
-              width: "100%",
-              border: "1px solid",
-              borderColor: "#C3BFC3",
-              color: "#C3BFC3",
-              paddingBottom: "10px",
-              height: "50px",
-              marginBottom: "10px",
+              width: '100%',
+              border: '1px solid',
+              borderColor: '#C3BFC3',
+              color: '#C3BFC3',
+              paddingBottom: '10px',
+              height: '50px',
+              marginBottom: '10px',
             }}
           >
-            <MenuItem value={"Usuario Comum"}>Usuario Comum</MenuItem>
-            <MenuItem value={"Usuario Palestrante"}>
+            <MenuItem value={'Usuario Comum'}>Usuario Comum</MenuItem>
+            <MenuItem value={'Usuario Palestrante'}>
               Usuario Palestrante
             </MenuItem>
-            <MenuItem value={"Usuario Criador de Evento"}>
+            <MenuItem value={'Usuario Criador de Evento'}>
               Usuario Criador de Evento
             </MenuItem>
           </Select>
@@ -123,11 +125,11 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
           <Button
             type="submit"
             sx={{
-              borderRadius: "30px",
+              borderRadius: '30px',
               // background: "#6750A4",
-              width: "100%",
-              paddingBottom: "10px",
-              height: "43px",
+              width: '100%',
+              paddingBottom: '10px',
+              height: '43px',
             }}
             color="secondary"
             variant="contained"
@@ -137,23 +139,23 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
           <Button
             onClick={() =>
               prev({
-                name: "",
-                email: "",
-                password: "",
-                confirmPassword: "",
-                cpfCnpj: "",
-                cell: "",
-                userType: "",
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                cpfCnpj: '',
+                cell: '',
+                userType: '',
               })
             }
             sx={{
-              borderRadius: "30px",
+              borderRadius: '30px',
               // background: "#6750A4",
-              width: "100%",
-              paddingBottom: "10px",
-              height: "43px",
-              marginBottom: "10px",
-              marginTop: "10px",
+              width: '100%',
+              paddingBottom: '10px',
+              height: '43px',
+              marginBottom: '10px',
+              marginTop: '10px',
             }}
             color="secondary"
             variant="contained"

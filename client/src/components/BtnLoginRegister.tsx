@@ -1,11 +1,11 @@
-import { Button } from "@mui/material";
-import React from "react";
+import { Button } from '@mui/material';
+import React from 'react';
 
 export interface Props {
   onclick: Function;
   name: string;
 
-  //handleclick
+  // handleclick
 }
 
 export const BtnLoginRegister: React.FC<Props> = ({ onclick, name }) => {
@@ -13,11 +13,11 @@ export const BtnLoginRegister: React.FC<Props> = ({ onclick, name }) => {
     <Button
       type="submit"
       sx={{
-        borderRadius: "30px",
-        background: "#6750A4",
-        width: "100%",
-        paddingBottom: "10px",
-        height: "43px",
+        borderRadius: '30px',
+        background: '#6750A4',
+        width: '100%',
+        paddingBottom: '10px',
+        height: '43px',
       }}
       variant="contained"
     >

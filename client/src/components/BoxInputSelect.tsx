@@ -1,6 +1,6 @@
-import { InputAdornment, MenuItem, Select } from "@mui/material";
-import React from "react";
-import BoxInputStyle from "../styles/BoxInput";
+import { InputAdornment, MenuItem, Select } from '@mui/material';
+import React from 'react';
+import BoxInputStyle from '../styles/BoxInput';
 
 // export interface Props {
 //   tipo: string;
@@ -9,14 +9,14 @@ import BoxInputStyle from "../styles/BoxInput";
 //   name: string;
 // }
 
-export const BoxInputSelect: React.FC = ({}) => {
+export const BoxInputSelect: React.FC = ({ }) => {
   return (
     <Select
       labelId="demo-simple-select-label"
       id="demo-simple-select"
-      value={"age"}
+      value={'age'}
       label="Age"
-      // onChange={handleChange}
+    // onChange={handleChange}
     >
       <MenuItem value={10}>Ten</MenuItem>
       <MenuItem value={20}>Twenty</MenuItem>
