@@ -36,14 +36,14 @@ function LoginAndRegister() {
   });
 
   const reqRegister = (data: any) => {
-    Axios.post("http://localhost:3001/LoginAndRegister", data)
+    Axios.post("http://localhost:3001/api/users", data)
       .then((res: any) => {
-        if (!res) alert("penis");
-        else alert("usuario registrado");
-        // window.location.reload();
+        console.log(res);
+        alert("usuario registrado");
       })
       .catch((error: any) => {
-        console.log(error);
+        alert("Email ja utilizado");
+        window.location.reload();
       });
   };
 

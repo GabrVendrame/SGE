@@ -29,23 +29,15 @@ export const BoxLogin: React.FC = () => {
 
   const reqLogion = (data: any) => {
     console.log("asdasdasda", data);
-    Axios.post("http://localhost:3001/LoginAndRegister/log", data)
+    Axios.post("http://localhost:3001/api/users/login", data)
       .then((res: any) => {
-        if (!res) alert("penis");
-        else if (res.data.user) {
-          alert(
-            `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
-          );
-          console.log(res.data);
-          localStorage.setItem("token", JSON.stringify(res.data.tk));
-          //console.log(res.data.tk);
-          window.location.reload();
-        } else {
-          alert("Usuario nao encontrado");
-        }
+        console.log(res.data.token);
+        localStorage.setItem("token", JSON.stringify(res.data.token));
+        window.location.reload();
       })
       .catch((error: any) => {
-        console.log(error);
+        alert("Email ja utilizado");
+        window.location.reload();
       });
 
     // Axios.get("http://localhost:3001/LoginAndRegister", { data })

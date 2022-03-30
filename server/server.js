@@ -1,34 +1,27 @@
 const express = require("express");
-
+const notes = require("./data/notes");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const userRoutes = require("./routes/userRoutes");
+const { notFound, errorHandler } = require("./middlewares/errorMiddleWare");
 let cors = require("cors");
-const path = require("path");
-const routes = require("./userroutes");
-const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-
 const app = express();
-app.use(cors());
+
+dotenv.config();
+connectDB();
 app.use(express.json());
-app.use(routes);
+app.use(cors());
 
-const uri = "mongodb+srv://admin:tanygay@sogeidb.envsm.mongodb.net/bdsogei";
-mongoose.connect(
-  uri,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  (err) => {
-    if (!err) {
-      console.log("connected to db");
-    } else {
-      console.log(err);
-    }
-  }
-);
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("sucesso");
+app.get("/", (req, res) => {
+  res.send("API in running");
 });
 
-app.listen(3001, () => {
-  console.log("porta 3001");
+app.get("/api/notes", (req, res) => {
+  res.json(notes);
 });
+
+app.use("/api/users", userRoutes);
+app.use(notFound);
+app.use(errorHandler);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, console.log(`start on ${PORT} `));
