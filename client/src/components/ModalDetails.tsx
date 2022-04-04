@@ -34,7 +34,6 @@ const ModalDetails: React.FC<Props> = ({
   setOpenModalDetails,
   eventData,
 }) => {
-  const handleClose = () => setOpenModalDetails(false);
   const theme = MuiStyles;
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [presentationData, setPresentationData] = React.useState<PresentationData>({
@@ -43,6 +42,11 @@ const ModalDetails: React.FC<Props> = ({
     img: '',
     remainingVacancies: 0,
   });
+
+  const handleClose = () => {
+    setOpenModalDetails(false);
+    setSelectedPresentation(false);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Box>
