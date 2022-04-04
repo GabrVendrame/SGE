@@ -7,28 +7,54 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
+import React from 'react';
 import ButtonStyles from '../styles/MuiStyles';
 import img1 from '../images/e3.jpeg';
 import img2 from '../images/f8.png';
 import img3 from '../images/gio.jpg';
 import img4 from '../images/tga.jpg';
+import ModalDetails from './ModalDetails';
 
-function Itens() {
+interface EventData {
+  title: string;
+  description: string;
+  img: string;
+  value?: number;
+  remainingVacancies: number;
+}
+
+const Itens: React.FC = () => {
+  const [openModalDetails, setOpenModalDetails] = React.useState(false);
+  const [itensData, setItensData] = React.useState<EventData>({
+    title: '',
+    description: '',
+    img: '',
+    remainingVacancies: 0,
+  });
   const theme = ButtonStyles;
   const itens = [
     {
-      id: 0, title: 'Titulo 1', description: 'Descrição 1', img: img1,
+      title: 'E3',
+      description: 'A Electronic Entertainment Expo, mais conhecida como E3, é uma feira internacional dedicada a jogos eletrônicos.',
+      img: img1,
+      value: 0.00,
+      remainingVacancies: 4,
     },
     {
-      id: 1, title: 'Titulo 2', description: 'Descrição 2', img: img2,
+      title: 'Titulo 2', description: 'Descrição 2', img: img2, value: 0.00, remainingVacancies: 14,
     },
     {
-      id: 2, title: 'Titulo 3', description: 'Descrição 3', img: img3,
+      title: 'Titulo 3', description: 'Descrição 3', img: img3, value: 0.00, remainingVacancies: 2,
     },
     {
-      id: 3, title: 'Titulo 4', description: 'Descrição 4', img: img4,
+      title: 'Titulo 4', description: 'Descrição 4', img: img4, value: 0.00, remainingVacancies: 12,
     },
   ];
+
+  const HandleOpenModalDetails = (obj: EventData) => {
+    setOpenModalDetails(true);
+    setItensData(obj);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Box className='fullBody' >
@@ -53,16 +79,21 @@ function Itens() {
                   </CardContent>
                   <CardActions sx={{ justifyContent: 'flex-end' }}>
                     <Button size="small" variant='contained' color='secondary'>Compartilhar</Button>
-                    <Button size="small" variant='contained' color='secondary'>Veja mais</Button>
+                    <Button size="small" variant='contained' color='secondary' onClick={() => HandleOpenModalDetails(item)}>Veja mais</Button>
                   </CardActions>
                 </Card>
               </Grid>
             ))}
           </Grid>
+          <ModalDetails
+            openModalDetails={openModalDetails}
+            setOpenModalDetails={setOpenModalDetails}
+            eventData={itensData}
+          />
         </Box>
       </Box>
     </ThemeProvider>
   );
-}
+};
 
 export default Itens;

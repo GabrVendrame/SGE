@@ -35,13 +35,6 @@ const theme = createTheme({
         },
       },
     },
-    // MuiContainer: {
-    //   styleOverrides: {
-    //     root: {
-    //       maxWidthXl: '2000px',
-    //     },
-    //   },
-    // },
   },
 });
 

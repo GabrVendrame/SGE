@@ -1,42 +1,42 @@
-import React, { useState } from "react";
-import Axios from "axios";
-import HeaderLoginRegister from "./HeaderLoginRegister";
-import BoxInputPadrao from "./BoxInputPadrao";
-import { Button, ThemeProvider } from "@mui/material";
-import "../styles/BoxLoginStyles.css";
-import * as yup from "yup";
-import { useFormik } from "formik";
+import React, { useState } from 'react';
+import Axios from 'axios';
+import { Button, ThemeProvider } from '@mui/material';
+import '../styles/BoxLoginStyles.css';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import HeaderLoginRegister from './HeaderLoginRegister';
+import BoxInputPadrao from './BoxInputPadrao';
 
-import ButtonStyles from "../styles/MuiStyles";
+import ButtonStyles from '../styles/MuiStyles';
 
-export interface Props {}
+export interface Props { }
 
 export const BoxLogin: React.FC = () => {
   const [data, setData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    cpfCnpj: "",
-    cell: "",
-    userType: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    cpfCnpj: '',
+    cell: '',
+    userType: '',
   });
 
   const validationSchema = yup.object({
-    email: yup.string().required("Campo obrigatorio"),
-    password: yup.string().required("Campo obrigatorio"),
+    email: yup.string().required('Campo obrigatorio'),
+    password: yup.string().required('Campo obrigatorio'),
   });
 
   const reqLogion = (data: any) => {
-    console.log("asdasdasda", data);
-    Axios.post("http://localhost:3001/api/users/login", data)
+    console.log('asdasdasda', data);
+    Axios.post('http://localhost:3001/api/users/login', data)
       .then((res: any) => {
         console.log(res.data.token);
-        localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem('token', JSON.stringify(res.data.token));
         window.location.reload();
       })
       .catch((error: any) => {
-        alert("Email ja utilizado");
+        alert('Email ja utilizado');
         window.location.reload();
       });
 
@@ -74,24 +74,24 @@ export const BoxLogin: React.FC = () => {
       <div className="boxlogin">
         <form onSubmit={formik.handleSubmit}>
           <HeaderLoginRegister
-            title={"Bem vindo de volta"}
-            subtitle={"Realize seu login"}
-            local={"login"}
+            title={'Bem vindo de volta'}
+            subtitle={'Realize seu login'}
+            local={'login'}
           />
 
           <BoxInputPadrao
-            name={"email"}
+            name={'email'}
             value={formik.values.email}
             onChange={formik.handleChange}
-            tipo={"text"}
-            placeHolder={"Usuario"}
+            tipo={'text'}
+            placeHolder={'Usuario'}
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
           <BoxInputPadrao
-            name={"password"}
-            tipo={"password"}
-            placeHolder={"Senha"}
+            name={'password'}
+            tipo={'password'}
+            placeHolder={'Senha'}
             value={formik.values.password}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
@@ -100,11 +100,11 @@ export const BoxLogin: React.FC = () => {
           <Button
             type="submit"
             sx={{
-              borderRadius: "30px",
+              borderRadius: '30px',
               // background: "#6750A4",
-              width: "100%",
-              paddingBottom: "10px",
-              height: "43px",
+              width: '100%',
+              paddingBottom: '10px',
+              height: '43px',
             }}
             color="secondary"
             variant="contained"

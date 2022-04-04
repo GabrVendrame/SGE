@@ -1,0 +1,10 @@
+.cardImg {
+  width: 40%;
+  border-radius: 5px;
+  /* height: 100%; */
+}
+
+.cardActionsDiv {
+  justify-content: flex-start;
+  margin-left: auto;
+}

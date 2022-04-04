@@ -51,7 +51,7 @@ function Home() {
             }}
           />
           <Box>
-            <Itens />
+            <Itens/>
           </Box>
         </Box>
       </Box>
