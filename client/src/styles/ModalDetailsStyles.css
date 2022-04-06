@@ -52,6 +52,26 @@
   max-height: 450px;
 }
 
-.presentationBox::-webkit-scrollbar{
-  display: none;
+.eventsSchedule {
+  display: flex;
+  gap: 30px;
+  overflow-x: scroll;
+  max-height: 450px;
+}
+
+.eventsSchedule::-webkit-scrollbar {
+  height: 7px;
+}
+
+.eventsSchedule::-webkit-scrollbar-thumb {
+  background-color: rgb(180, 121, 214);
+  border-radius: 25px;
+}
+.presentationBox::-webkit-scrollbar {
+  width: 7px;
+}
+
+.presentationBox::-webkit-scrollbar-thumb {
+  background-color: rgb(180, 121, 214);
+  border-radius: 25px;
 }

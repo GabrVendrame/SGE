@@ -29,8 +29,10 @@ interface EventData {
 }
 
 interface Props {
-  itensData?: EventData;
-  searchValues?: string;
+  searchValues: string;
+}
+interface EventProps {
+  itensData: EventData;
 }
 
 const Itens: React.FC<Props> = ({ searchValues }) => {
@@ -128,7 +130,7 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
     }
   }
 
-  const EventsDate = (props: Props) => {
+  const EventsDate = (props: EventProps) => {
     const eventsDate = props.itensData.dateByDay;
     const firstDay = eventsDate[0].initialDate.getDate();
     const lastDay = eventsDate[eventsDate.length - 1].finalDate.getDate();

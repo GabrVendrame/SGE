@@ -70,19 +70,27 @@ const ModalDetails: React.FC<Props> = ({
     // });
     // return (<Box>teste</Box>);
     return (
-      <Box >
-        <Card sx={{ background: '#1C1B1F', display: 'flex' }}>
+      <ThemeProvider theme={theme}>
+        <Card sx={{ background: '#1C1B1F', display: 'flex', overflow: 'initial' }} >
           {/* <CardActionArea onClick={() => handlePresentationData(presentation)}> */}
           <CardContent>
-            <Box >
-              <Typography gutterBottom component="div" sx={{ color: '#E6E1E5' }}>
-                Dia - {dateByDay.finalDate.getDate()}
-              </Typography>
-            </Box>
+            <Typography gutterBottom component="div" color="secondary" sx={{ minWidth: '165px' }}>
+              Dia - {dateByDay.finalDate.getDate()}/{dateByDay.finalDate.getMonth()}
+            </Typography>
+            <Typography gutterBottom component="div" color="primary">
+              Horário início - {dateByDay.initialDate.getHours()}
+              :
+              {dateByDay.initialDate.getMinutes()}
+            </Typography>
+            <Typography gutterBottom component="div" color="primary">
+              Horário término - {dateByDay.finalDate.getHours()}
+              :
+              {dateByDay.finalDate.getMinutes()}
+            </Typography>
           </CardContent>
           {/* </CardActionArea> */}
         </Card>
-      </Box>
+      </ThemeProvider>
 
     );
   };
@@ -128,13 +136,15 @@ const ModalDetails: React.FC<Props> = ({
                 </Box>
               </Grid>
               <Grid item container sm={8} md={6}>
-                <Grid item sm={8} md={16}>
+                <Grid item sm={8} md={12}>
                   <Box>
                     <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
                       Agenda
                     </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-
+                    <Box className='eventsSchedule'>
+                      {eventData.dateByDay.map((schedules) => (
+                        <EventSchedule dateByDay={schedules} />
+                      ))}
                       {eventData.dateByDay.map((schedules) => (
                         <EventSchedule dateByDay={schedules} />
                       ))}
@@ -142,7 +152,7 @@ const ModalDetails: React.FC<Props> = ({
                   </Box>
                 </Grid>
                 <Grid item sm={8} md={16}>
-                  <Box>
+                  <Box >
                     {selectedPresentation
                       ? <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
                         Selecionado - {presentationData.title}
