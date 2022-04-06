@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {
-  Card, CardContent, Divider, Grid, ThemeProvider,
+  Card, CardActionArea, CardContent, Divider, Grid, ThemeProvider,
 } from '@mui/material';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
@@ -56,15 +56,49 @@ const ModalDetails: React.FC<Props> = ({
     img: '',
     remainingVacancies: 0,
   });
+  const [isDown, setIsDown] = React.useState(false);
+  const [startX, setStartX] = React.useState(0);
+  const [scrollLeft, setScrollLeft] = React.useState(0);
+  const eventsScheduleRef = React.useRef<HTMLElement>(null);
 
   const handleClose = () => {
     setOpenModalDetails(false);
     setSelectedPresentation(false);
   };
 
+  const mouseDownHandler = (e: React.MouseEvent) => {
+    setIsDown(true);
+    if (eventsScheduleRef.current !== null) {
+      setStartX(e.pageX - eventsScheduleRef.current.offsetLeft);
+      setScrollLeft(eventsScheduleRef.current.scrollLeft);
+    } else {
+      console.log('Componente nulo');
+    }
+  };
+
+  const mouseLeaveHandler = () => {
+    setIsDown(false);
+  };
+
+  const mouseMoveHandler = (e: React.MouseEvent) => {
+    if (!isDown) return;
+    e.preventDefault();
+    if (eventsScheduleRef.current !== null) {
+      const x = e.pageX - eventsScheduleRef.current.offsetLeft;
+      const walk = (x - startX) * 3;
+      eventsScheduleRef.current.scrollLeft = scrollLeft - walk;
+    } else {
+      console.log('Componente nulo');
+    }
+  };
+
+  const mouseUpHandler = () => {
+    setIsDown(false);
+  };
+
   const EventSchedule: React.FC<EventProps> = ({ dateByDay }) => {
     // const dates = obj.eventData.dateByDay;
-    console.log(dateByDay);
+    // console.log(dateByDay);
     // dateByDay.map((days) => {
     //   console.log(days);
     // });
@@ -72,7 +106,7 @@ const ModalDetails: React.FC<Props> = ({
     return (
       <ThemeProvider theme={theme}>
         <Card sx={{ background: '#1C1B1F', display: 'flex', overflow: 'initial' }} >
-          {/* <CardActionArea onClick={() => handlePresentationData(presentation)}> */}
+          <CardActionArea onClick={() => console.log('teste')}>
           <CardContent>
             <Typography gutterBottom component="div" color="secondary" sx={{ minWidth: '165px' }}>
               Dia - {dateByDay.finalDate.getDate()}/{dateByDay.finalDate.getMonth()}
@@ -88,7 +122,7 @@ const ModalDetails: React.FC<Props> = ({
               {dateByDay.finalDate.getMinutes()}
             </Typography>
           </CardContent>
-          {/* </CardActionArea> */}
+          </CardActionArea>
         </Card>
       </ThemeProvider>
 
@@ -135,13 +169,20 @@ const ModalDetails: React.FC<Props> = ({
                   </Box>
                 </Box>
               </Grid>
-              <Grid item container sm={8} md={6}>
+              <Grid item container sm={8} md={6} columns={{ sm: 8, md: 12 }}>
                 <Grid item sm={8} md={12}>
                   <Box>
                     <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
                       Agenda
                     </Typography>
-                    <Box className='eventsSchedule'>
+                    <Box
+                      ref={eventsScheduleRef}
+                      className='eventsSchedule'
+                      onMouseDown={(e) => mouseDownHandler(e)}
+                      onMouseMove={(e) => mouseMoveHandler(e)}
+                      onMouseLeave={mouseLeaveHandler}
+                      onMouseUp={mouseUpHandler}
+                      >
                       {eventData.dateByDay.map((schedules) => (
                         <EventSchedule dateByDay={schedules} />
                       ))}

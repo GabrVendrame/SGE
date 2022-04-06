@@ -56,17 +56,19 @@
   display: flex;
   gap: 30px;
   overflow-x: scroll;
-  max-height: 450px;
+  /* max-width: 450px; */
+  /* cursor: ; */
 }
 
 .eventsSchedule::-webkit-scrollbar {
-  height: 7px;
+  display: none;
 }
 
 .eventsSchedule::-webkit-scrollbar-thumb {
   background-color: rgb(180, 121, 214);
   border-radius: 25px;
 }
+
 .presentationBox::-webkit-scrollbar {
   width: 7px;
 }
