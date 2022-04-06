@@ -2,7 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { Divider, Grid, ThemeProvider } from '@mui/material';
+import {
+  Card, CardContent, Divider, Grid, ThemeProvider,
+} from '@mui/material';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
 import Presentations from './Presentations';
@@ -13,6 +15,11 @@ interface EventData {
   img: string;
   value?: number;
   remainingVacancies: number;
+  isSingleDay: boolean;
+  dateByDay: {
+    initialDate: Date;
+    finalDate: Date;
+  }[];
 }
 
 interface PresentationData {
@@ -27,6 +34,13 @@ interface Props {
   openModalDetails: boolean;
   setOpenModalDetails: React.Dispatch<React.SetStateAction<boolean>>;
   eventData: EventData;
+}
+
+interface EventProps {
+  dateByDay: {
+    initialDate: Date;
+    finalDate: Date;
+  };
 }
 
 const ModalDetails: React.FC<Props> = ({
@@ -47,6 +61,40 @@ const ModalDetails: React.FC<Props> = ({
     setOpenModalDetails(false);
     setSelectedPresentation(false);
   };
+
+  const EventSchedule: React.FC<EventProps> = ({ dateByDay }) => {
+    // const dates = obj.eventData.dateByDay;
+    console.log(dateByDay);
+    // dateByDay.map((days) => {
+    //   console.log(days);
+    // });
+    // return (<Box>teste</Box>);
+    return (
+      <Box >
+        <Card sx={{ background: '#1C1B1F', display: 'flex' }}>
+          {/* <CardActionArea onClick={() => handlePresentationData(presentation)}> */}
+          <CardContent>
+            <Box >
+              <Typography gutterBottom component="div" sx={{ color: '#E6E1E5' }}>
+                Dia - {dateByDay.finalDate.getDate()}
+              </Typography>
+            </Box>
+          </CardContent>
+          {/* </CardActionArea> */}
+        </Card>
+      </Box>
+
+    );
+  };
+
+  // const getNumDays = (data: EventData) => {
+  //   if (!data.isSingleDay) {
+  //     const numDays = data.finalDate.getDate() - data.initialDate.getDate();
+  //     return numDays;
+  //   }
+  //   return null;
+  // };
+
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -79,14 +127,29 @@ const ModalDetails: React.FC<Props> = ({
                   </Box>
                 </Box>
               </Grid>
-              <Grid item sm={8} md={4}>
-                <Box>
-                  {selectedPresentation
-                    ? <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
-                      Selecionado - {presentationData.title}
+              <Grid item container sm={8} md={6}>
+                <Grid item sm={8} md={16}>
+                  <Box>
+                    <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
+                      Agenda
                     </Typography>
-                    : null}
-                </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+
+                      {eventData.dateByDay.map((schedules) => (
+                        <EventSchedule dateByDay={schedules} />
+                      ))}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item sm={8} md={16}>
+                  <Box>
+                    {selectedPresentation
+                      ? <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
+                        Selecionado - {presentationData.title}
+                      </Typography>
+                      : null}
+                  </Box>
+                </Grid>
               </Grid>
             </Grid>
           </Box>
