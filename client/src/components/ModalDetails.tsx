@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import ScrollDaysEvent from 'react-indiana-drag-scroll';
 import {
   Card, CardActionArea, CardContent, Divider, Grid, ThemeProvider,
 } from '@mui/material';
@@ -56,44 +57,14 @@ const ModalDetails: React.FC<Props> = ({
     img: '',
     remainingVacancies: 0,
   });
-  const [isDown, setIsDown] = React.useState(false);
-  const [startX, setStartX] = React.useState(0);
-  const [scrollLeft, setScrollLeft] = React.useState(0);
-  const eventsScheduleRef = React.useRef<HTMLElement>(null);
 
   const handleClose = () => {
     setOpenModalDetails(false);
     setSelectedPresentation(false);
   };
-
-  const mouseDownHandler = (e: React.MouseEvent) => {
-    setIsDown(true);
-    if (eventsScheduleRef.current !== null) {
-      setStartX(e.pageX - eventsScheduleRef.current.offsetLeft);
-      setScrollLeft(eventsScheduleRef.current.scrollLeft);
-    } else {
-      console.log('Componente nulo');
-    }
-  };
-
-  const mouseLeaveHandler = () => {
-    setIsDown(false);
-  };
-
-  const mouseMoveHandler = (e: React.MouseEvent) => {
-    if (!isDown) return;
+  const handleCardClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    if (eventsScheduleRef.current !== null) {
-      const x = e.pageX - eventsScheduleRef.current.offsetLeft;
-      const walk = (x - startX) * 3;
-      eventsScheduleRef.current.scrollLeft = scrollLeft - walk;
-    } else {
-      console.log('Componente nulo');
-    }
-  };
-
-  const mouseUpHandler = () => {
-    setIsDown(false);
+    console.log('clique');
   };
 
   const EventSchedule: React.FC<EventProps> = ({ dateByDay }) => {
@@ -105,23 +76,24 @@ const ModalDetails: React.FC<Props> = ({
     // return (<Box>teste</Box>);
     return (
       <ThemeProvider theme={theme}>
-        <Card sx={{ background: '#1C1B1F', display: 'flex', overflow: 'initial' }} >
-          <CardActionArea onClick={() => console.log('teste')}>
-          <CardContent>
-            <Typography gutterBottom component="div" color="secondary" sx={{ minWidth: '165px' }}>
-              Dia - {dateByDay.finalDate.getDate()}/{dateByDay.finalDate.getMonth()}
-            </Typography>
-            <Typography gutterBottom component="div" color="primary">
-              Horário início - {dateByDay.initialDate.getHours()}
-              :
-              {dateByDay.initialDate.getMinutes()}
-            </Typography>
-            <Typography gutterBottom component="div" color="primary">
-              Horário término - {dateByDay.finalDate.getHours()}
-              :
-              {dateByDay.finalDate.getMinutes()}
-            </Typography>
-          </CardContent>
+        <Card className='dayCard' sx={{ background: '#1C1B1F', display: 'flex', overflow: 'initial' }} >
+          <CardActionArea
+            onClick={(e) => handleCardClick(e)}>
+            <CardContent>
+              <Typography gutterBottom component="div" color="secondary" sx={{ minWidth: '165px' }}>
+                Dia - {dateByDay.finalDate.getDate()}/{dateByDay.finalDate.getMonth()}
+              </Typography>
+              <Typography gutterBottom component="div" color="primary">
+                Horário início - {dateByDay.initialDate.getHours()}
+                :
+                {dateByDay.initialDate.getMinutes()}
+              </Typography>
+              <Typography gutterBottom component="div" color="primary">
+                Horário término - {dateByDay.finalDate.getHours()}
+                :
+                {dateByDay.finalDate.getMinutes()}
+              </Typography>
+            </CardContent>
           </CardActionArea>
         </Card>
       </ThemeProvider>
@@ -175,21 +147,12 @@ const ModalDetails: React.FC<Props> = ({
                     <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
                       Agenda
                     </Typography>
-                    <Box
-                      ref={eventsScheduleRef}
-                      className='eventsSchedule'
-                      onMouseDown={(e) => mouseDownHandler(e)}
-                      onMouseMove={(e) => mouseMoveHandler(e)}
-                      onMouseLeave={mouseLeaveHandler}
-                      onMouseUp={mouseUpHandler}
-                      >
+                    <ScrollDaysEvent className="eventsSchedule">
+
                       {eventData.dateByDay.map((schedules) => (
                         <EventSchedule dateByDay={schedules} />
                       ))}
-                      {eventData.dateByDay.map((schedules) => (
-                        <EventSchedule dateByDay={schedules} />
-                      ))}
-                    </Box>
+                    </ScrollDaysEvent>
                   </Box>
                 </Grid>
                 <Grid item sm={8} md={16}>
@@ -205,8 +168,8 @@ const ModalDetails: React.FC<Props> = ({
             </Grid>
           </Box>
         </Modal>
-      </Box>
-    </ThemeProvider>
+      </Box >
+    </ThemeProvider >
   );
 };
 
