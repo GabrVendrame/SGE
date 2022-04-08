@@ -15,7 +15,7 @@ import img3 from '../images/gio.jpg';
 import img4 from '../images/tga.jpg';
 import ModalDetails from './ModalDetails';
 
-interface EventData {
+export interface EventData {
   title: string;
   description: string;
   img: string;

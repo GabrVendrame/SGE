@@ -7,12 +7,16 @@ import MuiStyles from '../styles/MuiStyles';
 import '../styles/Presentations.css';
 import imgTeste from '../images/casa.jpg';
 
-interface PresentationData {
+export interface PresentationData {
   title: string;
   description: string;
   img: string;
   value?: number;
   remainingVacancies: number;
+  dateByDay: {
+    initialDate: Date;
+    finalDate: Date;
+  }[];
 }
 
 interface Props {
@@ -30,17 +34,51 @@ const Presentations: React.FC<Props> = ({
       img: imgTeste,
       value: 20.00,
       remainingVacancies: 15,
+      dateByDay: [{
+        initialDate: new Date(),
+        finalDate: new Date(),
+      }],
     },
     {
-      title: 'Apresentação 2', description: 'Descrição 2', img: imgTeste, value: 10.00, remainingVacancies: 12,
+      title: 'Apresentação 2',
+      description: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas',
+      img: imgTeste,
+      value: 10.00,
+      remainingVacancies: 12,
+      dateByDay: [{
+        initialDate: new Date(),
+        finalDate: new Date(),
+      }],
     },
     {
-      title: 'Apresentação 3', description: 'Descrição 3', img: imgTeste, value: 15.00, remainingVacancies: 3,
+      title: 'Apresentação 3',
+      description: 'Descrição 3',
+      img: imgTeste,
+      value: 15.00,
+      remainingVacancies: 3,
+      dateByDay: [{
+        initialDate: new Date(),
+        finalDate: new Date(),
+      }],
     },
     {
-      title: 'Apresentação 4', description: 'Descrição 4', img: imgTeste, value: 5.00, remainingVacancies: 5,
+      title: 'Apresentação 4',
+      description: 'Descrição 4',
+      img: imgTeste,
+      value: 5.00,
+      remainingVacancies: 5,
+      dateByDay: [{
+        initialDate: new Date(),
+        finalDate: new Date(),
+      }],
     },
   ];
+
+  for (let index = 0; index < presentations.length; index++) {
+    // console.log('teste');
+    presentations[index].dateByDay[presentations[index].dateByDay.length - 1]
+      .finalDate.setHours(23);
+  }
   const theme = MuiStyles;
   const handlePresentationData = (obj: PresentationData) => {
     setPresentationData(obj);

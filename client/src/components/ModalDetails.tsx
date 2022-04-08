@@ -2,34 +2,14 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import ScrollDaysEvent from 'react-indiana-drag-scroll';
+import ScrollContainer from 'react-indiana-drag-scroll';
 import {
   Card, CardActionArea, CardContent, Divider, Grid, ThemeProvider,
 } from '@mui/material';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
-import Presentations from './Presentations';
-
-interface EventData {
-  title: string;
-  description: string;
-  img: string;
-  value?: number;
-  remainingVacancies: number;
-  isSingleDay: boolean;
-  dateByDay: {
-    initialDate: Date;
-    finalDate: Date;
-  }[];
-}
-
-interface PresentationData {
-  title: string;
-  description: string;
-  img: string;
-  value?: number;
-  remainingVacancies: number;
-}
+import Presentations, { PresentationData } from './Presentations';
+import { EventData } from './Itens';
 
 interface Props {
   openModalDetails: boolean;
@@ -37,7 +17,7 @@ interface Props {
   eventData: EventData;
 }
 
-interface EventProps {
+interface ScheduleProps {
   dateByDay: {
     initialDate: Date;
     finalDate: Date;
@@ -56,6 +36,10 @@ const ModalDetails: React.FC<Props> = ({
     description: '',
     img: '',
     remainingVacancies: 0,
+    dateByDay: [{
+      initialDate: new Date(),
+      finalDate: new Date(),
+    }],
   });
 
   const handleClose = () => {
@@ -67,7 +51,7 @@ const ModalDetails: React.FC<Props> = ({
     console.log('clique');
   };
 
-  const EventSchedule: React.FC<EventProps> = ({ dateByDay }) => {
+  const ScheduleCard: React.FC<ScheduleProps> = ({ dateByDay }) => {
     // const dates = obj.eventData.dateByDay;
     // console.log(dateByDay);
     // dateByDay.map((days) => {
@@ -97,17 +81,27 @@ const ModalDetails: React.FC<Props> = ({
           </CardActionArea>
         </Card>
       </ThemeProvider>
-
     );
   };
 
-  // const getNumDays = (data: EventData) => {
-  //   if (!data.isSingleDay) {
-  //     const numDays = data.finalDate.getDate() - data.initialDate.getDate();
-  //     return numDays;
-  //   }
-  //   return null;
-  // };
+  const PresentationDetailsAfterClick: React.FC = () => {
+    return (
+      <Box>
+        <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
+          Descrição da apresentação
+        </Typography>
+        <Typography variant='body2' color={'rgba(255, 255, 255, 0.7)'}>
+          {presentationData.description}
+        </Typography>
+        <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
+          Agenda da apresentação
+        </Typography>
+        {presentationData.dateByDay.map((schedules) => (
+          <ScheduleCard dateByDay={schedules} />
+        ))}
+      </Box>
+    );
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -123,47 +117,38 @@ const ModalDetails: React.FC<Props> = ({
               {eventData.title}
             </Typography>
             <Divider color="#DEC0F7" />
-            <Typography id="modal-modal-description" color="secondary" sx={{ mt: 2, mb: 2 }}>
+            <Typography id="modal-modal-description" color='rgba(255, 255, 255, 0.7)' sx={{ mt: 2, mb: 2 }}>
               {eventData.description}
             </Typography>
             <Divider color="#DEC0F7" />
             <Grid container columnSpacing={4} columns={{ sm: 8, md: 8 }}>
               <Grid item sm={8} md={4}>
                 <Box >
-                  <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
+                  <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
                     Apresentações cadastradas
                   </Typography>
-                  <Box className='presentationBox'>
+                  <ScrollContainer className='presentationBox'>
                     <Presentations
                       setSelectedPresentation={setSelectedPresentation}
                       setPresentationData={setPresentationData}
                     />
-                  </Box>
+                  </ScrollContainer>
                 </Box>
               </Grid>
-              <Grid item container sm={8} md={6} columns={{ sm: 8, md: 12 }}>
-                <Grid item sm={8} md={12}>
-                  <Box>
-                    <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
-                      Agenda
-                    </Typography>
-                    <ScrollDaysEvent className="eventsSchedule">
-
-                      {eventData.dateByDay.map((schedules) => (
-                        <EventSchedule dateByDay={schedules} />
-                      ))}
-                    </ScrollDaysEvent>
-                  </Box>
-                </Grid>
-                <Grid item sm={8} md={16}>
-                  <Box >
-                    {selectedPresentation
-                      ? <Typography color={'rgba(255, 255, 255, 0.7)'} sx={{ mt: 2, mb: 2 }}>
-                        Selecionado - {presentationData.title}
-                      </Typography>
-                      : null}
-                  </Box>
-                </Grid>
+              <Grid item sm={8} md={4}>
+                <Box>
+                  <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
+                    Agenda do evento
+                  </Typography>
+                  <ScrollContainer className="eventsSchedule">
+                    {eventData.dateByDay.map((schedules) => (
+                      <ScheduleCard dateByDay={schedules} />
+                    ))}
+                  </ScrollContainer>
+                  {selectedPresentation
+                    ? <PresentationDetailsAfterClick />
+                    : null}
+                </Box>
               </Grid>
             </Grid>
           </Box>
