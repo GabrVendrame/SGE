@@ -56,8 +56,24 @@
   display: flex;
   gap: 30px;
   overflow-x: scroll;
-  /* max-w  idth: 450px; */
-  /* cursor: ; */
+}
+
+.presentationDetails {
+  overflow-y: scroll;
+  max-height: 270px;
+}
+
+.rightGridContainer {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.rightGridContainer .buttonComprarIngresso {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .eventsSchedule::-webkit-scrollbar {
