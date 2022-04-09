@@ -1,3 +1,5 @@
+const presentationRoutes = require("./routes/presentationRoutes");
+const eventRoutes = require("./routes/eventRoutes");
 const express = require("express");
 const notes = require("./data/notes");
 const dotenv = require("dotenv");
@@ -21,6 +23,8 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/presentations", presentationRoutes);
 app.use(notFound);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;

@@ -60,7 +60,7 @@
 
 .presentationDetails {
   overflow-y: scroll;
-  max-height: 270px;
+  max-height: 250px;
 }
 
 .rightGridContainer {
@@ -69,10 +69,11 @@
   height: 100%;
 }
 
-.rightGridContainer .buttonComprarIngresso {
+.rightGridContainer .buttonsWapper {
   display: flex;
   flex: 1 1 auto;
   justify-content: flex-end;
+  gap: 15px;
   align-items: flex-end;
 }
 

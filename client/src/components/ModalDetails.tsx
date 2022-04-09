@@ -102,9 +102,11 @@ const ModalDetails: React.FC<Props> = ({
             </Card>
           ))}
         </ScrollContainer>
-        <Box className='buttonComprarIngresso'>
-
-          <Button>Comprar ingresso</Button>
+        <Box className='buttonsWapper'>
+          {/* <Box sx={{ display: 'flex', justifyContent: 'space-between' }> */}
+            <Button color='secondary' >Adicionar ao carrinho</Button>
+            <Button color='secondary' onClick={() => console.log('trocar de div para comprar ingresso')}>Comprar ingresso</Button>
+          {/* </Box> */}
         </Box>
       </ThemeProvider>
     );
