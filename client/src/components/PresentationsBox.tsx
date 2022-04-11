@@ -6,6 +6,7 @@ import React from 'react';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/Presentations.css';
 import imgTeste from '../images/casa.jpg';
+import api from '../services/api';
 
 export interface PresentationData {
   title: string;
@@ -23,7 +24,7 @@ interface Props {
   setSelectedPresentation: React.Dispatch<React.SetStateAction<boolean>>;
   setPresentationData: React.Dispatch<React.SetStateAction<PresentationData>>
 }
-const Presentations: React.FC<Props> = ({
+const PresentationsBox: React.FC<Props> = ({
   setSelectedPresentation,
   setPresentationData,
 }) => {
@@ -74,11 +75,29 @@ const Presentations: React.FC<Props> = ({
     },
   ];
 
-  for (let index = 0; index < presentations.length; index++) {
+  const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
+
+  React.useEffect(() => {
+    api.get('/presentations').then((response) => {
+      setPresentations(response.data);
+    });
+  }, []);
+
+  // formata para o tipo Date
+  Presentations.forEach((presentation) => {
+    presentation.dateByDay.forEach((date) => {
+      date.initialDate = new Date(date.initialDate);
+      date.finalDate = new Date(date.finalDate);
+      return date;
+    });
+  });
+
+  for (let index = 0; index < Presentations.length; index++) {
     // console.log('teste');
-    presentations[index].dateByDay[presentations[index].dateByDay.length - 1]
+    Presentations[index].dateByDay[Presentations[index].dateByDay.length - 1]
       .finalDate.setHours(23);
   }
+  console.log(Presentations);
   const theme = MuiStyles;
   const handlePresentationData = (obj: PresentationData) => {
     setPresentationData(obj);
@@ -117,4 +136,4 @@ const Presentations: React.FC<Props> = ({
   );
 };
 
-export default Presentations;
+export default PresentationsBox;

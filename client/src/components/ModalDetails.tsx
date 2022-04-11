@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
-import Presentations, { PresentationData } from './Presentations';
+import Presentations, { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
 
 interface Props {

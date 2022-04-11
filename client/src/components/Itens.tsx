@@ -8,11 +8,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import React from 'react';
+import api from '../services/api';
 import MuiStyles from '../styles/MuiStyles';
-import img1 from '../images/e3.jpeg';
-import img2 from '../images/f8.png';
-import img3 from '../images/gio.jpg';
-import img4 from '../images/tga.jpg';
+// import img1 from '../images/e3.jpeg';
+// import img2 from '../images/f8.png';
+// import img3 from '../images/gio.jpg';
+// import img4 from '../images/tga.jpg';
 import ModalDetails from './ModalDetails';
 
 export interface EventData {
@@ -37,6 +38,7 @@ interface EventProps {
 
 const Itens: React.FC<Props> = ({ searchValues }) => {
   const [openModalDetails, setOpenModalDetails] = React.useState(false);
+  const [Events, setEvents] = React.useState<EventData[]>([]);
   const [itensData, setItensData] = React.useState<EventData>({
     title: '',
     description: '',
@@ -50,83 +52,28 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
     }],
   });
 
+  React.useEffect(() => {
+    api.get('/events').then((response) => {
+      setEvents(response.data);
+    });
+  }, []);
+
+  Events.forEach((event) => {
+    event.dateByDay.forEach((date) => {
+      date.initialDate = new Date(date.initialDate);
+      date.finalDate = new Date(date.finalDate);
+      return date;
+    });
+  });
+
+  // console.log(Events);
   const theme = MuiStyles;
 
-  const itens = [
-    {
-      title: 'E3',
-      description:
-        'A Electronic Entertainment Expo, mais conhecida como E3, é uma feira internacional dedicada a jogos eletrônicos.',
-      img: img1,
-      value: 0.0,
-      remainingVacancies: 4,
-      isSingleDay: true,
-      dateByDay: [{
-        initialDate: new Date(),
-        finalDate: new Date(),
-      }],
-    },
-    {
-      title: 'Titulo 2',
-      description: 'Descrição 2',
-      img: img2,
-      value: 15.00,
-      remainingVacancies: 14,
-      isSingleDay: false,
-      dateByDay: [
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-      ],
-    },
-    {
-      title: 'Titulo 3',
-      description: 'Descrição 3',
-      img: img3,
-      value: 10.00,
-      remainingVacancies: 2,
-      isSingleDay: true,
-      dateByDay: [
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-      ],
-    },
-    {
-      title: 'Titulo 4',
-      description: 'Descrição 4',
-      img: img4,
-      value: 5.00,
-      remainingVacancies: 12,
-      isSingleDay: false,
-      dateByDay: [
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-      ],
-    },
-  ];
-
   // só seta o valor 9 no último dia caso o evento durar mais que um dia
-  for (let index = 0; index < itens.length; index++) {
-    if (!itens[index].isSingleDay) {
+  for (let index = 0; index < Events.length; index++) {
+    if (!Events[index].isSingleDay) {
       // console.log('teste');
-      itens[index].dateByDay[itens[index].dateByDay.length - 1].finalDate.setDate(9);
+      Events[index].dateByDay[Events[index].dateByDay.length - 1].finalDate.setDate(15);
     }
   }
 
@@ -134,27 +81,21 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
     const eventsDate = props.itensData.dateByDay;
     const firstDay = eventsDate[0].initialDate.getDate();
     const lastDay = eventsDate[eventsDate.length - 1].finalDate.getDate();
-    return <Typography>{`Data: ${firstDay}/${lastDay}`}</Typography>;
 
-    // const eventsDate = props.itensData.dateByDay.map((date) => {
-    //   const x = date.initialDate.getDate();
-    //   const y = date.finalDate.getDate();
-    //   return `Data: ${x}/${y}`;
-    // });
-    // console.log(eventsDate);
-    // return <Box>{eventsDate[eventsDate.length - 1]}</Box>;
+    return <Typography>{`Data: ${firstDay}/${lastDay}`}</Typography>;
   };
 
   const filteredItens = searchValues
-    ? itens.filter((item: any) => {
+    ? Events.filter((item: any) => {
       return item.title.toLowerCase().includes(searchValues.toLowerCase());
     })
-    : itens;
+    : Events;
 
   const HandleOpenModalDetails = (obj: EventData) => {
     setOpenModalDetails(true);
     setItensData(obj);
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Box className="fullBody">
