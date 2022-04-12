@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
-import Presentations, { PresentationData } from './PresentationsBox';
+import PresentationsBox, { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
 }
 
 interface ScheduleProps {
+  _id?: string;
   dateByDay: {
     initialDate: Date;
     finalDate: Date;
@@ -33,13 +34,16 @@ const ModalDetails: React.FC<Props> = ({
   const theme = MuiStyles;
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [presentationData, setPresentationData] = React.useState<PresentationData>({
+    _id: '',
     title: '',
     description: '',
     img: '',
+    value: 0,
     remainingVacancies: 0,
     dateByDay: [{
       initialDate: new Date(),
       finalDate: new Date(),
+      _id: '',
     }],
   });
 
@@ -79,7 +83,7 @@ const ModalDetails: React.FC<Props> = ({
     );
   };
 
-  const PresentationDetailsAfterClick: React.FC = () => {
+  const PresentationDetailsAfterClick = React.memo(() => {
     return (
       <ThemeProvider theme={theme}>
 
@@ -97,20 +101,20 @@ const ModalDetails: React.FC<Props> = ({
           {presentationData.dateByDay.map((schedules) => (
             <Card className='dayCard' sx={{
               background: '#1C1B1F', display: 'flex', overflow: 'initial', minWidth: 'fit-content',
-            }} >
+            }}
+              key={schedules._id}
+            >
               <ScheduleCard dateByDay={schedules} />
             </Card>
           ))}
         </ScrollContainer>
         <Box className='buttonsWapper'>
-          {/* <Box sx={{ display: 'flex', justifyContent: 'space-between' }> */}
-            <Button color='secondary' >Adicionar ao carrinho</Button>
-            <Button color='secondary' onClick={() => console.log('trocar de div para comprar ingresso')}>Comprar ingresso</Button>
-          {/* </Box> */}
+          <Button color='secondary' >Adicionar ao carrinho</Button>
+          <Button color='secondary' onClick={() => console.log('trocar de div para comprar ingresso')}>Comprar ingresso</Button>
         </Box>
       </ThemeProvider>
     );
-  };
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,16 +134,19 @@ const ModalDetails: React.FC<Props> = ({
               {eventData.description}
             </Typography>
             <Divider color="#DEC0F7" />
-            <Grid container columnSpacing={4} columns={{ sm: 8, md: 8 }}>
+            <Grid container columnSpacing={4} columns={{ sm: 8, md: 8 }}
+              key={presentationData._id}
+            >
               <Grid item sm={8} md={4}>
                 <Box >
                   <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
                     Apresentações cadastradas
                   </Typography>
                   <ScrollContainer className='presentationBox'>
-                    <Presentations
+                    <PresentationsBox
                       setSelectedPresentation={setSelectedPresentation}
                       setPresentationData={setPresentationData}
+                      eventId={eventData._id}
                     />
                   </ScrollContainer>
                 </Box>
@@ -157,7 +164,10 @@ const ModalDetails: React.FC<Props> = ({
                           display: 'flex',
                           overflow: 'initial',
                           minWidth: 'fit-content',
-                        }} >
+                        }}
+                          key={schedules._id}
+                        >
+                          {/* {console.log(schedules._id)} */}
                           <CardActionArea
                             onClick={(e) => handleCardClick(e)}>
                             <ScheduleCard dateByDay={schedules} />
@@ -170,7 +180,6 @@ const ModalDetails: React.FC<Props> = ({
                     ? <PresentationDetailsAfterClick />
                     : null}
                 </Box>
-
               </Grid>
             </Grid>
           </Box>
@@ -180,4 +189,4 @@ const ModalDetails: React.FC<Props> = ({
   );
 };
 
-export default ModalDetails;
+export default React.memo(ModalDetails);

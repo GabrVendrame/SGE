@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import React from 'react';
 import api from '../services/api';
 import MuiStyles from '../styles/MuiStyles';
+// import ScrollContainer from 'react-indiana-drag-scroll';
 // import img1 from '../images/e3.jpeg';
 // import img2 from '../images/f8.png';
 // import img3 from '../images/gio.jpg';
@@ -17,6 +18,7 @@ import MuiStyles from '../styles/MuiStyles';
 import ModalDetails from './ModalDetails';
 
 export interface EventData {
+  _id: string;
   title: string;
   description: string;
   img: string;
@@ -26,6 +28,7 @@ export interface EventData {
   dateByDay: {
     initialDate: Date;
     finalDate: Date;
+    _id: string;
   }[];
 }
 
@@ -40,6 +43,7 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
   const [openModalDetails, setOpenModalDetails] = React.useState(false);
   const [Events, setEvents] = React.useState<EventData[]>([]);
   const [itensData, setItensData] = React.useState<EventData>({
+    _id: '',
     title: '',
     description: '',
     img: '',
@@ -49,6 +53,7 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
     dateByDay: [{
       initialDate: new Date(),
       finalDate: new Date(),
+      _id: '',
     }],
   });
 
@@ -78,6 +83,7 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
   }
 
   const EventsDate = (props: EventProps) => {
+    // console.log(`teste:${itensData._id}`);
     const eventsDate = props.itensData.dateByDay;
     const firstDay = eventsDate[0].initialDate.getDate();
     const lastDay = eventsDate[eventsDate.length - 1].finalDate.getDate();
@@ -107,8 +113,9 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
             columns={{ xs: 2, sm: 4, md: 6 }}
           >
             {filteredItens.map((item) => (
-              <Grid item xs={2} sm={4} md={3}>
-                <Card sx={{ background: '#1C1B1F' }}>
+              <Grid item xs={2} sm={4} md={3} key={item._id}>
+                {/* {console.log()} */}
+                <Card sx={{ background: '#1C1B1F' }} >
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div" sx={{ color: '#E6E1E5' }}>
                       {item.title}

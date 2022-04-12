@@ -7,12 +7,6 @@ const findAllEvents = asyncHandler(async (req, res) => {
   return res.json(events);
 });
 
-const findRegisteredPresentationsInEvent = asyncHandler(async (req, res) => {
-  const event = await Event.find({}).select('-_id registeredPresentations');
-
-  return res.json(event);
-});
-
 const createEvent = asyncHandler(async (req, res) => {
   const event = await Event.create(req.body);
 
@@ -22,6 +16,5 @@ const createEvent = asyncHandler(async (req, res) => {
 module.exports = {
   findAllEvents,
   createEvent,
-  findRegisteredPresentationsInEvent,
 };
 

@@ -5,83 +5,43 @@ import {
 import React from 'react';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/Presentations.css';
-import imgTeste from '../images/casa.jpg';
+// import imgTeste from '../images/casa.jpg';
 import api from '../services/api';
 
 export interface PresentationData {
+  _id: string;
   title: string;
   description: string;
   img: string;
-  value?: number;
+  value: number;
   remainingVacancies: number;
   dateByDay: {
     initialDate: Date;
     finalDate: Date;
+    _id: string;
   }[];
 }
 
 interface Props {
   setSelectedPresentation: React.Dispatch<React.SetStateAction<boolean>>;
   setPresentationData: React.Dispatch<React.SetStateAction<PresentationData>>
+  eventId: string;
 }
 const PresentationsBox: React.FC<Props> = ({
   setSelectedPresentation,
   setPresentationData,
+  eventId,
 }) => {
-  const presentations = [
-    {
-      title: 'Apresentação 1',
-      description: 'This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.',
-      img: imgTeste,
-      value: 20.00,
-      remainingVacancies: 15,
-      dateByDay: [{
-        initialDate: new Date(),
-        finalDate: new Date(),
-      }],
-    },
-    {
-      title: 'Apresentação 2',
-      description: 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas',
-      img: imgTeste,
-      value: 10.00,
-      remainingVacancies: 12,
-      dateByDay: [{
-        initialDate: new Date(),
-        finalDate: new Date(),
-      }],
-    },
-    {
-      title: 'Apresentação 3',
-      description: 'Descrição 3',
-      img: imgTeste,
-      value: 15.00,
-      remainingVacancies: 3,
-      dateByDay: [{
-        initialDate: new Date(),
-        finalDate: new Date(),
-      }],
-    },
-    {
-      title: 'Apresentação 4',
-      description: 'Descrição 4',
-      img: imgTeste,
-      value: 5.00,
-      remainingVacancies: 5,
-      dateByDay: [{
-        initialDate: new Date(),
-        finalDate: new Date(),
-      }],
-    },
-  ];
-
   const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
 
   React.useEffect(() => {
-    api.get('/presentations').then((response) => {
+    console.log(Presentations);
+    api.get(`/presentations/registeredPresentations/${eventId}`).then((response) => {
       setPresentations(response.data);
+      console.log('teste');
     });
   }, []);
+  // console.log(Presentations);
 
   // formata para o tipo Date
   Presentations.forEach((presentation) => {
@@ -97,16 +57,21 @@ const PresentationsBox: React.FC<Props> = ({
     Presentations[index].dateByDay[Presentations[index].dateByDay.length - 1]
       .finalDate.setHours(23);
   }
-  console.log(Presentations);
+  // console.log(Presentations);
   const theme = MuiStyles;
   const handlePresentationData = (obj: PresentationData) => {
+    // setTeste(obj);
     setPresentationData(obj);
+    // console.log(teste);
     setSelectedPresentation(true);
   };
   return (
     <ThemeProvider theme={theme}>
-      {presentations.map((presentation) => (
-        <Card sx={{ background: '#1C1B1F', display: 'flex', overflow: 'initial' }}>
+      {Presentations.map((presentation) => (
+        <Card
+          sx={{ background: '#1C1B1F', display: 'flex', overflow: 'initial' }}
+          key={presentation._id}
+        >
           <CardMedia
             // component="img"
             // width='80px'
@@ -114,7 +79,9 @@ const PresentationsBox: React.FC<Props> = ({
             image={presentation.img}
           // alt="green iguana"
           />
-          <CardActionArea onClick={() => handlePresentationData(presentation)}>
+          <CardActionArea
+          onClick={() => handlePresentationData(presentation)}
+          >
             <CardContent>
               <Typography gutterBottom component="div" sx={{ color: '#E6E1E5' }}>
                 {presentation.title}
