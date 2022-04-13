@@ -10,6 +10,8 @@ import Grid from '@mui/material/Grid';
 import React from 'react';
 import api from '../services/api';
 import MuiStyles from '../styles/MuiStyles';
+import { PresentationData } from './PresentationsBox';
+
 // import ScrollContainer from 'react-indiana-drag-scroll';
 // import img1 from '../images/e3.jpeg';
 // import img2 from '../images/f8.png';
@@ -42,6 +44,7 @@ interface EventProps {
 const Itens: React.FC<Props> = ({ searchValues }) => {
   const [openModalDetails, setOpenModalDetails] = React.useState(false);
   const [Events, setEvents] = React.useState<EventData[]>([]);
+  const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [itensData, setItensData] = React.useState<EventData>({
     _id: '',
     title: '',
@@ -98,8 +101,14 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
     : Events;
 
   const HandleOpenModalDetails = (obj: EventData) => {
+    // console.log('Fazendo requisição..');
+    api.get(`/presentations/registeredPresentations/${obj._id}`).then((response) => {
+      setPresentations(response.data);
+      // console.log(response.data);
+    });
     setOpenModalDetails(true);
     setItensData(obj);
+    // console.log(`Apresentações: ${Presentations}`);
   };
 
   return (
@@ -163,6 +172,7 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
             openModalDetails={openModalDetails}
             setOpenModalDetails={setOpenModalDetails}
             eventData={itensData}
+            Presentations={Presentations}
           />
         </Box >
       </Box >

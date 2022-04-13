@@ -44,13 +44,13 @@
 
 }
 
-.presentationBox {
+/* .presentationBox {
   display: flex;
   flex-direction: column;
   gap: 30px;
   overflow-y: scroll;
   max-height: 450px;
-}
+} */
 
 .eventsSchedule {
   display: flex;

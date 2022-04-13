@@ -16,23 +16,25 @@ interface Props {
   openModalDetails: boolean;
   setOpenModalDetails: React.Dispatch<React.SetStateAction<boolean>>;
   eventData: EventData;
+  Presentations: PresentationData[];
 }
 
 interface ScheduleProps {
   _id?: string;
-  dateByDay: {
-    initialDate: Date;
-    finalDate: Date;
-  };
+  initialDate: Date;
+  finalDate: Date;
+
 }
 
 const ModalDetails: React.FC<Props> = ({
   openModalDetails,
   setOpenModalDetails,
   eventData,
+  Presentations,
 }) => {
   const theme = MuiStyles;
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
+  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [presentationData, setPresentationData] = React.useState<PresentationData>({
     _id: '',
     title: '',
@@ -51,32 +53,27 @@ const ModalDetails: React.FC<Props> = ({
     setOpenModalDetails(false);
     setSelectedPresentation(false);
   };
-  const handleCardClick = (e: React.MouseEvent) => {
+  const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
     e.preventDefault();
-    console.log('clique');
+    console.log(teste);
   };
 
-  const ScheduleCard: React.FC<ScheduleProps> = ({ dateByDay }) => {
-    // const dates = obj.eventData.dateByDay;
-    // console.log(dateByDay);
-    // dateByDay.map((days) => {
-    //   console.log(days);
-    // });
+  const ScheduleCard = (presentationDate: ScheduleProps) => {
     return (
       <ThemeProvider theme={theme}>
         <CardContent>
           <Typography gutterBottom component="div" color="secondary" sx={{ minWidth: '165px' }}>
-            Dia - {dateByDay.finalDate.getDate()}/{dateByDay.finalDate.getMonth()}
+            Dia - {presentationDate.finalDate.getDate()}/{presentationDate.finalDate.getMonth()}
           </Typography>
           <Typography gutterBottom component="div" color="primary">
-            Horário início - {dateByDay.initialDate.getHours()}
+            Horário início - {presentationDate.initialDate.getHours()}
             :
-            {dateByDay.initialDate.getMinutes()}
+            {presentationDate.initialDate.getMinutes()}
           </Typography>
           <Typography gutterBottom component="div" color="primary">
-            Horário término - {dateByDay.finalDate.getHours()}
+            Horário término - {presentationDate.finalDate.getHours()}
             :
-            {dateByDay.finalDate.getMinutes()}
+            {presentationDate.finalDate.getMinutes()}
           </Typography>
         </CardContent>
       </ThemeProvider>
@@ -98,13 +95,15 @@ const ModalDetails: React.FC<Props> = ({
           <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
             Agenda da apresentação
           </Typography>
-          {presentationData.dateByDay.map((schedules) => (
+          {presentationData.dateByDay.map((PresentationSchedules) => (
             <Card className='dayCard' sx={{
               background: '#1C1B1F', display: 'flex', overflow: 'initial', minWidth: 'fit-content',
             }}
-              key={schedules._id}
+              key={PresentationSchedules._id}
             >
-              <ScheduleCard dateByDay={schedules} />
+              {/* <ScheduleCard dateByDay={PresentationSchedules} /> */}
+              {ScheduleCard(PresentationSchedules)}
+
             </Card>
           ))}
         </ScrollContainer>
@@ -118,13 +117,14 @@ const ModalDetails: React.FC<Props> = ({
 
   return (
     <ThemeProvider theme={theme}>
+        {console.log('teste')}
       <Box>
         <Modal
           open={openModalDetails}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
-        >
+          >
           <Box className='modalBody'>
             <Typography id="modal-modal-title" className='title' color="secondary" variant="h6" component="h2">
               {eventData.title}
@@ -142,13 +142,14 @@ const ModalDetails: React.FC<Props> = ({
                   <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
                     Apresentações cadastradas
                   </Typography>
-                  <ScrollContainer className='presentationBox'>
+                  {/* <ScrollContainer className='presentationBox'> */}
                     <PresentationsBox
                       setSelectedPresentation={setSelectedPresentation}
                       setPresentationData={setPresentationData}
-                      eventId={eventData._id}
+                      // eventId={eventData._id}
+                      Presentations={Presentations}
                     />
-                  </ScrollContainer>
+                  {/* </ScrollContainer> */}
                 </Box>
               </Grid>
               <Grid item sm={8} md={4}>
@@ -158,19 +159,20 @@ const ModalDetails: React.FC<Props> = ({
                       Agenda do evento
                     </Typography>
                     <ScrollContainer className="eventsSchedule">
-                      {eventData.dateByDay.map((schedules) => (
+                      {eventData.dateByDay.map((eventSchedules) => (
                         <Card sx={{
                           background: '#1C1B1F',
                           display: 'flex',
                           overflow: 'initial',
                           minWidth: 'fit-content',
                         }}
-                          key={schedules._id}
+                          key={eventSchedules._id}
                         >
-                          {/* {console.log(schedules._id)} */}
+                          {/* {console.log((eventData.dateByDay))} */}
                           <CardActionArea
-                            onClick={(e) => handleCardClick(e)}>
-                            <ScheduleCard dateByDay={schedules} />
+                            onClick={(e) => handleDayClick(e, eventSchedules)}>
+                            {/* <ScheduleCard dateByDay={eventSchedules} /> */}
+                            {ScheduleCard(eventSchedules)}
                           </CardActionArea>
                         </Card>
                       ))}
@@ -189,4 +191,4 @@ const ModalDetails: React.FC<Props> = ({
   );
 };
 
-export default React.memo(ModalDetails);
+export default (ModalDetails);
