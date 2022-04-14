@@ -54,16 +54,14 @@ const PresentationsBox: React.FC<Props> = ({
   }
   // console.log(Presentations);
   const theme = MuiStyles;
-  const handlePresentationData = (obj: PresentationData, e: React.MouseEvent) => {
+  const handlePresentationData = async (obj: PresentationData, e: React.MouseEvent) => {
     e.preventDefault();
-    // console.log()
-    setPresentationData(obj);
+    await setPresentationData(obj);
     setSelectedPresentation(true);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      {/* {console.log('teste')} */}
         <ScrollContainer className='presentationBox'>
           {Presentations.map((presentation) => (
             <Card
