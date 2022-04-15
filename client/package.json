@@ -19,13 +19,16 @@
     "axios": "^0.26.1",
     "formik": "^2.2.9",
     "history": "^5.3.0",
+    "jsonwebtoken": "^8.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-indiana-drag-scroll": "^2.1.0",
     "react-router-dom": "^6.2.2",
+    "require": "^2.4.20",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/node": "^17.0.24",
     "@types/qs": "^6.9.7",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",

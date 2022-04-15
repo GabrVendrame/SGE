@@ -16,9 +16,6 @@ function LoginAndRegister() {
   React.useEffect(() => {
     setUserTk(localStorage.getItem("token"));
     if (userTk) {
-      console.log(userTk);
-
-      // navigate( rota -><page info={tk}/>)
       navigate("/HomeUser");
     }
   }, [userTk]);

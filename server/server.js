@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("API in running"); 
+  res.send("API in running");
 });
 
 app.get("/api/notes", (req, res) => {
@@ -25,6 +25,7 @@ app.get("/api/notes", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/presentations", presentationRoutes);
+
 app.use(notFound);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;

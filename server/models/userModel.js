@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   cpfCnpj: String,
   cell: String,
   userType: String,
+  tk: String,
 });
 
 userSchema.pre("save", async function (next) {
