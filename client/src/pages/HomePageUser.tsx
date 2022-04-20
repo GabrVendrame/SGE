@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../styles/Home.css";
-import Axios from "axios";
-import "../styles/Home.css";
-import { ThemeProvider } from "@mui/material/styles";
-import { Box } from "@material-ui/core";
-import { IconButton, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import ClearIcon from "@mui/icons-material/Clear";
-import Header from "../components/Header2";
-import ResponsiveDrawer from "../components/ResponsiveDrawer";
-import Itens from "../components/Itens";
-import ButtonStyles from "../styles/MuiStyles";
-import SearchField from "../components/SearchField";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/Home.css';
+import Axios from 'axios';
+
+import { ThemeProvider } from '@mui/material/styles';
+import { Box } from '@material-ui/core';
+import { IconButton, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+import Header from '../components/HeaderLogged';
+import ResponsiveDrawer from '../components/ResponsiveDrawer';
+import Itens from '../components/Itens';
+import ButtonStyles from '../styles/MuiStyles';
+import SearchField from '../components/SearchField';
 
 type user = {
   name: string;
@@ -28,8 +28,8 @@ type obj = user | any;
 function HomePageUser() {
   const theme = ButtonStyles;
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [searchValues, setSearchValues] = useState("");
-  const [userType, setUserType] = useState("");
+  const [searchValues, setSearchValues] = useState('');
+  const [userType, setUserType] = useState('');
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(event.target.value);
     setSearchValues(event.target.value);
@@ -38,22 +38,22 @@ function HomePageUser() {
   const [tk, setTk] = useState<any>();
   const navigate = useNavigate();
   const pages = [
-    { id: 0, text: "Sobre nós" },
-    { id: 1, text: "FAQ" },
-    { id: 2, text: "Contato" },
+    { id: 0, text: 'Sobre nós' },
+    { id: 1, text: 'FAQ' },
+    { id: 2, text: 'Contato' },
   ];
 
   useEffect(() => {
-    setTk(localStorage.getItem("token"));
+    setTk(localStorage.getItem('token'));
     Axios.get(
-      `http://localhost:3001/api/users/find/${localStorage.getItem("token")}`
+      `http://localhost:3001/api/users/find/${localStorage.getItem('token')}`,
     )
       .then((res) => {
-        //console.log("req", res.data.user.userType);
+        // console.log("req", res.data.user.userType);
 
         setUser(res.data.user);
         setUserType(res.data.user.userType);
-        //console.log(user);
+        // console.log(user);
       })
       .catch((error) => {
         console.log(error.response);
@@ -61,14 +61,14 @@ function HomePageUser() {
     // handleLoadUser();
   }, []);
 
-  //console.log("fora", user);
-  console.log("Tipo do usuario ", userType);
+  // console.log("fora", user);
+  console.log('Tipo do usuario ', userType);
 
   return (
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          width: "100%",
+          width: '100%',
         }}
       >
         <Header
@@ -85,7 +85,7 @@ function HomePageUser() {
         <Box className="divSearchbarAndItens">
           <SearchField
             onChange={handleChange}
-            sx={{ marginTop: { sm: "35px" } }}
+            sx={{ marginTop: { sm: '35px' } }}
             fullWidth
             placeholder="Pesquisar evento ou apresentação"
             InputProps={{

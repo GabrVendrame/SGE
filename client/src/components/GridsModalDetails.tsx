@@ -7,6 +7,9 @@ import {
   Card, CardActionArea, CardContent, Grid, ThemeProvider,
 } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { BoxTypeMap } from '@mui/system';
+import BoxBuyTicket from './BoxBuyTicket';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
 import PresentationsBox, { PresentationData } from './PresentationsBox';
@@ -46,6 +49,10 @@ const GridsModalDetails: React.FC<Props> = ({
     }],
   });
 
+  const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
+  const [presentationDetailsDisplay, setPresentationDetailsDisplay] = React.useState<string>('flex');
+  const rightContainerGridRef = React.useRef<any>(null)!;
+
   const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
     e.preventDefault();
     console.log(teste);
@@ -73,6 +80,16 @@ const GridsModalDetails: React.FC<Props> = ({
     );
   };
 
+  const changeRightGrid = () => {
+    // setPresentationDetailsDisplay('none');
+    if (rightContainerGridRef.current != null) {
+      rightContainerGridRef.current.style.display = 'none';
+      if (rightContainerGridRef.current.style.display === 'none') {
+        setBoxBuyTicketDisplay('flex');
+      }
+    }
+  };
+
   const PresentationDetailsAfterClick = React.memo(() => {
     return (
       <ThemeProvider theme={theme}>
@@ -98,7 +115,7 @@ const GridsModalDetails: React.FC<Props> = ({
         </ScrollContainer>
         <Box className='buttonsWapper'>
           <Button color='secondary' >Adicionar ao carrinho</Button>
-          <Button color='secondary' onClick={() => console.log('trocar de div para comprar ingresso')}>Comprar ingresso</Button>
+          <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
         </Box>
       </ThemeProvider>
     );
@@ -107,7 +124,6 @@ const GridsModalDetails: React.FC<Props> = ({
   return (
     <ThemeProvider theme={theme}>
       <Grid container columnSpacing={4} columns={{ sm: 8, md: 8 }}>
-
         <Grid item sm={8} md={4}>
           <Box >
             <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
@@ -120,7 +136,7 @@ const GridsModalDetails: React.FC<Props> = ({
           </Box>
         </Grid>
         <Grid item sm={8} md={4}>
-          <Box className='rightGridContainer'>
+          <Box ref={rightContainerGridRef} className='rightGridContainer'>
             <Box sx={{ mb: '23px' }}>
               <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
                 Agenda do evento
@@ -146,6 +162,11 @@ const GridsModalDetails: React.FC<Props> = ({
               <PresentationDetailsAfterClick />
             </Collapse >
           </Box>
+          <BoxBuyTicket
+            boxBuyTicketDisplay={boxBuyTicketDisplay}
+            setBoxBuyTicketDisplay={setBoxBuyTicketDisplay}
+            rightContainerGridRef={rightContainerGridRef}
+          />
         </Grid>
       </Grid>
 
