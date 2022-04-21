@@ -70,12 +70,17 @@
   height: 100%;
 }
 
+.collapseContainer {
+  flex: 1 1 auto;
+}
+
 .rightGridContainer .buttonsWapper {
   display: flex;
   flex: 1 1 auto;
   justify-content: flex-end;
   gap: 15px;
   align-items: flex-end;
+  padding: 5px 0px;
 }
 
 .eventsSchedule::-webkit-scrollbar {

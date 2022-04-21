@@ -7,8 +7,6 @@ import {
   Card, CardActionArea, CardContent, Grid, ThemeProvider,
 } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
-import { BoxTypeMap } from '@mui/system';
 import BoxBuyTicket from './BoxBuyTicket';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
@@ -49,9 +47,9 @@ const GridsModalDetails: React.FC<Props> = ({
     }],
   });
 
-  const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
-  const [presentationDetailsDisplay, setPresentationDetailsDisplay] = React.useState<string>('flex');
-  const rightContainerGridRef = React.useRef<any>(null)!;
+  // const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
+  const [showBoxBuyTicket, setShowBoxBuyTicket] = React.useState<boolean>(false);
+  // const rightContainerGridRef = React.useRef<any>(null)!;
 
   const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
     e.preventDefault();
@@ -82,12 +80,13 @@ const GridsModalDetails: React.FC<Props> = ({
 
   const changeRightGrid = () => {
     // setPresentationDetailsDisplay('none');
-    if (rightContainerGridRef.current != null) {
-      rightContainerGridRef.current.style.display = 'none';
-      if (rightContainerGridRef.current.style.display === 'none') {
-        setBoxBuyTicketDisplay('flex');
-      }
-    }
+    // if (rightContainerGridRef.current != null) {
+    //   rightContainerGridRef.current.style.display = 'none';
+    //   if (rightContainerGridRef.current.style.display === 'none') {
+    //     setBoxBuyTicketDisplay('flex');
+    //   }
+    // }
+    setShowBoxBuyTicket(true);
   };
 
   const PresentationDetailsAfterClick = React.memo(() => {
@@ -113,13 +112,57 @@ const GridsModalDetails: React.FC<Props> = ({
             </Card>
           ))}
         </ScrollContainer>
-        <Box className='buttonsWapper'>
-          <Button color='secondary' >Adicionar ao carrinho</Button>
-          <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
-        </Box>
+
       </ThemeProvider>
     );
   });
+
+  const InfoSection = (open: boolean) => {
+    // const InfoSection = ({ open }: { open: boolean }) => {
+    console.log(open);
+    return (
+      <>
+        <Box sx={{ mb: '23px' }}>
+          <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
+            Agenda do evento
+          </Typography>
+          <ScrollContainer className="eventsSchedule">
+            {eventData.dateByDay.map((eventSchedules) => (
+              <Card sx={{
+                background: '#1C1B1F',
+                display: 'flex',
+                overflow: 'initial',
+                minWidth: 'fit-content',
+              }}
+                key={eventSchedules._id}>
+                <CardActionArea
+                  onClick={(e) => handleDayClick(e, eventSchedules)}>
+                  {ScheduleCard(eventSchedules)}
+                </CardActionArea>
+              </Card>
+            ))}
+          </ScrollContainer>
+        </Box>
+        <Collapse in={open}
+          className="collapseContainer"
+        // sx={{ flex: '1 1 auto' }}
+        >
+          <PresentationDetailsAfterClick />
+        </Collapse >
+        {/* <Collapse in={open} className='collapseContainer'> */}
+        {selectedPresentation
+          // eslint-disable-next-line operator-linebreak
+          ?
+          <Box className='buttonsWapper'>
+            <Button color='secondary' >Adicionar ao carrinho</Button>
+            <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
+          </Box>
+          : null}
+
+        {/* </Collapse> */}
+      </>
+    );
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -136,37 +179,20 @@ const GridsModalDetails: React.FC<Props> = ({
           </Box>
         </Grid>
         <Grid item sm={8} md={4}>
-          <Box ref={rightContainerGridRef} className='rightGridContainer'>
-            <Box sx={{ mb: '23px' }}>
-              <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
-                Agenda do evento
-              </Typography>
-              <ScrollContainer className="eventsSchedule">
-                {eventData.dateByDay.map((eventSchedules) => (
-                  <Card sx={{
-                    background: '#1C1B1F',
-                    display: 'flex',
-                    overflow: 'initial',
-                    minWidth: 'fit-content',
-                  }}
-                    key={eventSchedules._id}>
-                    <CardActionArea
-                      onClick={(e) => handleDayClick(e, eventSchedules)}>
-                      {ScheduleCard(eventSchedules)}
-                    </CardActionArea>
-                  </Card>
-                ))}
-              </ScrollContainer>
-            </Box>
-            <Collapse in={selectedPresentation}>
-              <PresentationDetailsAfterClick />
-            </Collapse >
+          <Box
+            // ref={rightContainerGridRef}
+            className='rightGridContainer'>
+            {showBoxBuyTicket
+              ? < BoxBuyTicket setShowComponent={setShowBoxBuyTicket} />
+              : InfoSection(selectedPresentation)}
+            {/* {!showComponent ? InfoSection(selectedPresentation) : null} */}
+            {/* <InfoSection open={selectedPresentation}/> */}
           </Box>
-          <BoxBuyTicket
-            boxBuyTicketDisplay={boxBuyTicketDisplay}
-            setBoxBuyTicketDisplay={setBoxBuyTicketDisplay}
-            rightContainerGridRef={rightContainerGridRef}
-          />
+          {/* <BoxBuyTicket
+              boxBuyTicketDisplay={boxBuyTicketDisplay}
+              setBoxBuyTicketDisplay={setBoxBuyTicketDisplay}
+              rightContainerGridRef={rightContainerGridRef}
+            /> */}
         </Grid>
       </Grid>
 
