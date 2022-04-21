@@ -30,6 +30,7 @@ function Home() {
       <Box
         sx={{
           width: '100%',
+          position: 'fixed',
         }}
       >
         <Header
@@ -46,7 +47,7 @@ function Home() {
         <Box className="divSearchbarAndItens">
           <SearchField
             onChange={handleChange}
-            sx={{ marginTop: { sm: '35px' } }}
+            sx={{ marginTop: { sm: '35px' }, mb: '25px' }}
             fullWidth
             placeholder="Pesquisar evento ou apresentação"
             InputProps={{
@@ -62,9 +63,7 @@ function Home() {
               ),
             }}
           />
-          <Box>
-            <Itens searchValues={searchValues} />
-          </Box>
+          <Itens searchValues={searchValues} />
         </Box>
       </Box>
     </ThemeProvider>

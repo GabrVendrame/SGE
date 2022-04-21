@@ -24,7 +24,7 @@
     "react-dom": "^17.0.2",
     "react-indiana-drag-scroll": "^2.1.0",
     "react-router-dom": "^6.2.2",
-    "require": "^2.4.20",
+    "require": "^0.4.4",
     "yup": "^0.32.11"
   },
   "devDependencies": {

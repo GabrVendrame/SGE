@@ -36,7 +36,6 @@ const Header: React.FC<Props> = ({
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
-        {/* <Container className='containerHeader'> */}
         <Toolbar disableGutters>
           <Box className='logoAndName' sx={{ display: { xs: 'none', sm: 'flex' } }}>
             <Link to="/">
@@ -84,9 +83,7 @@ const Header: React.FC<Props> = ({
             }}>Login/Cadastro</Button>
           </Link>
         </Toolbar>
-        {/* </Container> */}
       </AppBar>
-      );
     </ThemeProvider>
   );
 };

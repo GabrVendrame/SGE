@@ -113,68 +113,66 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box className="fullBody">
-        <Box className="itensBody">
-          <Grid
-            container
-            rowSpacing={'50px'}
-            columnSpacing={2}
-            columns={{ xs: 2, sm: 4, md: 6 }}
-          >
-            {filteredItens.map((item) => (
-              <Grid item xs={2} sm={4} md={3} key={item._id}>
-                {/* {console.log()} */}
-                <Card sx={{ background: '#1C1B1F' }} >
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" sx={{ color: '#E6E1E5' }}>
-                      {item.title}
-                    </Typography>
-                  </CardContent>
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image={item.img}
-                  // alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="body1" component="div" sx={{ color: '#E6E1E5' }}>
-                      <EventsDate itensData={item} />
-                    </Typography>
-                    <Typography gutterBottom variant="body1" component="div" sx={{ color: '#E6E1E5' }}>
-                      Valor do ingreso: {item.value?.toFixed(2)}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ color: '#E6E1E5' }}
-                    >
-                      {item.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions sx={{ justifyContent: 'flex-end' }}>
-                    <Button size="small" variant="contained" color="secondary">
-                      Compartilhar
-                    </Button>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => HandleOpenModalDetails(item)}
-                    >
-                      Veja mais
-                    </Button>
-                  </CardActions>
-                </Card >
-              </Grid >
-            ))}
-          </Grid >
-          <ModalDetails
-            openModalDetails={openModalDetails}
-            setOpenModalDetails={setOpenModalDetails}
-            eventData={itensData}
-            Presentations={Presentations}
-          />
-        </Box >
+      <Box className="itensBody">
+        <Grid
+          container
+          rowSpacing={'50px'}
+          columnSpacing={2}
+          columns={{ xs: 2, sm: 4, md: 6 }}
+        >
+          {filteredItens.map((item) => (
+            <Grid item xs={2} sm={4} md={3} key={item._id}>
+              {/* {console.log()} */}
+              <Card sx={{ background: '#1C1B1F' }} >
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div" sx={{ color: '#E6E1E5' }}>
+                    {item.title}
+                  </Typography>
+                </CardContent>
+                <CardMedia
+                  component="img"
+                  height="400"
+                  image={item.img}
+                // alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="body1" component="div" sx={{ color: '#E6E1E5' }}>
+                    <EventsDate itensData={item} />
+                  </Typography>
+                  <Typography gutterBottom variant="body1" component="div" sx={{ color: '#E6E1E5' }}>
+                    Valor do ingreso: {item.value?.toFixed(2)}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ color: '#E6E1E5' }}
+                  >
+                    {item.description}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'flex-end' }}>
+                  <Button size="small" variant="contained" color="secondary">
+                    Compartilhar
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => HandleOpenModalDetails(item)}
+                  >
+                    Veja mais
+                  </Button>
+                </CardActions>
+              </Card >
+            </Grid >
+          ))}
+        </Grid >
+        <ModalDetails
+          openModalDetails={openModalDetails}
+          setOpenModalDetails={setOpenModalDetails}
+          eventData={itensData}
+          Presentations={Presentations}
+        />
       </Box >
     </ThemeProvider >
   );
