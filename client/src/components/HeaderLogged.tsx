@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import MuiStyles from "../styles/MuiStyles";
 import logo from "../images/logo.png";
+import ModalDetails from "./ModalDetails2";
 
 // const pages = ['Sobre nós', 'FAQ', 'Contato'];
 interface Props {
@@ -23,7 +24,7 @@ const HeaderLogged: React.FC<Props> = ({
 }) => {
   const theme = MuiStyles;
   const navigate = useNavigate();
-
+  const [openModalDetails, setOpenModalDetails] = React.useState(false);
   const logout = () => {
     localStorage.removeItem("token");
     console.log("saindo");
@@ -38,6 +39,12 @@ const HeaderLogged: React.FC<Props> = ({
   const handlePageSelect = (id: number) => {
     // setAnchorElNav(null);
     console.log(id);
+  };
+
+  const HandleOpenModalDetails = () => {
+    setOpenModalDetails(true);
+    console.log("fon");
+    // console.log(`Apresentações: ${Presentations}`);
   };
 
   return (
@@ -102,7 +109,8 @@ const HeaderLogged: React.FC<Props> = ({
             Sair
           </Button>
           <Button
-            onClick={() => logout()}
+            onClick={() => HandleOpenModalDetails()}
+            //onClick={() => HandleOpenModalDetails(item)}
             color="secondary"
             variant="contained"
             sx={{
@@ -115,6 +123,10 @@ const HeaderLogged: React.FC<Props> = ({
             Minha conta
           </Button>
         </Toolbar>
+        <ModalDetails
+          openModalDetails={openModalDetails}
+          setOpenModalDetails={setOpenModalDetails}
+        />
         {/* </Container> */}
       </AppBar>
     </ThemeProvider>

@@ -32,6 +32,7 @@ type obj = user | any;
 
 function HomePageUser() {
   const theme = ButtonStyles;
+
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [searchValues, setSearchValues] = useState("");
   const [userType, setUserType] = useState("");
