@@ -26,6 +26,7 @@ const BoxBuyTicket: React.FC<Props> = ({
   const [presentationTicket, setPresentationTicket] = React.useState<number>(0);
   const [disableEventButton, setDisableEventButton] = React.useState<boolean>(true);
   const [disablePresentationButton, setDisablePresentationButton] = React.useState<boolean>(true);
+  // const [disableBuyTicket, setDisableBuyTicket] = React.useState<boolean>(true);
   const theme = MuiStyles;
   // console.log(`display: ${boxBuyTicketDisplay}`);
 
@@ -49,80 +50,92 @@ const BoxBuyTicket: React.FC<Props> = ({
         value == 0
           ? setDisablePresentationButton(true)
           : setDisablePresentationButton(false));
-  }
+
+    // (eventTicket == 0 || presentationTicket == 0)
+    //   ? setDisableBuyTicket(true)
+    //   : setDisableBuyTicket(false)
+  };
+
   return (
     <ThemeProvider theme={theme}>
-        <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
-          Selecionado - {presentationData.title}
-        </Typography>
-        <Box className='rightGridContent'>
-          <Grid container rowGap={2} columns={{ sm: 8, md: 8 }}>
-            <Grid item md={8}>
-            </Grid>
-            <Box className='buyTicketInputs'>
-              <Grid item md={5}>
-                <Typography color='primary' sx={{ mt: 2, mb: 2 }}>
-                  Selecione o número de ingressos (evento)
-                </Typography>
-              </Grid>
-              <Grid item md={2}>
-                <Box className='rightGridInputs'>
-                  <TextField
-                    id="eventTicketInput"
-                    variant="outlined"
-                    type="number"
-                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', readOnly: true }}
-                    value={eventTicket}
-                  />
-                  <Box className='ticketButtonsWrapper'>
-                    <Button
-                      onClick={() => changeInputValue(-1, true)}
-                      color='minusOneItem'
-                      variant='contained'
-                      disabled={disableEventButton}>-1</Button>
-                    <Button onClick={(value) => changeInputValue(1, true)} color='plusOneItem' variant='contained'>+1</Button>
-                  </Box>
-                </Box>
-              </Grid>
-            </Box>
-            <Box className='buyTicketInputs'>
-              <Grid item md={5}>
-                <Typography color='primary' sx={{ mt: 2, mb: 2 }}>
-                  Selecione o número de ingressos (apresentação)
-                </Typography>
-              </Grid>
-              <Grid item md={2}>
-                <Box className='rightGridInputs'>
-                  <TextField
-                    id="presentationTicketInput"
-                    variant="outlined"
-                    type="number"
-                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', readOnly: true }}
-                    value={presentationTicket}
-                  />
-                  <Box className='ticketButtonsWrapper'>
-                    <Button
-                      onClick={() => changeInputValue(-1, false)}
-                      color='minusOneItem'
-                      variant='contained'
-                      disabled={disablePresentationButton}
-                    >-1</Button>
-                    <Button onClick={() => changeInputValue(1, false)} color='plusOneItem' variant='contained'>+1</Button>
-                  </Box>
-                </Box>
-              </Grid>
-            </Box>
+      <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
+        Selecionado - {presentationData.title}
+      </Typography>
+      <Box className='rightGridContent'>
+        <Grid container rowGap={2} columns={{ sm: 8, md: 8 }}>
+          <Grid item md={8}>
           </Grid>
-        </Box>
-        <Box sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: '15px',
-          padding: '5px 0px'
-        }}>
-          <Button onClick={() => changeRightGrid()} color='secondary'>Voltar</Button>
-          <Button onClick={() => console.log('Comprar ingresso')} color='secondary'>Comprar ingresso</Button>
-        </Box>
+          <Box className='buyTicketInputs'>
+            <Grid item md={5}>
+              <Typography color='primary' sx={{ mt: 2, mb: 2 }}>
+                Selecione o número de ingressos (evento)
+              </Typography>
+            </Grid>
+            <Grid item md={2}>
+              <Box className='rightGridInputs'>
+                <TextField
+                  id="eventTicketInput"
+                  variant="outlined"
+                  type="number"
+                  inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', readOnly: true }}
+                  value={eventTicket}
+                />
+                <Box className='ticketButtonsWrapper'>
+                  <Button
+                    onClick={() => changeInputValue(-1, true)}
+                    color='minusOneItem'
+                    variant='contained'
+                    disabled={disableEventButton}>-1</Button>
+                  <Button onClick={(value) => changeInputValue(1, true)} color='plusOneItem' variant='contained'>+1</Button>
+                </Box>
+              </Box>
+            </Grid>
+          </Box>
+          <Box className='buyTicketInputs'>
+            <Grid item md={5}>
+              <Typography color='primary' sx={{ mt: 2, mb: 2 }}>
+                Selecione o número de ingressos (apresentação)
+              </Typography>
+            </Grid>
+            <Grid item md={2}>
+              <Box className='rightGridInputs'>
+                <TextField
+                  id="presentationTicketInput"
+                  variant="outlined"
+                  type="number"
+                  inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', readOnly: true }}
+                  value={presentationTicket}
+                />
+                <Box className='ticketButtonsWrapper'>
+                  <Button
+                    onClick={() => changeInputValue(-1, false)}
+                    color='minusOneItem'
+                    variant='contained'
+                    disabled={disablePresentationButton}
+                  >-1</Button>
+                  <Button onClick={() => changeInputValue(1, false)} color='plusOneItem' variant='contained'>+1</Button>
+                </Box>
+              </Box>
+            </Grid>
+          </Box>
+        </Grid>
+      </Box>
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'flex-end',
+        gap: '15px',
+        padding: '5px 0px'
+      }}>
+        <Button onClick={() => changeRightGrid()} color='secondary'>Voltar</Button>
+        {(eventTicket == 0 || presentationTicket == 0)
+          ? <Button onClick={() => console.log('Comprar ingresso')}
+            disabled={true}
+            color='secondary'>Comprar ingresso</Button>
+          : <Button onClick={() => console.log('Comprar ingresso')}
+            disabled={false}
+            color='secondary'>Comprar ingresso</Button>
+        }
+      </Box>
     </ThemeProvider>
 
   );
