@@ -141,7 +141,7 @@ const ProfileModalDetails: React.FC<Props> = ({
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     tipo={"email"}
-                    placeHolder={user.cell}
+                    placeHolder={user.email}
                     error={() => console.log("fon")}
                     helperText={() => console.log("fon")}
                   />
