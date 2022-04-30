@@ -58,6 +58,7 @@ const ProfileModalDetails: React.FC<Props> = ({
     onSubmit: (values) => {
       // console.log(validarReq(values));
       if (validarReq(values)) {
+        values.cpfCnpj = user.cpfCnpj;
         console.log("Fazer requisicao do login aqui", values);
       } else {
         console.log("Sem alteracoes");
