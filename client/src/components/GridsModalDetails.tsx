@@ -50,6 +50,7 @@ const GridsModalDetails: React.FC<Props> = ({
   // const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
   const [showBoxBuyTicket, setShowBoxBuyTicket] = React.useState<boolean>(false);
   // const rightContainerGridRef = React.useRef<any>(null)!;
+  const [disableCard, setDisableCard] = React.useState<boolean>(false);
 
   const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
     e.preventDefault();
@@ -158,7 +159,6 @@ const GridsModalDetails: React.FC<Props> = ({
             <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
           </Box>
           : null}
-
         {/* </Collapse> */}
       </>
     );
@@ -175,7 +175,8 @@ const GridsModalDetails: React.FC<Props> = ({
             <PresentationsBox
               setSelectedPresentation={setSelectedPresentation}
               setPresentationData={setPresentationData}
-              Presentations={Presentations} />
+              Presentations={Presentations}
+              disableCard={showBoxBuyTicket} />
           </Box>
         </Grid>
         <Grid item sm={8} md={4}>
@@ -183,7 +184,10 @@ const GridsModalDetails: React.FC<Props> = ({
             // ref={rightContainerGridRef}
             className='rightGridContainer'>
             {showBoxBuyTicket
-              ? < BoxBuyTicket setShowComponent={setShowBoxBuyTicket} />
+              ? < BoxBuyTicket
+                setShowComponent={setShowBoxBuyTicket}
+                presentationData={presentationData}
+              />
               : InfoSection(selectedPresentation)}
             {/* {!showComponent ? InfoSection(selectedPresentation) : null} */}
             {/* <InfoSection open={selectedPresentation}/> */}

@@ -1,6 +1,7 @@
 import { styled, TextField } from '@mui/material';
 
-const SearchField = styled(TextField)({ // TextField personalizado
+ // TextField personalizado
+const SearchField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
       borderColor: '#C3BFC3',

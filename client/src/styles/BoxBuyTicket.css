@@ -1,0 +1,34 @@
+.buyTicketInputs {
+    display: flex;
+    /* align-items: center; */
+}
+
+.rightGridContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.ticketButtonsWrapper {
+    display: flex;
+    /* margin-top: 10%; */
+}
+
+.ticketButtonsWrapper Button {
+    min-width: 1px;
+    width: 100%;
+    /* max-width: 5px; */
+}
+
+.rightGridInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.rightGridInputs input::-webkit-outer-spin-button,
+.rightGridInputs input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
