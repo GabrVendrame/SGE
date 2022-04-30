@@ -19,16 +19,14 @@ import ResponsiveDrawerUsuarioComum from "../components/ResponsiveDrawerUsuarioC
 import ResponsiveDrawerUsuarioCE from "../components/ResponsiveDrawerUsuarioCE";
 import ResponsiveDrawerUsuarioPalestrante from "../components/ResponsiveDrawerUsuarioPalestrante";
 
-type user = {
+export interface user {
   name: string;
   email: string;
   password: string;
   cpfCnpj: string;
   cell: string;
   userType: string;
-};
-
-type obj = user | any;
+}
 
 function HomePageUser() {
   const theme = ButtonStyles;
@@ -40,7 +38,14 @@ function HomePageUser() {
     // console.log(event.target.value);
     setSearchValues(event.target.value);
   };
-  const [user, setUser] = useState<any>();
+  const [user, setUser] = useState<user>({
+    name: "",
+    email: "",
+    password: "",
+    cpfCnpj: "",
+    cell: "",
+    userType: "",
+  });
   const [tk, setTk] = useState<any>();
   const navigate = useNavigate();
   const pages = [
@@ -69,7 +74,7 @@ function HomePageUser() {
 
   // console.log("fora", user);
   console.log("Tipo do usuario ", userType);
-
+  console.log(user);
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -79,6 +84,7 @@ function HomePageUser() {
         }}
       >
         <Header
+          user={user}
           pages={pages}
           isOpenDrawer={isOpenDrawer}
           setIsOpenDrawer={setIsOpenDrawer}

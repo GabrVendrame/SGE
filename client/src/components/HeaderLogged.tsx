@@ -3,21 +3,23 @@ import { ThemeProvider } from "@mui/material/styles";
 import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box/Box";
 import { Link, useNavigate } from "react-router-dom";
-
+import { user } from "../pages/HomePageUser";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import MuiStyles from "../styles/MuiStyles";
 import logo from "../images/logo.png";
-import ModalDetails from "./ModalDetails2";
+import ModalDetails from "./ProfileModalDetails";
 
 // const pages = ['Sobre nós', 'FAQ', 'Contato'];
 interface Props {
   isOpenDrawer: boolean;
   setIsOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
   pages: { id: number; text: string }[];
+  user: user;
 }
 
 const HeaderLogged: React.FC<Props> = ({
+  user,
   isOpenDrawer,
   setIsOpenDrawer,
   pages,
@@ -124,6 +126,7 @@ const HeaderLogged: React.FC<Props> = ({
           </Button>
         </Toolbar>
         <ModalDetails
+          user={user}
           openModalDetails={openModalDetails}
           setOpenModalDetails={setOpenModalDetails}
         />
