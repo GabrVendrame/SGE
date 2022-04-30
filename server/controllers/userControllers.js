@@ -81,10 +81,11 @@ const findUser = asyncHandler(async (req, res) => {
 });
 
 const changeUserData = asyncHandler(async (req, res) => {
-  const {user} = req.body;
-  var { name, password, cell, email, cpfCnpj } = user;
-  const userFind = await User.findOne({ cpfCnpj: user.cpfCnpj });
-  console.log(user);
+  // const { user } = req.body;
+  var { name, password, cell, email, cpfCnpj } = req.body;
+  console.log(cpfCnpj);
+  const userFind = await User.findOne({ cpfCnpj: cpfCnpj });
+
   if (name === "") {
     name = userFind.name;
   }
