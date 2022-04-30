@@ -80,4 +80,32 @@ const findUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser, findUser };
+const changeUserData = asyncHandler(async (req, res) => {
+  const {user} = req.body;
+  var { name, password, cell, email, cpfCnpj } = user;
+  const userFind = await User.findOne({ cpfCnpj: user.cpfCnpj });
+  console.log(user);
+  if (name === "") {
+    name = userFind.name;
+  }
+  if (password === "") {
+    password = userFind.password;
+  }
+  if (cell === "") {
+    cell = userFind.cell;
+  }
+  if (email === "") {
+    email = userFind.email;
+  }
+
+  let dataCreate = {
+    name,
+    password,
+    cell,
+    email,
+  };
+  const changedUser = await User.findOneAndUpdate({ cpfCnpj }, dataCreate);
+  res.json(changedUser);
+});
+
+module.exports = { registerUser, authUser, findUser, changeUserData };

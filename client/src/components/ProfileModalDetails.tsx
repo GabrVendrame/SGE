@@ -9,6 +9,7 @@ import { user } from "../pages/HomePageUser";
 import BoxInputPadrao from "./BoxInputPadrao";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import Axios from 'axios';
 
 interface Props {
   openModalDetails: boolean;
@@ -60,6 +61,8 @@ const ProfileModalDetails: React.FC<Props> = ({
       if (validarReq(values)) {
         values.cpfCnpj = user.cpfCnpj;
         console.log("Fazer requisicao do login aqui", values);
+        Axios.put('http://localhost:3001/api/users/update', values).then((res) => {
+          console.log('fon')}).catch((error) => {console.log(error)});
       } else {
         console.log("Sem alteracoes");
       }
