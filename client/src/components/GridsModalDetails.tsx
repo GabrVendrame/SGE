@@ -187,6 +187,7 @@ const GridsModalDetails: React.FC<Props> = ({
               ? < BoxBuyTicket
                 setShowComponent={setShowBoxBuyTicket}
                 presentationData={presentationData}
+                eventData={eventData}
               />
               : InfoSection(selectedPresentation)}
             {/* {!showComponent ? InfoSection(selectedPresentation) : null} */}

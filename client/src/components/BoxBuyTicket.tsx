@@ -3,7 +3,9 @@ import * as React from 'react';
 import "../styles/BoxBuyTicket.css";
 import MuiStyles from '../styles/MuiStyles';
 import { PresentationData } from './PresentationsBox';
+import { EventData } from './Itens';
 import TextField from '@mui/material/TextField';
+import api from '../services/api';
 import Collapse from '@mui/material/Collapse';
 
 interface Props {
@@ -12,6 +14,7 @@ interface Props {
   // rightContainerGridRef: React.MutableRefObject<any>;
   setShowComponent: React.Dispatch<React.SetStateAction<boolean>>
   presentationData: PresentationData;
+  eventData: EventData;
 }
 
 const BoxBuyTicket: React.FC<Props> = ({
@@ -20,6 +23,7 @@ const BoxBuyTicket: React.FC<Props> = ({
   // rightContainerGridRef,
   setShowComponent,
   presentationData,
+  eventData,
 }) => {
   // const displayBoxBuyTickectRef = React.useRef<any>(null);
   const [eventTicket, setEventTicket] = React.useState<number>(0);
@@ -55,6 +59,15 @@ const BoxBuyTicket: React.FC<Props> = ({
     //   ? setDisableBuyTicket(true)
     //   : setDisableBuyTicket(false)
   };
+
+  const buyTicket = () => {
+    // Axios.put("http://localhost:3001/api/users/update", values)
+    console.log('a')
+    api.put(`/users/buyTicket/${presentationData._id}`).then((response) => {
+      // setPresentations(response.data);
+      // console.log(response.data);
+    });
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -128,16 +141,15 @@ const BoxBuyTicket: React.FC<Props> = ({
       }}>
         <Button onClick={() => changeRightGrid()} color='secondary'>Voltar</Button>
         {(eventTicket == 0 || presentationTicket == 0)
-          ? <Button onClick={() => console.log('Comprar ingresso')}
+          ? <Button onClick={() => buyTicket()}
             disabled={true}
             color='secondary'>Comprar ingresso</Button>
-          : <Button onClick={() => console.log('Comprar ingresso')}
+          : <Button onClick={() => buyTicket()}
             disabled={false}
             color='secondary'>Comprar ingresso</Button>
         }
       </Box>
     </ThemeProvider>
-
   );
 };
 

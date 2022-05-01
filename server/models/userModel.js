@@ -9,6 +9,8 @@ const userSchema = mongoose.Schema({
   cell: String,
   userType: String,
   tk: String,
+  presentationId: Array,
+  eventId: Array,
 });
 
 userSchema.pre("save", async function (next) {

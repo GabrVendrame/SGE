@@ -13,7 +13,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Usuario ja cadastrado");
   }
-  console.log("dsadas");
+
   const user = await User.create({
     name,
     email,
@@ -22,6 +22,9 @@ const registerUser = asyncHandler(async (req, res) => {
     cell,
     userType,
     tk: generateToken({ name, email, password, cpfCnpj, cell, userType }),
+    presentationId: [],
+    eventId: []
+
   });
   console.log(user);
   if (user) {
@@ -36,6 +39,12 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(402);
     throw newError("Error");
   }
+});
+
+const userBuyTicket = asyncHandler(async (req, res) => {
+  const { presentationId } = req.params;
+  console.log(presentationId);
+  // const insert ;
 });
 
 const authUser = asyncHandler(async (req, res) => {
@@ -109,4 +118,10 @@ const changeUserData = asyncHandler(async (req, res) => {
   res.json(changedUser);
 });
 
-module.exports = { registerUser, authUser, findUser, changeUserData };
+module.exports = {
+  registerUser,
+  authUser,
+  findUser,
+  changeUserData,
+  userBuyTicket,
+};
