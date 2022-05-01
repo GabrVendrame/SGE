@@ -9,7 +9,7 @@ import BoxInputStyle from '../styles/BoxInput';
 //   name: string;
 // }
 
-export const BoxInputSelect: React.FC = ({ }) => {
+export const BoxInputSelect: React.FC = () => {
   return (
     <Select
       labelId="demo-simple-select-label"

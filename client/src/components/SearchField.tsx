@@ -1,6 +1,6 @@
 import { styled, TextField } from '@mui/material';
 
- // TextField personalizado
+// TextField personalizado
 const SearchField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     '& fieldset': {

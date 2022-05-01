@@ -10,6 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import BoxBuyTicket from './BoxBuyTicket';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
+import { User } from '../pages/HomePageUser';
 import PresentationsBox, { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
 
@@ -18,6 +19,7 @@ interface Props {
   Presentations: PresentationData[];
   selectedPresentation: boolean;
   setSelectedPresentation: React.Dispatch<React.SetStateAction<boolean>>;
+  user: User;
 }
 
 interface ScheduleProps {
@@ -31,6 +33,7 @@ const GridsModalDetails: React.FC<Props> = ({
   Presentations,
   selectedPresentation,
   setSelectedPresentation,
+  user,
 }) => {
   const theme = MuiStyles;
   const [presentationData, setPresentationData] = React.useState<PresentationData>({
@@ -50,7 +53,7 @@ const GridsModalDetails: React.FC<Props> = ({
   // const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
   const [showBoxBuyTicket, setShowBoxBuyTicket] = React.useState<boolean>(false);
   // const rightContainerGridRef = React.useRef<any>(null)!;
-  const [disableCard, setDisableCard] = React.useState<boolean>(false);
+  // const [disableCard, setDisableCard] = React.useState<boolean>(false);
 
   const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
     e.preventDefault();
@@ -188,6 +191,7 @@ const GridsModalDetails: React.FC<Props> = ({
                 setShowComponent={setShowBoxBuyTicket}
                 presentationData={presentationData}
                 eventData={eventData}
+                user={user}
               />
               : InfoSection(selectedPresentation)}
             {/* {!showComponent ? InfoSection(selectedPresentation) : null} */}

@@ -1,25 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import "../styles/HomePageUser.css";
-import Axios from "axios";
+import '../styles/HomePageUser.css';
+import Axios from 'axios';
 
-import { ThemeProvider } from "@mui/material/styles";
-import { Box } from "@material-ui/core";
-import { IconButton, InputAdornment } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import ClearIcon from "@mui/icons-material/Clear";
-import Header from "../components/HeaderLogged";
-//import ResponsiveDrawer from "../components/ResponsiveDrawer";
-import ResponsiveDrawer from "../components/ResponsiveDrawer";
-import Itens from "../components/Itens";
-import ButtonStyles from "../styles/MuiStyles";
-import SearchField from "../components/SearchField";
-import ResponsiveDrawerUsuarioComum from "../components/ResponsiveDrawerUsuarioComum";
-import ResponsiveDrawerUsuarioCE from "../components/ResponsiveDrawerUsuarioCE";
-import ResponsiveDrawerUsuarioPalestrante from "../components/ResponsiveDrawerUsuarioPalestrante";
+import { ThemeProvider } from '@mui/material/styles';
+import { Box } from '@material-ui/core';
+import { IconButton, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import ClearIcon from '@mui/icons-material/Clear';
+import Header from '../components/HeaderLogged';
+// import ResponsiveDrawer from "../components/ResponsiveDrawer";
+import ResponsiveDrawer from '../components/ResponsiveDrawer';
+import Itens from '../components/Itens';
+import ButtonStyles from '../styles/MuiStyles';
+import SearchField from '../components/SearchField';
+import ResponsiveDrawerUsuarioComum from '../components/ResponsiveDrawerUsuarioComum';
+import ResponsiveDrawerUsuarioCE from '../components/ResponsiveDrawerUsuarioCE';
+import ResponsiveDrawerUsuarioPalestrante from '../components/ResponsiveDrawerUsuarioPalestrante';
 
-export interface user {
+export interface User {
   name: string;
   email: string;
   password: string;
@@ -32,32 +32,32 @@ function HomePageUser() {
   const theme = ButtonStyles;
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [searchValues, setSearchValues] = useState("");
-  const [userType, setUserType] = useState("");
+  const [searchValues, setSearchValues] = useState('');
+  const [userType, setUserType] = useState('');
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(event.target.value);
     setSearchValues(event.target.value);
   };
-  const [user, setUser] = useState<user>({
-    name: "",
-    email: "",
-    password: "",
-    cpfCnpj: "",
-    cell: "",
-    userType: "",
+  const [user, setUser] = useState<User>({
+    name: '',
+    email: '',
+    password: '',
+    cpfCnpj: '',
+    cell: '',
+    userType: '',
   });
   const [tk, setTk] = useState<any>();
   const navigate = useNavigate();
   const pages = [
-    { id: 0, text: "Sobre nós" },
-    { id: 1, text: "FAQ" },
-    { id: 2, text: "Contato" },
+    { id: 0, text: 'Sobre nós' },
+    { id: 1, text: 'FAQ' },
+    { id: 2, text: 'Contato' },
   ];
 
   useEffect(() => {
-    setTk(localStorage.getItem("token"));
+    setTk(localStorage.getItem('token'));
     Axios.get(
-      `http://localhost:3001/api/users/find/${localStorage.getItem("token")}`
+      `http://localhost:3001/api/users/find/${localStorage.getItem('token')}`,
     )
       .then((res) => {
         // console.log("req", res.data.user.userType);
@@ -73,14 +73,14 @@ function HomePageUser() {
   }, []);
 
   // console.log("fora", user);
-  console.log("Tipo do usuario ", userType);
+  console.log('Tipo do usuario ', userType);
   console.log(user);
   return (
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          width: "100%",
-          position: "fixed",
+          width: '100%',
+          position: 'fixed',
         }}
       >
         <Header
@@ -90,13 +90,13 @@ function HomePageUser() {
           setIsOpenDrawer={setIsOpenDrawer}
         />
 
-        {userType === "Usuario Comum" ? (
+        {userType === 'Usuario Comum' ? (
           <ResponsiveDrawerUsuarioComum
             pages={pages}
             isOpenDrawer={isOpenDrawer}
             setIsOpenDrawer={setIsOpenDrawer}
           />
-        ) : userType === "Usuario Criador de Evento" ? (
+        ) : userType === 'Usuario Criador de Evento' ? (
           <ResponsiveDrawerUsuarioCE
             pages={pages}
             isOpenDrawer={isOpenDrawer}
@@ -113,7 +113,7 @@ function HomePageUser() {
         <Box className="divSearchbarAndItens">
           <SearchField
             onChange={handleChange}
-            sx={{ marginTop: { sm: "35px" }, mb: "25px" }}
+            sx={{ marginTop: { sm: '35px' }, mb: '25px' }}
             fullWidth
             placeholder="Pesquisar evento ou apresentação"
             InputProps={{
@@ -129,7 +129,7 @@ function HomePageUser() {
               ),
             }}
           />
-          <Itens searchValues={searchValues} />
+          <Itens searchValues={searchValues} user={user} />
         </Box>
       </Box>
     </ThemeProvider>

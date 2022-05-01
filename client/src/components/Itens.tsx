@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import React from 'react';
 import api from '../services/api';
 import MuiStyles from '../styles/MuiStyles';
+import { User } from '../pages/HomePageUser';
 import { PresentationData } from './PresentationsBox';
 
 // import ScrollContainer from 'react-indiana-drag-scroll';
@@ -36,12 +37,13 @@ export interface EventData {
 
 interface Props {
   searchValues: string;
+  user: User;
 }
 interface EventProps {
   itensData: EventData;
 }
 
-const Itens: React.FC<Props> = ({ searchValues }) => {
+const Itens: React.FC<Props> = ({ searchValues, user }) => {
   const [openModalDetails, setOpenModalDetails] = React.useState(false);
   const [Events, setEvents] = React.useState<EventData[]>([]);
   const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
@@ -172,6 +174,7 @@ const Itens: React.FC<Props> = ({ searchValues }) => {
           setOpenModalDetails={setOpenModalDetails}
           eventData={itensData}
           Presentations={Presentations}
+          user={user}
         />
       </Box >
     </ThemeProvider >

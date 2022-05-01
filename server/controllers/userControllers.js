@@ -22,9 +22,8 @@ const registerUser = asyncHandler(async (req, res) => {
     cell,
     userType,
     tk: generateToken({ name, email, password, cpfCnpj, cell, userType }),
-    presentationId: [],
-    eventId: []
-
+    presentationData: {},
+    eventData: {},
   });
   console.log(user);
   if (user) {
@@ -42,9 +41,23 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const userBuyTicket = asyncHandler(async (req, res) => {
-  const { presentationId } = req.params;
-  console.log(presentationId);
-  // const insert ;
+  const { presentationId, eventId, userEmail } = req.body;
+  console.log(userEmail)
+  const setIds = await User.findOneAndUpdate({ email: userEmail },
+    {
+      $addToSet: {
+        "presentationId": {
+          $each: [presentationId],
+        },
+        "eventId": {
+          $each: [eventId],
+        },
+      },
+    });
+  res.json(setIds);
+  // console.log("presentation: " + presentationId);
+  // console.log("event: " + eventId);
+  // console.log("userId: "+ user.id);
 });
 
 const authUser = asyncHandler(async (req, res) => {

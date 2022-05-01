@@ -1,4 +1,4 @@
-import "../styles/Drawer.css";
+import '../styles/Drawer.css';
 import {
   Box,
   Divider,
@@ -6,16 +6,16 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from "@mui/material";
-import Drawer from "@mui/material/Drawer";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
-import LoginIcon from "@mui/icons-material/Login";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import { ThemeProvider } from "@mui/material/styles";
-import React from "react";
-import { Link } from "react-router-dom";
-import MuiStyles from "../styles/MuiStyles";
+} from '@mui/material';
+import Drawer from '@mui/material/Drawer';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import LoginIcon from '@mui/icons-material/Login';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import { ThemeProvider } from '@mui/material/styles';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import MuiStyles from '../styles/MuiStyles';
 
 const drawerWidth = 240;
 
@@ -42,15 +42,15 @@ const ResponsiveDrawerUsuarioPalestrante: React.FC<Props> = ({
     console.log(id);
   };
   const itensDrawer = [
-    { id: 0, text: "Home", icon: <HomeOutlinedIcon color="secondary" /> },
+    { id: 0, text: 'Home', icon: <HomeOutlinedIcon color="secondary" /> },
     {
       id: 1,
-      text: "Apresentacoes",
+      text: 'Apresentacoes',
       icon: <StarOutlinedIcon color="secondary" />,
     },
     {
       id: 2,
-      text: "Relatórios",
+      text: 'Relatórios',
       icon: <ShoppingBagOutlinedIcon color="secondary" />,
     },
   ];
@@ -58,13 +58,13 @@ const ResponsiveDrawerUsuarioPalestrante: React.FC<Props> = ({
   const drawer = (
     <Box>
       <List>
-        <ListItem button sx={{ display: { sm: "none" } }}>
+        <ListItem button sx={{ display: { sm: 'none' } }}>
           <ListItemIcon>
             <LoginIcon color="secondary" />
           </ListItemIcon>
           <Link
-            to={"/LoginAndRegister"}
-            style={{ textDecoration: "none", color: "inherit" }}
+            to={'/LoginAndRegister'}
+            style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <ListItemText primary="Login/Cadastro" />
           </Link>
@@ -81,7 +81,7 @@ const ResponsiveDrawerUsuarioPalestrante: React.FC<Props> = ({
         ))}
       </List>
       <Divider variant="middle" color="#fff" />
-      <Box sx={{ display: { sm: "none" } }}>
+      <Box sx={{ display: { sm: 'none' } }}>
         <List>
           {pages.map((page) => (
             <ListItem
@@ -100,7 +100,7 @@ const ResponsiveDrawerUsuarioPalestrante: React.FC<Props> = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: 'flex' }}>
         <Box
           component="nav"
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}

@@ -1,12 +1,14 @@
-import { Box, Button, Grid, ThemeProvider, Typography } from '@mui/material';
+import {
+  Box, Button, Grid, ThemeProvider, Typography,
+} from '@mui/material';
 import * as React from 'react';
-import "../styles/BoxBuyTicket.css";
+import '../styles/BoxBuyTicket.css';
+import TextField from '@mui/material/TextField';
 import MuiStyles from '../styles/MuiStyles';
 import { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
-import TextField from '@mui/material/TextField';
 import api from '../services/api';
-import Collapse from '@mui/material/Collapse';
+import { User } from '../pages/HomePageUser';
 
 interface Props {
   // boxBuyTicketDisplay: string;
@@ -15,6 +17,7 @@ interface Props {
   setShowComponent: React.Dispatch<React.SetStateAction<boolean>>
   presentationData: PresentationData;
   eventData: EventData;
+  user: User;
 }
 
 const BoxBuyTicket: React.FC<Props> = ({
@@ -24,6 +27,7 @@ const BoxBuyTicket: React.FC<Props> = ({
   setShowComponent,
   presentationData,
   eventData,
+  user,
 }) => {
   // const displayBoxBuyTickectRef = React.useRef<any>(null);
   const [eventTicket, setEventTicket] = React.useState<number>(0);
@@ -45,15 +49,15 @@ const BoxBuyTicket: React.FC<Props> = ({
 
     isEventTicket
       ? (value = eventTicket + newValue,
-        setEventTicket(value),
-        value == 0
-          ? setDisableEventButton(true)
-          : setDisableEventButton(false))
+      setEventTicket(value),
+      value === 0
+        ? setDisableEventButton(true)
+        : setDisableEventButton(false))
       : (value = presentationTicket + newValue,
-        setPresentationTicket(value),
-        value == 0
-          ? setDisablePresentationButton(true)
-          : setDisablePresentationButton(false));
+      setPresentationTicket(value),
+      value === 0
+        ? setDisablePresentationButton(true)
+        : setDisablePresentationButton(false));
 
     // (eventTicket == 0 || presentationTicket == 0)
     //   ? setDisableBuyTicket(true)
@@ -62,12 +66,17 @@ const BoxBuyTicket: React.FC<Props> = ({
 
   const buyTicket = () => {
     // Axios.put("http://localhost:3001/api/users/update", values)
-    console.log('a')
-    api.put(`/users/buyTicket/${presentationData._id}`).then((response) => {
+    console.log(user.email);
+    const data = {
+      presentationId: presentationData._id,
+      eventId: eventData._id,
+      userEmail: user.email,
+    };
+    api.put('/users/buyTicket/', data).then((response) => {
       // setPresentations(response.data);
       // console.log(response.data);
     });
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -137,10 +146,10 @@ const BoxBuyTicket: React.FC<Props> = ({
         display: 'flex',
         justifyContent: 'flex-end',
         gap: '15px',
-        padding: '5px 0px'
+        padding: '5px 0px',
       }}>
         <Button onClick={() => changeRightGrid()} color='secondary'>Voltar</Button>
-        {(eventTicket == 0 || presentationTicket == 0)
+        {(eventTicket === 0 || presentationTicket === 0)
           ? <Button onClick={() => buyTicket()}
             disabled={true}
             color='secondary'>Comprar ingresso</Button>

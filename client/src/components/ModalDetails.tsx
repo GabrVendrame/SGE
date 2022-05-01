@@ -9,6 +9,7 @@ import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
 import { PresentationData } from './PresentationsBox';
 import GridsModalDetails from './GridsModalDetails';
+import { User } from '../pages/HomePageUser';
 import { EventData } from './Itens';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   setOpenModalDetails: React.Dispatch<React.SetStateAction<boolean>>;
   eventData: EventData;
   Presentations: PresentationData[];
+  user: User;
 }
 
 const ModalDetails: React.FC<Props> = ({
@@ -23,6 +25,7 @@ const ModalDetails: React.FC<Props> = ({
   setOpenModalDetails,
   eventData,
   Presentations,
+  user,
 }) => {
   const theme = MuiStyles;
   // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
@@ -53,7 +56,8 @@ const ModalDetails: React.FC<Props> = ({
               Presentations={Presentations}
               eventData={eventData}
               selectedPresentation={selectedPresentation}
-              setSelectedPresentation={setSelectedPresentation} />
+              setSelectedPresentation={setSelectedPresentation}
+              user={user} />
           </Box>
         </Modal>
       </Box >

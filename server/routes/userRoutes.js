@@ -13,6 +13,6 @@ router.route("/").post(registerUser);
 router.route("/login").post(authUser);
 router.route("/find/:_id").get(findUser);
 router.route("/update").put(changeUserData);
-router.route("/buyTicket/:presentationId").put(userBuyTicket);
+router.route("/buyTicket/").put(userBuyTicket);
 
 module.exports = router;
