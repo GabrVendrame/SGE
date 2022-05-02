@@ -40,6 +40,16 @@ const theme = createTheme({
         },
       },
     },
+    // MuiDialog: {
+    //   styleOverrides: {
+    //     root: {
+    //       // backgroundColor: '#ffffff',
+    //       '& .MuiDialog-paper': {
+    //         backgroundColor: '#1c1a1c',
+    //       },
+    //     },
+    //   },
+    // },
     MuiButton: {
       styleOverrides: {
         root: {

@@ -1,9 +1,21 @@
 import {
-  Box, Button, Grid, ThemeProvider, Typography,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Divider,
+  Grid,
+  ThemeProvider,
+  Tooltip,
+  Typography,
 } from '@mui/material';
 import * as React from 'react';
 import '../styles/BoxBuyTicket.css';
 import TextField from '@mui/material/TextField';
+import { Link } from 'react-router-dom';
 import MuiStyles from '../styles/MuiStyles';
 import { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
@@ -38,6 +50,7 @@ const BoxBuyTicket: React.FC<Props> = ({
     eventTicket: 0,
     presentationTicket: 0,
   });
+  const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
   // const [disableBuyTicket, setDisableBuyTicket] = React.useState<boolean>(true);
   const theme = MuiStyles;
   // console.log(`display: ${boxBuyTicketDisplay}`);
@@ -62,7 +75,124 @@ const BoxBuyTicket: React.FC<Props> = ({
     });
   };
 
-  const rightTicketInputs = (category: string) => {
+  const handleCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
+  };
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
+
+  const ConfirmDialogLoginRequest: React.FC = () => {
+    return (
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+        maxWidth="xs"
+        open={openConfirmDialog}
+        onClose={handleCloseConfirmDialog}
+      >
+        <DialogTitle>Comprar ingresso</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>
+            É necessário estar logado em uma conta como usuário comum para
+            realizar a compra de um ingresso.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button color='secondary' autoFocus onClick={handleCloseConfirmDialog}>
+            Cancelar
+          </Button>
+          <Link to={'/LoginAndRegister'} style={{ textDecoration: 'none' }}>
+            <Button
+              color='secondary'
+            >Realizar Login
+            </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
+  const ConfirmDialogBuyTicket: React.FC = () => {
+    const totalPrice = (presentationData.value! * ticketData.presentationTicket)
+      + (eventData.value! * ticketData.eventTicket);
+    return (
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+        // maxWidth="xs"
+        open={openConfirmDialog}
+        onClose={handleCloseConfirmDialog}
+      >
+        <DialogTitle>Finalizar Compra</DialogTitle>
+        <DialogContent dividers>
+          {/* <DialogContentText> */}
+          <Box className='buyTicketsDialogInfo'>
+            <Box className='eventsInfo'>
+              <Typography variant='h5' color='secondary' sx={{ fontWeight: 'bold' }}>
+                Dados do evento
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                <span style={{ color: '#DEC0F7' }}>
+                  Título
+                </span> - {eventData.title}
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                <span style={{ color: '#DEC0F7' }}>
+                  Número de ingressos
+                </span> - {ticketData.eventTicket}
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                <span style={{ color: '#DEC0F7' }}>
+                  Preço unitário
+                </span> - R$ {eventData.value?.toFixed(2)}
+              </Typography>
+            </Box>
+            {/* <Divider orientation='vertical' flexItem/> */}
+            <Box className='presentationInfo'>
+              <Typography variant='h5' color='secondary' sx={{ fontWeight: 'bold' }}>
+                Dados da apresentação
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                <span style={{ color: '#DEC0F7' }}>
+                  Título
+                </span> - {presentationData.title}
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                <span style={{ color: '#DEC0F7' }}>
+                  Número de ingressos
+                </span> - {ticketData.presentationTicket}
+              </Typography>
+              <Typography sx={{ mt: 2, mb: 2 }}>
+                <span style={{ color: '#DEC0F7' }}>
+                  Preço unitário
+                </span> - R$ {presentationData.value?.toFixed(2)}
+              </Typography>
+            </Box>
+          </Box>
+          <Typography variant='h6' sx={{ mt: 2, mb: 2, fontWeight: 'bold' }}>
+            Preço total
+            - <span style={{ color: '#4caf50' }}> R$ {totalPrice.toFixed(2)}</span>
+          </Typography>
+
+          {/* </DialogContentText> */}
+        </DialogContent>
+        <DialogActions>
+          <Button color='secondary' autoFocus onClick={handleCloseConfirmDialog}>
+            Cancelar
+          </Button>
+          <Link to={'/LoginAndRegister'} style={{ textDecoration: 'none' }}>
+            <Button
+              color='secondary'
+              onClick={() => buyTicket()}
+            >Confirmar
+            </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
+    );
+  };
+
+  const RightTicketInputs = (category: string) => {
     let ticket: number = 0;
     let disableButton = true;
 
@@ -118,7 +248,8 @@ const BoxBuyTicket: React.FC<Props> = ({
                   });
                 }}
                 color='terceary'
-                variant='contained'>+1</Button>
+                variant='contained'
+              >+1</Button>
             </Box>
           </Box>
         </Grid>
@@ -135,8 +266,8 @@ const BoxBuyTicket: React.FC<Props> = ({
         <Grid container rowGap={2} columns={{ sm: 8, md: 8 }}>
           <Grid item md={8}>
           </Grid>
-          {rightTicketInputs('evento')}
-          {rightTicketInputs('apresentação')}
+          {RightTicketInputs('evento')}
+          {RightTicketInputs('apresentação')}
         </Grid>
       </Box>
       <Box sx={{
@@ -146,14 +277,23 @@ const BoxBuyTicket: React.FC<Props> = ({
         padding: '5px 0px',
       }}>
         <Button onClick={() => changeRightGrid()} color='secondary'>Voltar</Button>
-        {(ticketData.eventTicket === 0 || ticketData.presentationTicket === 0)
-          ? <Button onClick={() => buyTicket()}
-            disabled={true}
-            color='secondary'>Comprar ingresso</Button>
-          : <Button onClick={() => buyTicket()}
+        {(ticketData.eventTicket === 0)
+          ? <Tooltip arrow title="Mínimo de um ingresso de evento necessário.">
+            <span>
+              <Button
+                onClick={handleOpenConfirmDialog}
+                disabled={true}
+                color='secondary'>Finalizar Compra</Button>
+            </span>
+          </Tooltip>
+          : <Button
+            onClick={handleOpenConfirmDialog}
             disabled={false}
-            color='secondary'>Comprar ingresso</Button>
+            color='secondary'>Finalizar Compra</Button>
         }
+        {user
+          ? <ConfirmDialogBuyTicket />
+          : <ConfirmDialogLoginRequest />}
       </Box>
     </ThemeProvider>
   );
