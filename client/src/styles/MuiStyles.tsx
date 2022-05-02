@@ -2,18 +2,19 @@ import { createTheme } from '@mui/material';
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: '#FFFFFF',
     },
     secondary: {
       main: '#DEC0F7',
     },
-    plusOneItem: {
+    terceary: {
       main: '#6750A4',
     },
-    minusOneItem: {
+    error: {
       main: '#B20505',
-    }
+    },
   },
   components: {
     MuiTextField: {
@@ -69,22 +70,19 @@ const theme = createTheme({
 
 declare module '@mui/material/styles' {
   interface Palette {
-    plusOneItem: Palette['primary'];
-    minusOneItem: Palette['primary'];
+    terceary: Palette['primary'];
   }
 
   // allow configuration using `createTheme`
   interface PaletteOptions {
-    plusOneItem?: PaletteOptions['primary'];
-    minusOneItem?: PaletteOptions['primary'];
+    terceary?: PaletteOptions['primary'];
   }
 }
 
 // Update the Button's color prop options
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
-    plusOneItem: true;
-    minusOneItem: true;
+    terceary: true;
   }
 }
 

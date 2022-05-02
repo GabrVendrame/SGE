@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const Event = require("../models/eventModel");
+const mongoose = require("mongoose");
 const generateToken = require("../utils/generateToken");
 const jwt = require("jsonwebtoken");
 
@@ -22,8 +24,9 @@ const registerUser = asyncHandler(async (req, res) => {
     cell,
     userType,
     tk: generateToken({ name, email, password, cpfCnpj, cell, userType }),
-    presentationData: {},
-    eventData: {},
+    // presentationsId: [],
+    // eventsId: [],
+    userRegisteredEvents: [],
   });
   console.log(user);
   if (user) {
@@ -42,22 +45,41 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const userBuyTicket = asyncHandler(async (req, res) => {
   const { presentationId, eventId, userEmail } = req.body;
-  console.log(userEmail)
-  const setIds = await User.findOneAndUpdate({ email: userEmail },
-    {
-      $addToSet: {
-        "presentationId": {
-          $each: [presentationId],
-        },
-        "eventId": {
-          $each: [eventId],
-        },
-      },
+  // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+  const registeredEvent = await User.findOne(
+    { email: userEmail, 'userRegisteredEvents.eventId': eventId },
+  ).catch(err => {
+    console.log(err);
+  });
+
+  if (registeredEvent) {
+    console.log('Registro de evento já criado. Atualizando com novos dados');
+    const updatePresId = await User.updateOne(
+      { email: userEmail, 'userRegisteredEvents.eventId': eventId },
+      { $push: { "userRegisteredEvents.$.userRegisteredPresentationsId": presentationId } },
+    ).catch(err => {
+      console.log(err);
     });
-  res.json(setIds);
-  // console.log("presentation: " + presentationId);
-  // console.log("event: " + eventId);
-  // console.log("userId: "+ user.id);
+    return res.json(updatePresId);
+  } else {
+    console.log('Registro para esse evento inexistente. Criando novo registro');
+    const newRegisteredEventField = await User.updateOne(
+      {
+        email: userEmail,
+      },
+      {
+        $push: {
+          "userRegisteredEvents": {
+            eventId: eventId,
+            "userRegisteredPresentationsId": presentationId,
+          }
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    return res.json(newRegisteredEventField);
+  }
 });
 
 const authUser = asyncHandler(async (req, res) => {

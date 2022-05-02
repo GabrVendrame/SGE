@@ -9,14 +9,15 @@ const userSchema = mongoose.Schema({
   cell: String,
   userType: String,
   tk: String,
-  presentationData: {
-    presentationsId: [],
-    numTickets: Number,
-  },
-  eventData: {
-    eventsId: [],
-    numTickets: Number,
-  },
+  // presentationsId: [],
+  // eventsId: [],
+  userRegisteredEvents: [
+    {
+      eventId: String,
+      userRegisteredPresentationsId: [],
+    }
+  ],
+  // presentationsId: [],
 });
 
 userSchema.pre("save", async function (next) {
