@@ -1,15 +1,15 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { Button, Divider, ThemeProvider } from '@mui/material';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import Axios from 'axios';
-import MuiStyles from '../styles/MuiStyles';
-import '../styles/ProfileModalDetails.css';
-import { User } from '../pages/HomePageUser';
-import BoxInputPadrao from './BoxInputPadrao';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Button, Divider, ThemeProvider } from "@mui/material";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import Axios from "axios";
+import MuiStyles from "../styles/MuiStyles";
+import "../styles/ProfileModalDetails.css";
+import { User } from "../pages/HomePageUser";
+import BoxInputPadrao from "./BoxInputPadrao";
 
 interface Props {
   openModalDetails: boolean;
@@ -32,17 +32,17 @@ const ProfileModalDetails: React.FC<Props> = ({
 
   const validationSchema = yup.object({
     name: yup.string(),
-    email: yup.string().email('Email invalido'),
-    password: yup.string().min(8, 'Senha muito curta'),
+    email: yup.string().email("Email invalido"),
+    password: yup.string().min(8, "Senha muito curta"),
     cell: yup.string(),
   });
 
   const validarReq = (values: User) => {
     if (
-      values.name === ''
-      && values.password === ''
-      && values.cell === ''
-      && values.email === ''
+      values.name === "" &&
+      values.password === "" &&
+      values.cell === "" &&
+      values.email === ""
     ) {
       return false;
     }
@@ -59,18 +59,18 @@ const ProfileModalDetails: React.FC<Props> = ({
       // console.log(validarReq(values));
       if (validarReq(values)) {
         values.cpfCnpj = user.cpfCnpj;
-        console.log('Fazer requisicao do login aqui', values);
-        Axios.put('http://localhost:3001/api/users/update', values)
+        console.log("Fazer requisicao do login aqui", values);
+        Axios.put("http://localhost:3001/api/users/update", values)
           .then((res) => {
-            console.log('fon');
-            alert('penis de camelo');
+            console.log("fon");
+            alert("penis de camelo");
             window.location.reload();
           })
           .catch((error) => {
             console.log(error);
           });
       } else {
-        console.log('Sem alteracoes');
+        console.log("Sem alteracoes");
       }
     },
 
@@ -94,27 +94,27 @@ const ProfileModalDetails: React.FC<Props> = ({
               variant="h6"
               component="h2"
             >
-              {'Alterar informações de perfil'}
+              {"Alterar informações de perfil"}
             </Typography>
             <Divider color="#DEC0F7" />
             <div className="box">
               <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                   <BoxInputPadrao
-                    name={'name'}
+                    name={"name"}
                     value={formik.values.name}
                     onChange={formik.handleChange}
-                    tipo={'text'}
+                    tipo={"text"}
                     placeHolder={user.name}
                     error={formik.touched.name && Boolean(formik.errors.name)}
                     helperText={formik.touched.name && formik.errors.name}
                   />
                   <BoxInputPadrao
-                    name={'password'}
+                    name={"password"}
                     value={formik.values.password}
                     onChange={formik.handleChange}
-                    tipo={'text'}
-                    placeHolder={'Senha'}
+                    tipo={"password"}
+                    placeHolder={"Senha"}
                     error={
                       formik.touched.password && Boolean(formik.errors.password)
                     }
@@ -125,10 +125,10 @@ const ProfileModalDetails: React.FC<Props> = ({
                 </div>
                 <div className="row">
                   <BoxInputPadrao
-                    name={'cell'}
+                    name={"cell"}
                     value={formik.values.cell}
                     onChange={formik.handleChange}
-                    tipo={'text'}
+                    tipo={"text"}
                     placeHolder={user.cell}
                     error={formik.touched.cell && Boolean(formik.errors.cell)}
                     helperText={formik.touched.cell && formik.errors.cell}
@@ -136,23 +136,23 @@ const ProfileModalDetails: React.FC<Props> = ({
                 </div>
                 <div className="row">
                   <BoxInputPadrao
-                    name={'email'}
+                    name={"email"}
                     value={formik.values.email}
                     onChange={formik.handleChange}
-                    tipo={'email'}
+                    tipo={"email"}
                     placeHolder={user.email}
-                    error={() => console.log('fon')}
-                    helperText={() => console.log('fon')}
+                    error={() => console.log("fon")}
+                    helperText={() => console.log("fon")}
                   />
                 </div>
                 <Button
                   type="submit"
                   sx={{
-                    borderRadius: '30px',
+                    borderRadius: "30px",
                     // background: "#6750A4",
-                    width: '100%',
-                    paddingBottom: '10px',
-                    height: '43px',
+                    width: "100%",
+                    paddingBottom: "10px",
+                    height: "43px",
                   }}
                   color="secondary"
                   variant="contained"
@@ -163,12 +163,12 @@ const ProfileModalDetails: React.FC<Props> = ({
               <Button
                 onClick={() => handleClose()}
                 sx={{
-                  borderRadius: '30px',
+                  borderRadius: "30px",
                   // background: "#6750A4",
-                  width: '100%',
-                  marginTop: '10px',
-                  paddingBottom: '10px',
-                  height: '43px',
+                  width: "100%",
+                  marginTop: "10px",
+                  paddingBottom: "10px",
+                  height: "43px",
                 }}
                 color="secondary"
                 variant="contained"

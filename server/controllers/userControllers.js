@@ -4,6 +4,7 @@ const Event = require("../models/eventModel");
 const mongoose = require("mongoose");
 const generateToken = require("../utils/generateToken");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, confirmPassword, cpfCnpj, cell, userType } =
@@ -52,9 +53,10 @@ const userBuyTicket = asyncHandler(async (req, res) => {
     numPresTickets } = req.body;
   // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-  const registeredEvent = await User.findOne(
-    { email: userEmail, 'userRegisteredEvents.eventId': eventId },
-  ).catch(err => {
+  const registeredEvent = await User.findOne({
+    email: userEmail,
+    "userRegisteredEvents.eventId": eventId,
+  }).catch((err) => {
     console.log(err);
   });
 
@@ -238,7 +240,8 @@ const changeUserData = asyncHandler(async (req, res) => {
   if (email === "") {
     email = userFind.email;
   }
-
+  const salt = await bcrypt.genSalt(10);
+  password = await bcrypt.hash(password, salt);
   let dataCreate = {
     name,
     password,

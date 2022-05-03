@@ -16,8 +16,9 @@ import Itens from '../components/Itens';
 import ButtonStyles from '../styles/MuiStyles';
 import SearchField from '../components/SearchField';
 import ResponsiveDrawerUsuarioComum from '../components/ResponsiveDrawerUsuarioComum';
-import ResponsiveDrawerUsuarioCE from '../components/ResponsiveDrawerUsuarioCE';
+
 import ResponsiveDrawerUsuarioPalestrante from '../components/ResponsiveDrawerUsuarioPalestrante';
+import ResponsiveDrawerUsuarioCE from '../components/ResponsiveDrawerUsuarioCE';
 
 export interface User {
   name: string;

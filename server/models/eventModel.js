@@ -7,12 +7,15 @@ const EventSchema = new mongoose.Schema({
   value: Number,
   remainingVacancies: Number,
   isSingleDay: Boolean,
-  dateByDay: [{
-    initialDate: Date,
-    finalDate: Date,
-  }],
+  dateByDay: [
+    {
+      initialDate: Date,
+      finalDate: Date,
+    },
+  ],
+  url: String,
   // registeredPresentations: [ Object ],
 });
 
-const Event = mongoose.model('Event', EventSchema);
+const Event = mongoose.model("Event", EventSchema);
 module.exports = Event;
