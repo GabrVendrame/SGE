@@ -89,8 +89,8 @@ function HomePageUser() {
   }, []);
 
   // console.log("fora", user);
-  console.log('Tipo do usuario ', userType);
-  console.log(user);
+  // console.log('Tipo do usuario ', userType);
+  // console.log(user);
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -146,7 +146,7 @@ function HomePageUser() {
               ),
             }}
           />
-          <Itens searchValues={searchValues} user={user} />
+          <Itens searchValues={searchValues} user={user} setUser={setUser} />
         </Box>
       </Box>
     </ThemeProvider>

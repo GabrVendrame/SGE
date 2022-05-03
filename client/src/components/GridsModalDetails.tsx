@@ -3,8 +3,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import {
+  Alert,
   Button,
-  Card, CardActionArea, CardContent, Grid, ThemeProvider,
+  Card, CardActionArea, CardContent, Grid, Portal, Snackbar, ThemeProvider,
 } from '@mui/material';
 import Collapse from '@mui/material/Collapse';
 import BoxBuyTicket from './BoxBuyTicket';
@@ -13,13 +14,17 @@ import '../styles/ModalDetailsStyles.css';
 import { User } from '../pages/HomePageUser';
 import PresentationsBox, { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
+import api from '../services/api';
 
 interface Props {
   eventData: EventData;
   Presentations: PresentationData[];
   selectedPresentation: boolean;
   setSelectedPresentation: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenOkAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenAlert: React.Dispatch<React.SetStateAction<boolean>>;
   user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 
 interface ScheduleProps {
@@ -33,7 +38,10 @@ const GridsModalDetails: React.FC<Props> = ({
   Presentations,
   selectedPresentation,
   setSelectedPresentation,
+  setOpenOkAlert,
   user,
+  setOpenAlert,
+  setUser,
 }) => {
   const theme = MuiStyles;
   const [presentationData, setPresentationData] = React.useState<PresentationData>({
@@ -52,8 +60,6 @@ const GridsModalDetails: React.FC<Props> = ({
 
   // const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
   const [showBoxBuyTicket, setShowBoxBuyTicket] = React.useState<boolean>(false);
-  // const rightContainerGridRef = React.useRef<any>(null)!;
-  // const [disableCard, setDisableCard] = React.useState<boolean>(false);
 
   const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
     e.preventDefault();
@@ -90,6 +96,18 @@ const GridsModalDetails: React.FC<Props> = ({
     //     setBoxBuyTicketDisplay('flex');
     //   }
     // }
+    api.get(
+      `/users/find/${user.cpfCnpj}`,
+    ).then((res) => {
+      setUser(res.data.user);
+    }).catch((error) => {
+      console.log(error.response);
+    });
+
+    if (user.userRegisteredEvents.some((e) => e.eventId === eventData._id)) {
+      // console.log('existe');
+      setOpenAlert(true);
+    }
     setShowBoxBuyTicket(true);
   };
 
@@ -123,7 +141,7 @@ const GridsModalDetails: React.FC<Props> = ({
 
   const InfoSection = (open: boolean) => {
     // const InfoSection = ({ open }: { open: boolean }) => {
-    console.log(open);
+    // console.log(open);
     return (
       <>
         <Box sx={{ mb: '23px' }}>
@@ -187,21 +205,15 @@ const GridsModalDetails: React.FC<Props> = ({
                 presentationData={presentationData}
                 eventData={eventData}
                 user={user}
+                setUser={setUser}
+                setOpenOkAlert={setOpenOkAlert}
               />
               : InfoSection(selectedPresentation)}
-            {/* {!showComponent ? InfoSection(selectedPresentation) : null} */}
-            {/* <InfoSection open={selectedPresentation}/> */}
           </Box>
-          {/* <BoxBuyTicket
-              boxBuyTicketDisplay={boxBuyTicketDisplay}
-              setBoxBuyTicketDisplay={setBoxBuyTicketDisplay}
-              rightContainerGridRef={rightContainerGridRef}
-            /> */}
         </Grid>
       </Grid>
-
     </ThemeProvider>
   );
 };
 
-export default GridsModalDetails;
+export default React.memo(GridsModalDetails);

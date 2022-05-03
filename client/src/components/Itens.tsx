@@ -1,6 +1,7 @@
 import Card from '@mui/material/Card';
 import {
-  Box, Button, ThemeProvider, Typography,
+  Alert,
+  Box, Button, Snackbar, ThemeProvider, Typography,
 } from '@mui/material';
 import '../styles/Itens.css';
 import CardActions from '@mui/material/CardActions';
@@ -39,17 +40,19 @@ export interface EventData {
 interface Props {
   searchValues: string;
   user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>
 }
 interface EventProps {
   itensData: EventData;
 }
 
-const Itens: React.FC<Props> = ({ searchValues, user }) => {
+const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
   const [openModalDetails, setOpenModalDetails] = React.useState(false);
   const [Events, setEvents] = React.useState<EventData[]>([]);
   const [Presentations, setPresentations] = React.useState<PresentationData[]>(
     [],
   );
+
   const [itensData, setItensData] = React.useState<EventData>({
     _id: '',
     title: '',
@@ -109,7 +112,6 @@ const Itens: React.FC<Props> = ({ searchValues, user }) => {
       return item.title.toLowerCase().includes(searchValues.toLowerCase());
     })
     : Events;
-  console.log(user);
   const HandleOpenModalDetails = (obj: EventData) => {
     // console.log('Fazendo requisição..');
     api
@@ -200,6 +202,8 @@ const Itens: React.FC<Props> = ({ searchValues, user }) => {
           eventData={itensData}
           Presentations={Presentations}
           user={user}
+          setUser={setUser}
+        // setOpenOkAlert={setOpenOkAlert}
         />
       </Box>
     </ThemeProvider>

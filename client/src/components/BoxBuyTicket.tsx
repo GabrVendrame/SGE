@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   Dialog,
@@ -6,8 +7,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider,
   Grid,
+  Portal,
+  Snackbar,
   ThemeProvider,
   Tooltip,
   Typography,
@@ -28,9 +30,11 @@ interface Props {
   // setBoxBuyTicketDisplay: React.Dispatch<React.SetStateAction<string>>;
   // rightContainerGridRef: React.MutableRefObject<any>;
   setShowComponent: React.Dispatch<React.SetStateAction<boolean>>
+  setOpenOkAlert: React.Dispatch<React.SetStateAction<boolean>>
   presentationData: PresentationData;
   eventData: EventData;
   user: User;
+  setUser: React.Dispatch<React.SetStateAction<User>>
 }
 interface TicketsData {
   eventTicket: number,
@@ -42,9 +46,11 @@ const BoxBuyTicket: React.FC<Props> = ({
   // setBoxBuyTicketDisplay,
   // rightContainerGridRef,
   setShowComponent,
+  setOpenOkAlert,
   presentationData,
   eventData,
   user,
+  setUser,
 }) => {
   // const displayBoxBuyTickectRef = React.useRef<any>(null);
   const [ticketData, setTicketData] = React.useState<TicketsData>({
@@ -62,6 +68,14 @@ const BoxBuyTicket: React.FC<Props> = ({
     setShowComponent(false);
   };
 
+  const handleCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
+  };
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
+
   const buyTicket = () => {
     if (presentationData._id === '' || ticketData.presentationTicket === 0) {
       const data = {
@@ -71,8 +85,19 @@ const BoxBuyTicket: React.FC<Props> = ({
         numEventTickets: ticketData.eventTicket,
       };
       api.put('/users/buyTicket/', data).then((response) => {
-        // setPresentations(response.data);
-        // console.log(response.data);
+        if (response.status === 200) {
+          setOpenOkAlert(true);
+          handleCloseConfirmDialog();
+          setShowComponent(false);
+          // setTk(localStorage.getItem('token'));
+          api.get(
+            `/users/find/${user.cpfCnpj}`,
+          ).then((res) => {
+            setUser(res.data.user);
+          }).catch((error) => {
+            console.log(error.response);
+          });
+        }
       });
     } else {
       const data = {
@@ -83,18 +108,23 @@ const BoxBuyTicket: React.FC<Props> = ({
         numPresTickets: ticketData.presentationTicket,
       };
       api.put('/users/buyTicket/', data).then((response) => {
-        // setPresentations(response.data);
-        // console.log(response.data);
+        if (response.status === 200) {
+          setOpenOkAlert(true);
+          handleCloseConfirmDialog();
+          api.get(
+            `/users/find/${user.cpfCnpj}`,
+          ).then((res) => {
+            setUser(res.data.user);
+          }).catch((error) => {
+            console.log(error.response);
+          });
+        }
+      }).catch((err) => {
+        console.log(err);
       });
     }
   };
-  const handleCloseConfirmDialog = () => {
-    setOpenConfirmDialog(false);
-  };
 
-  const handleOpenConfirmDialog = () => {
-    setOpenConfirmDialog(true);
-  };
   const ConfirmDialogLoginRequest: React.FC = () => {
     return (
       <Dialog
@@ -265,12 +295,6 @@ const BoxBuyTicket: React.FC<Props> = ({
     );
   };
 
-  const BoxTitle: React.FC = () => {
-    return (
-      <div>teste</div>
-    );
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
@@ -278,6 +302,7 @@ const BoxBuyTicket: React.FC<Props> = ({
           ? <span>Apenas evento selecionado</span>
           : <span>Apresentação selecionada - {presentationData.title}</span>
         }
+        {/* <BoxTitle /> */}
       </Typography>
       <Box className='rightGridContent'>
         <Grid container rowGap={2} columns={{ sm: 8, md: 8 }}>
