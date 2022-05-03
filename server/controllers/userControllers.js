@@ -4,6 +4,7 @@ const Event = require("../models/eventModel");
 const mongoose = require("mongoose");
 const generateToken = require("../utils/generateToken");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, confirmPassword, cpfCnpj, cell, userType } =
@@ -47,37 +48,44 @@ const userBuyTicket = asyncHandler(async (req, res) => {
   const { presentationId, eventId, userEmail } = req.body;
   // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
-  const registeredEvent = await User.findOne(
-    { email: userEmail, 'userRegisteredEvents.eventId': eventId },
-  ).catch(err => {
+  const registeredEvent = await User.findOne({
+    email: userEmail,
+    "userRegisteredEvents.eventId": eventId,
+  }).catch((err) => {
     console.log(err);
   });
 
   if (registeredEvent) {
-    console.log('Registro de evento já criado. Atualizando com novos dados');
+    console.log("Registro de evento já criado. Atualizando com novos dados");
     const updatePresId = await User.updateOne(
-      { email: userEmail, 'userRegisteredEvents.eventId': eventId },
-      { $push: { "userRegisteredEvents.$.userRegisteredPresentationsId": presentationId } },
-    ).catch(err => {
+      { email: userEmail, "userRegisteredEvents.eventId": eventId },
+      {
+        $push: {
+          "userRegisteredEvents.$.userRegisteredPresentationsId":
+            presentationId,
+        },
+      }
+    ).catch((err) => {
       console.log(err);
     });
     return res.json(updatePresId);
   } else {
-    console.log('Registro para esse evento inexistente. Criando novo registro');
+    console.log("Registro para esse evento inexistente. Criando novo registro");
     const newRegisteredEventField = await User.updateOne(
       {
         email: userEmail,
       },
       {
         $push: {
-          "userRegisteredEvents": {
+          userRegisteredEvents: {
             eventId: eventId,
-            "userRegisteredPresentationsId": presentationId,
-          }
-        }
-      }).catch(err => {
-        console.log(err);
-      });
+            userRegisteredPresentationsId: presentationId,
+          },
+        },
+      }
+    ).catch((err) => {
+      console.log(err);
+    });
     return res.json(newRegisteredEventField);
   }
 });
@@ -142,7 +150,8 @@ const changeUserData = asyncHandler(async (req, res) => {
   if (email === "") {
     email = userFind.email;
   }
-
+  const salt = await bcrypt.genSalt(10);
+  password = await bcrypt.hash(password, salt);
   let dataCreate = {
     name,
     password,
