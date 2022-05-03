@@ -1,4 +1,4 @@
-import '../styles/Drawer.css';
+import "../styles/Drawer.css";
 import {
   Box,
   Divider,
@@ -6,19 +6,20 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@mui/material';
-import Drawer from '@mui/material/Drawer';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import LoginIcon from '@mui/icons-material/Login';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { ThemeProvider } from '@mui/material/styles';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import MuiStyles from '../styles/MuiStyles';
-import CreateEventsModalDetails from './CreateEventsModalDetails';
-import CreatePalestraModalDetails from './CreatePalestraModalDetails';
-import { User } from '../pages/HomePageUser';
+} from "@mui/material";
+import Drawer from "@mui/material/Drawer";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import LoginIcon from "@mui/icons-material/Login";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import { ThemeProvider } from "@mui/material/styles";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import MuiStyles from "../styles/MuiStyles";
+import CreateEventsModalDetails from "./CreateEventsModalDetails";
+import CreatePalestraModalDetails from "./CreatePalestraModalDetails";
+import { User } from "../pages/HomePageUser";
+import { EventData } from "./Itens";
 
 const drawerWidth = 240;
 
@@ -27,6 +28,7 @@ interface Props {
   setIsOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
   pages: { id: number; text: string }[];
   user: User;
+  events: EventData[];
 }
 
 const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
@@ -34,49 +36,52 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
   setIsOpenDrawer,
   pages,
   user,
+  events,
 }) => {
   const [criarEvento, setCriarEvento] = useState(false);
   const [criarPalestra, setCriarPalestra] = useState(false);
   const theme = MuiStyles;
-  const [openModalDetailsPalestra, setOpenModalDetailsPalestra] = React.useState(false);
+  const [openModalDetailsPalestra, setOpenModalDetailsPalestra] =
+    React.useState(false);
 
   const handleDrawerToggle = () => {
     console.log(isOpenDrawer);
     setIsOpenDrawer(!isOpenDrawer);
     console.log(isOpenDrawer);
   };
-  const [openModalDetailsEvento, setOpenModalDetailsEvento] = React.useState(false);
+  const [openModalDetailsEvento, setOpenModalDetailsEvento] =
+    React.useState(false);
 
   const handleDrawerClick = (id: number) => {
     // setIsOpenModalCreateProduct(true);
     if (id === 1) {
-      console.log('mostrar aqui a tela de criar eventos');
+      console.log("mostrar aqui a tela de criar eventos");
       setCriarEvento(true);
       console.log(criarEvento);
       setOpenModalDetailsEvento(true);
     }
     if (id === 2) {
-      console.log('mostrar aqui a tela de criar palestras');
+      console.log("mostrar aqui a tela de criar palestras");
       setCriarPalestra(true);
       console.log(criarPalestra);
       setOpenModalDetailsPalestra(true);
     }
   };
   const itensDrawer = [
-    { id: 0, text: 'Home', icon: <HomeOutlinedIcon color="secondary" /> },
+    { id: 0, text: "Home", icon: <HomeOutlinedIcon color="secondary" /> },
     {
       id: 1,
-      text: 'Criar evento',
+      text: "Criar evento",
       icon: <StarOutlinedIcon color="secondary" />,
     },
     {
       id: 2,
-      text: 'Criar palestra',
+      text: "Criar palestra",
       icon: <StarOutlinedIcon color="secondary" />,
     },
     {
       id: 3,
-      text: 'Relatórios',
+      text: "Relatórios",
       icon: <ShoppingBagOutlinedIcon color="secondary" />,
     },
   ];
@@ -84,13 +89,13 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
   const drawer = (
     <Box>
       <List>
-        <ListItem button sx={{ display: { sm: 'none' } }}>
+        <ListItem button sx={{ display: { sm: "none" } }}>
           <ListItemIcon>
             <LoginIcon color="secondary" />
           </ListItemIcon>
           <Link
-            to={'/LoginAndRegister'}
-            style={{ textDecoration: 'none', color: 'inherit' }}
+            to={"/LoginAndRegister"}
+            style={{ textDecoration: "none", color: "inherit" }}
           >
             <ListItemText primary="Login/Cadastro" />
           </Link>
@@ -107,7 +112,7 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
         ))}
       </List>
       <Divider variant="middle" color="#fff" />
-      <Box sx={{ display: { sm: 'none' } }}>
+      <Box sx={{ display: { sm: "none" } }}>
         <List>
           {pages.map((page) => (
             <ListItem
@@ -126,7 +131,7 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <Box
           component="nav"
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -164,6 +169,7 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
           openModalDetails={openModalDetailsPalestra}
           setOpenModalDetails={setOpenModalDetailsPalestra}
           user={user}
+          events={events}
         />
       ) : (
         <></>
