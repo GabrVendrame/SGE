@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import '../styles/BoxBuyTicket.css';
+import ScrollContainer from 'react-indiana-drag-scroll';
 import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom';
 import MuiStyles from '../styles/MuiStyles';
@@ -62,19 +63,31 @@ const BoxBuyTicket: React.FC<Props> = ({
   };
 
   const buyTicket = () => {
-    // Axios.put("http://localhost:3001/api/users/update", values)
-    console.log(user.email);
-    const data = {
-      presentationId: presentationData._id,
-      eventId: eventData._id,
-      userEmail: user.email,
-    };
-    api.put('/users/buyTicket/', data).then((response) => {
-      // setPresentations(response.data);
-      // console.log(response.data);
-    });
+    if (presentationData._id === '' || ticketData.presentationTicket === 0) {
+      const data = {
+        // presentationId: presentationData._id,
+        eventId: eventData._id,
+        userEmail: user.email,
+        numEventTickets: ticketData.eventTicket,
+      };
+      api.put('/users/buyTicket/', data).then((response) => {
+        // setPresentations(response.data);
+        // console.log(response.data);
+      });
+    } else {
+      const data = {
+        presentationId: presentationData._id,
+        eventId: eventData._id,
+        userEmail: user.email,
+        numEventTickets: ticketData.eventTicket,
+        numPresTickets: ticketData.presentationTicket,
+      };
+      api.put('/users/buyTicket/', data).then((response) => {
+        // setPresentations(response.data);
+        // console.log(response.data);
+      });
+    }
   };
-
   const handleCloseConfirmDialog = () => {
     setOpenConfirmDialog(false);
   };
@@ -82,7 +95,6 @@ const BoxBuyTicket: React.FC<Props> = ({
   const handleOpenConfirmDialog = () => {
     setOpenConfirmDialog(true);
   };
-
   const ConfirmDialogLoginRequest: React.FC = () => {
     return (
       <Dialog
@@ -113,13 +125,44 @@ const BoxBuyTicket: React.FC<Props> = ({
     );
   };
 
+  const DialogInfo: React.FC<{ category: string }> = ({ category }) => {
+    return (
+      <Box className='info'>
+        <Typography variant='h5' color='secondary' sx={{ fontWeight: 'bold' }}>
+          Dados do {category}
+        </Typography>
+        <Typography sx={{ mt: 2, mb: 2 }}>
+          <span style={{ color: '#DEC0F7' }}>
+            Título
+          </span> - {category === 'evento'
+            ? eventData.title
+            : presentationData.title}
+        </Typography>
+        <Typography sx={{ mt: 2, mb: 2 }}>
+          <span style={{ color: '#DEC0F7' }}>
+            Número de ingressos
+          </span> - {category === 'evento'
+            ? ticketData.eventTicket
+            : ticketData.presentationTicket}
+        </Typography>
+        <Typography sx={{ mt: 2, mb: 2 }}>
+          <span style={{ color: '#DEC0F7' }}>
+            Preço unitário
+          </span> - R$ {category === 'evento'
+            ? eventData.value?.toFixed(2)
+            : presentationData.value?.toFixed(2)}
+        </Typography>
+      </Box>
+    );
+  };
+
   const ConfirmDialogBuyTicket: React.FC = () => {
-    const totalPrice = (presentationData.value! * ticketData.presentationTicket)
-      + (eventData.value! * ticketData.eventTicket);
+    const totalPrice = (presentationData.value! * ticketData.presentationTicket!)
+      + (eventData.value! * ticketData.eventTicket!);
+    // const dialogWidth
     return (
       <Dialog
-        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-        // maxWidth="xs"
+        sx={{ '& .MuiDialog-paper': { maxHeight: 435 } }}
         open={openConfirmDialog}
         onClose={handleCloseConfirmDialog}
       >
@@ -127,66 +170,31 @@ const BoxBuyTicket: React.FC<Props> = ({
         <DialogContent dividers>
           {/* <DialogContentText> */}
           <Box className='buyTicketsDialogInfo'>
-            <Box className='eventsInfo'>
-              <Typography variant='h5' color='secondary' sx={{ fontWeight: 'bold' }}>
-                Dados do evento
-              </Typography>
-              <Typography sx={{ mt: 2, mb: 2 }}>
-                <span style={{ color: '#DEC0F7' }}>
-                  Título
-                </span> - {eventData.title}
-              </Typography>
-              <Typography sx={{ mt: 2, mb: 2 }}>
-                <span style={{ color: '#DEC0F7' }}>
-                  Número de ingressos
-                </span> - {ticketData.eventTicket}
-              </Typography>
-              <Typography sx={{ mt: 2, mb: 2 }}>
-                <span style={{ color: '#DEC0F7' }}>
-                  Preço unitário
-                </span> - R$ {eventData.value?.toFixed(2)}
-              </Typography>
-            </Box>
-            {/* <Divider orientation='vertical' flexItem/> */}
-            <Box className='presentationInfo'>
-              <Typography variant='h5' color='secondary' sx={{ fontWeight: 'bold' }}>
-                Dados da apresentação
-              </Typography>
-              <Typography sx={{ mt: 2, mb: 2 }}>
-                <span style={{ color: '#DEC0F7' }}>
-                  Título
-                </span> - {presentationData.title}
-              </Typography>
-              <Typography sx={{ mt: 2, mb: 2 }}>
-                <span style={{ color: '#DEC0F7' }}>
-                  Número de ingressos
-                </span> - {ticketData.presentationTicket}
-              </Typography>
-              <Typography sx={{ mt: 2, mb: 2 }}>
-                <span style={{ color: '#DEC0F7' }}>
-                  Preço unitário
-                </span> - R$ {presentationData.value?.toFixed(2)}
-              </Typography>
-            </Box>
+            <ScrollContainer className='buyTicketsDialogInfo'>
+              <DialogInfo category='evento' />
+            </ScrollContainer>
+            {presentationData._id === '' || ticketData.presentationTicket === 0
+              ? null
+              : <ScrollContainer className='buyTicketsDialogInfo'>
+                <DialogInfo category='apresentação' />
+              </ScrollContainer>
+            }
           </Box>
           <Typography variant='h6' sx={{ mt: 2, mb: 2, fontWeight: 'bold' }}>
             Preço total
             - <span style={{ color: '#4caf50' }}> R$ {totalPrice.toFixed(2)}</span>
           </Typography>
-
           {/* </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Button color='secondary' autoFocus onClick={handleCloseConfirmDialog}>
             Cancelar
           </Button>
-          <Link to={'/LoginAndRegister'} style={{ textDecoration: 'none' }}>
-            <Button
-              color='secondary'
-              onClick={() => buyTicket()}
-            >Confirmar
-            </Button>
-          </Link>
+          <Button
+            color='secondary'
+            onClick={() => buyTicket()}
+          >Confirmar
+          </Button>
         </DialogActions>
       </Dialog>
     );
@@ -257,17 +265,29 @@ const BoxBuyTicket: React.FC<Props> = ({
     );
   };
 
+  const BoxTitle: React.FC = () => {
+    return (
+      <div>teste</div>
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Typography color='secondary' sx={{ mt: 2, mb: 2 }}>
-        Selecionado - {presentationData.title}
+        {presentationData._id === ''
+          ? <span>Apenas evento selecionado</span>
+          : <span>Apresentação selecionada - {presentationData.title}</span>
+        }
       </Typography>
       <Box className='rightGridContent'>
         <Grid container rowGap={2} columns={{ sm: 8, md: 8 }}>
           <Grid item md={8}>
           </Grid>
           {RightTicketInputs('evento')}
-          {RightTicketInputs('apresentação')}
+          {presentationData._id === ''
+            ? null
+            : RightTicketInputs('apresentação')
+          }
         </Grid>
       </Box>
       <Box sx={{

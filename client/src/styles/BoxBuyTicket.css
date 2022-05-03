@@ -37,6 +37,8 @@
   display: flex;
   /* flex-direction: column; */
   justify-content: space-around;
+  max-height: 23vh;
+  gap: 50px;
 }
 
 .eventsInfo {
@@ -49,4 +51,11 @@
   display: flex;
   flex-direction: column;
   min-width: 250px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 250px;
 }

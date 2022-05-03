@@ -44,7 +44,12 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const userBuyTicket = asyncHandler(async (req, res) => {
-  const { presentationId, eventId, userEmail } = req.body;
+  const {
+    presentationId,
+    eventId,
+    userEmail,
+    numEventTickets,
+    numPresTickets } = req.body;
   // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
   const registeredEvent = await User.findOne(
@@ -55,30 +60,121 @@ const userBuyTicket = asyncHandler(async (req, res) => {
 
   if (registeredEvent) {
     console.log('Registro de evento já criado. Atualizando com novos dados');
-    const updatePresId = await User.updateOne(
-      { email: userEmail, 'userRegisteredEvents.eventId': eventId },
-      { $push: { "userRegisteredEvents.$.userRegisteredPresentationsId": presentationId } },
-    ).catch(err => {
-      console.log(err);
-    });
-    return res.json(updatePresId);
-  } else {
-    console.log('Registro para esse evento inexistente. Criando novo registro');
-    const newRegisteredEventField = await User.updateOne(
-      {
-        email: userEmail,
-      },
-      {
-        $push: {
-          "userRegisteredEvents": {
-            eventId: eventId,
-            "userRegisteredPresentationsId": presentationId,
-          }
-        }
-      }).catch(err => {
+    if (presentationId) {
+      console.log('Atualizando com id de apresentação')
+      const registeredPresentation = await User.findOne(
+        {
+          email: userEmail,
+          'userRegisteredEvents.eventId': eventId,
+          'userRegisteredEvents.userRegisteredPresentationsId.presentationId': presentationId
+        },
+      ).catch(err => {
         console.log(err);
       });
-    return res.json(newRegisteredEventField);
+      if (registeredPresentation) {
+        console.log('Registro de apresentação já criada, atualizando com novos dados');
+        const updateNumPresTickets = await User.updateOne(
+          {
+            email: userEmail,
+            'userRegisteredEvents.eventId': eventId,
+            'userRegisteredEvents.userRegisteredPresentationsId.presentationId': presentationId
+          },
+          {
+            $set: {
+              "userRegisteredEvents.$[i].numEventTickets": numEventTickets,
+              "userRegisteredEvents.$[i].userRegisteredPresentationsId.$[j].numPresTickets": numPresTickets
+            }
+          },
+          {
+            arrayFilters: [{
+              "i.eventId": eventId,
+            },
+            {
+              "j.presentationId": presentationId
+            }]
+          }
+        ).catch(err => {
+          console.log(err);
+        });
+        return res.json(updateNumPresTickets);
+      } else {
+        console.log('Registro de apresentação não encontrada, criando novo registro');
+        const newPresentationRegister = await User.updateOne(
+          {
+            email: userEmail,
+            'userRegisteredEvents.eventId': eventId,
+            // 'userRegisteredEvents.userRegisteredPresentationsId.presentationId': presentationId
+          },
+          {
+            $addToSet: {
+              "userRegisteredEvents.$.userRegisteredPresentationsId": {
+                presentationId: presentationId,
+                numPresTickets: numPresTickets,
+              }
+            }
+          }).catch(err => {
+            console.log(err);
+          });
+        return res.json(newPresentationRegister);
+
+      }
+    } else {
+      console.log('Atualizando sem id da apresentação')
+      const updateNumEventTickets = await User.updateOne(
+        { email: userEmail, 'userRegisteredEvents.eventId': eventId },
+        {
+          $set: {
+            "userRegisteredEvents.$.numEventTickets": numEventTickets
+          }
+        },
+      ).catch(err => {
+        console.log(err);
+      });
+      return res.json(updateNumEventTickets);
+
+    }
+  } else {
+    console.log('Registro para esse evento inexistente. Criando novo registro');
+    if (presentationId) {
+      console.log('Criando registro de evento com apresentação');
+      const newRegisteredEventField = await User.updateOne(
+        {
+          email: userEmail,
+        },
+        {
+          $push: {
+            "userRegisteredEvents": {
+              eventId: eventId,
+              numEventTickets: numEventTickets,
+              userRegisteredPresentationsId: {
+                presentationId: presentationId,
+                numPresTickets: numPresTickets,
+              },
+            }
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      return res.json(newRegisteredEventField);
+    } else {
+      console.log('Criando registro de evento sem apresentação');
+      const newRegisteredEventField = await User.updateOne(
+        {
+          email: userEmail,
+        },
+        {
+          $push: {
+            "userRegisteredEvents": {
+              eventId: eventId,
+              numEventTickets: numEventTickets,
+              userRegisteredPresentationsId: [],
+            }
+          }
+        }).catch(err => {
+          console.log(err);
+        });
+      return res.json(newRegisteredEventField);
+    }
   }
 });
 

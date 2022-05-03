@@ -154,15 +154,10 @@ const GridsModalDetails: React.FC<Props> = ({
           <PresentationDetailsAfterClick />
         </Collapse >
         {/* <Collapse in={open} className='collapseContainer'> */}
-        {selectedPresentation
-          // eslint-disable-next-line operator-linebreak
-          ?
-          <Box className='buttonsWapper'>
-            <Button color='secondary' >Adicionar ao carrinho</Button>
-            <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
-          </Box>
-          : null}
-        {/* </Collapse> */}
+        <Box className='buttonsWapper'>
+          <Button color='secondary' >Adicionar ao carrinho</Button>
+          <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
+        </Box>
       </>
     );
   };

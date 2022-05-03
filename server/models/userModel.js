@@ -14,7 +14,13 @@ const userSchema = mongoose.Schema({
   userRegisteredEvents: [
     {
       eventId: String,
-      userRegisteredPresentationsId: [],
+      numEventTickets: Number,
+      userRegisteredPresentationsId: [
+        {
+          presentationId: String,
+          numPresTickets: Number,
+        }
+      ],
     }
   ],
   // presentationsId: [],

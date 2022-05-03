@@ -26,6 +26,14 @@ export interface User {
   cpfCnpj: string;
   cell: string;
   userType: string;
+  userRegisteredEvents: [{
+    eventId: string,
+    numEventTickets: number,
+    userRegisteredPresentationsId: [{
+      presentationId: string,
+      numPresTickets: number,
+    }]
+  }],
 }
 
 function HomePageUser() {
@@ -45,6 +53,14 @@ function HomePageUser() {
     cpfCnpj: '',
     cell: '',
     userType: '',
+    userRegisteredEvents: [{
+      eventId: '',
+      numEventTickets: 0,
+      userRegisteredPresentationsId: [{
+        presentationId: '',
+        numPresTickets: 0,
+      }],
+    }],
   });
   const [tk, setTk] = useState<any>();
   const navigate = useNavigate();
