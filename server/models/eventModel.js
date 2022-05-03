@@ -7,6 +7,7 @@ const EventSchema = new mongoose.Schema({
   value: Number,
   remainingVacancies: Number,
   isSingleDay: Boolean,
+  createdBy: String,
   dateByDay: [
     {
       initialDate: Date,

@@ -109,7 +109,7 @@ const Itens: React.FC<Props> = ({ searchValues, user }) => {
       return item.title.toLowerCase().includes(searchValues.toLowerCase());
     })
     : Events;
-
+  console.log(user);
   const HandleOpenModalDetails = (obj: EventData) => {
     // console.log('Fazendo requisição..');
     api
@@ -150,7 +150,7 @@ const Itens: React.FC<Props> = ({ searchValues, user }) => {
                   component="img"
                   height="400"
                   image={item.url}
-                  // alt="green iguana"
+                // alt="green iguana"
                 />
                 <CardContent>
                   <Typography

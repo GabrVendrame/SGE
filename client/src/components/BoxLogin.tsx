@@ -10,7 +10,7 @@ import BoxInputPadrao from './BoxInputPadrao';
 
 import ButtonStyles from '../styles/MuiStyles';
 
-export interface Props {}
+export interface Props { }
 
 export const BoxLogin: React.FC = () => {
   const [data, setData] = useState({
@@ -31,7 +31,9 @@ export const BoxLogin: React.FC = () => {
   const reqLogion = (data: any) => {
     Axios.post('http://localhost:3001/api/users/login', data)
       .then((res: any) => {
+        // console.log(data);
         localStorage.setItem('token', res.data.tk.id.cpfCnpj);
+        // console.log(res.data);
         window.location.reload();
       })
       .catch((error: any) => {

@@ -15,6 +15,7 @@ import BoxInputPadrao from './BoxInputPadrao';
 interface Props {
   openModalDetails: boolean;
   setOpenModalDetails: React.Dispatch<React.SetStateAction<boolean>>;
+  user: User;
 }
 
 export interface Event {
@@ -24,6 +25,7 @@ export interface Event {
   value: Number;
   remainingVacancies: Number;
   isSingleDay: Boolean;
+  createdBy: String;
   dateByDay: [
     {
       initialDate: Date;
@@ -36,6 +38,7 @@ export interface Event {
 const CreateEventsModalDetails: React.FC<Props> = ({
   openModalDetails,
   setOpenModalDetails,
+  user,
 }) => {
   const theme = MuiStyles;
   // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
@@ -47,6 +50,7 @@ const CreateEventsModalDetails: React.FC<Props> = ({
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
+    createdBy: user.cpfCnpj,
     dateByDay: [
       {
         initialDate: new Date(),

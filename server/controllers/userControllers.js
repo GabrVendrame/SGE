@@ -11,8 +11,9 @@ const registerUser = asyncHandler(async (req, res) => {
     req.body;
 
   const userExists = await User.findOne({ email });
+  const cpfExists = await User.findOne({ cpfCnpj });
   console.log(userExists);
-  if (userExists) {
+  if (userExists || cpfExists) {
     res.status(400);
     throw new Error("Usuario ja cadastrado");
   }

@@ -39,7 +39,6 @@ export interface User {
 
 function HomePageUser() {
   const theme = ButtonStyles;
-
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [searchValues, setSearchValues] = useState('');
   const [userType, setUserType] = useState('');
@@ -118,6 +117,7 @@ function HomePageUser() {
             pages={pages}
             isOpenDrawer={isOpenDrawer}
             setIsOpenDrawer={setIsOpenDrawer}
+            user={user}
           />
         ) : (
           <ResponsiveDrawerUsuarioPalestrante
