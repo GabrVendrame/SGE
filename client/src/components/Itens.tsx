@@ -203,7 +203,6 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
           Presentations={Presentations}
           user={user}
           setUser={setUser}
-        // setOpenOkAlert={setOpenOkAlert}
         />
       </Box>
     </ThemeProvider>

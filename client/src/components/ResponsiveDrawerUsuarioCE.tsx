@@ -19,6 +19,7 @@ import MuiStyles from '../styles/MuiStyles';
 import CreateEventsModalDetails from './CreateEventsModalDetails';
 import CreatePalestraModalDetails from './CreatePalestraModalDetails';
 import { User } from '../pages/HomePageUser';
+import { EventData } from './Itens';
 
 const drawerWidth = 240;
 
@@ -27,6 +28,7 @@ interface Props {
   setIsOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
   pages: { id: number; text: string }[];
   user: User;
+  events: EventData[];
 }
 
 const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
@@ -34,6 +36,7 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
   setIsOpenDrawer,
   pages,
   user,
+  events,
 }) => {
   const [criarEvento, setCriarEvento] = useState(false);
   const [criarPalestra, setCriarPalestra] = useState(false);
@@ -164,6 +167,7 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
           openModalDetails={openModalDetailsPalestra}
           setOpenModalDetails={setOpenModalDetailsPalestra}
           user={user}
+          events={events}
         />
       ) : (
         <></>

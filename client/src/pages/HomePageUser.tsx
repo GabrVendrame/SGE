@@ -12,11 +12,11 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Header from '../components/HeaderLogged';
 // import ResponsiveDrawer from "../components/ResponsiveDrawer";
 import ResponsiveDrawer from '../components/ResponsiveDrawer';
-import Itens from '../components/Itens';
+import Itens, { EventData } from '../components/Itens';
 import ButtonStyles from '../styles/MuiStyles';
 import SearchField from '../components/SearchField';
 import ResponsiveDrawerUsuarioComum from '../components/ResponsiveDrawerUsuarioComum';
-
+import api from '../services/api';
 import ResponsiveDrawerUsuarioPalestrante from '../components/ResponsiveDrawerUsuarioPalestrante';
 import ResponsiveDrawerUsuarioCE from '../components/ResponsiveDrawerUsuarioCE';
 
@@ -27,17 +27,22 @@ export interface User {
   cpfCnpj: string;
   cell: string;
   userType: string;
-  userRegisteredEvents: [{
-    eventId: string,
-    numEventTickets: number,
-    userRegisteredPresentationsId: [{
-      presentationId: string,
-      numPresTickets: number,
-    }]
-  }],
+  userRegisteredEvents: [
+    {
+      eventId: string;
+      numEventTickets: number;
+      userRegisteredPresentationsId: [
+        {
+          presentationId: string;
+          numPresTickets: number;
+        }
+      ];
+    }
+  ];
 }
 
 function HomePageUser() {
+  const [Events, setEvents] = React.useState<EventData[]>([]);
   const theme = ButtonStyles;
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [searchValues, setSearchValues] = useState('');
@@ -53,14 +58,18 @@ function HomePageUser() {
     cpfCnpj: '',
     cell: '',
     userType: '',
-    userRegisteredEvents: [{
-      eventId: '',
-      numEventTickets: 0,
-      userRegisteredPresentationsId: [{
-        presentationId: '',
-        numPresTickets: 0,
-      }],
-    }],
+    userRegisteredEvents: [
+      {
+        eventId: '',
+        numEventTickets: 0,
+        userRegisteredPresentationsId: [
+          {
+            presentationId: '',
+            numPresTickets: 0,
+          },
+        ],
+      },
+    ],
   });
   const [tk, setTk] = useState<any>();
   const navigate = useNavigate();
@@ -80,17 +89,24 @@ function HomePageUser() {
 
         setUser(res.data.user);
         setUserType(res.data.user.userType);
+        if (res.data.user.userType === 'Usuario Criador de Evento') {
+          console.log('fon');
+          api.get('/events').then((response) => {
+            setEvents(response.data);
+          });
+        }
         // console.log(user);
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
       });
     // handleLoadUser();
   }, []);
 
   // console.log("fora", user);
-  // console.log('Tipo do usuario ', userType);
+  // console.log("Tipo do usuario ", userType);
   // console.log(user);
+  console.log('AAA', Events);
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -118,6 +134,7 @@ function HomePageUser() {
             isOpenDrawer={isOpenDrawer}
             setIsOpenDrawer={setIsOpenDrawer}
             user={user}
+            events={Events}
           />
         ) : (
           <ResponsiveDrawerUsuarioPalestrante

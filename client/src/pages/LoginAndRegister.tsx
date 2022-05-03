@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { Box } from '@mui/material';
-
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/HeaderPageLoginRegister';
 import '../styles/LoginAndRegister.css';
 import BoxLogin from '../components/BoxLogin';
 import BoxRegisterPrimeiraEtapa from '../components/BoxRegisterPrimeiraEtapa';
 import BoxRegisterSegundaEtapa from '../components/BoxRegisterSegundaEtapa';
-import { useNavigate } from 'react-router-dom';
 
 function LoginAndRegister() {
   const navigate = useNavigate();
