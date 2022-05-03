@@ -1,25 +1,29 @@
-import Card from '@mui/material/Card';
+import Card from "@mui/material/Card";
 import {
   Alert,
-  Box, Button, Snackbar, ThemeProvider, Typography,
-} from '@mui/material';
-import '../styles/Itens.css';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
-import React from 'react';
-import api from '../services/api';
-import MuiStyles from '../styles/MuiStyles';
-import { User } from '../pages/HomePageUser';
-import { PresentationData } from './PresentationsBox';
+  Box,
+  Button,
+  Snackbar,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
+import "../styles/Itens.css";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
+import React from "react";
+import api from "../services/api";
+import MuiStyles from "../styles/MuiStyles";
+import { User } from "../pages/HomePageUser";
+import { PresentationData } from "./PresentationsBox";
 
 // import ScrollContainer from 'react-indiana-drag-scroll';
 // import img1 from '../images/e3.jpeg';
 // import img2 from '../images/f8.png';
 // import img3 from '../images/gio.jpg';
 // import img4 from '../images/tga.jpg';
-import ModalDetails from './ModalDetails';
+import ModalDetails from "./ModalDetails";
 
 export interface EventData {
   _id: string;
@@ -40,7 +44,7 @@ export interface EventData {
 interface Props {
   searchValues: string;
   user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>
+  setUser: React.Dispatch<React.SetStateAction<User>>;
 }
 interface EventProps {
   itensData: EventData;
@@ -50,14 +54,14 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
   const [openModalDetails, setOpenModalDetails] = React.useState(false);
   const [Events, setEvents] = React.useState<EventData[]>([]);
   const [Presentations, setPresentations] = React.useState<PresentationData[]>(
-    [],
+    []
   );
 
   const [itensData, setItensData] = React.useState<EventData>({
-    _id: '',
-    title: '',
-    description: '',
-    img: '',
+    _id: "",
+    title: "",
+    description: "",
+    img: "",
     value: 0.0,
     remainingVacancies: 0,
     isSingleDay: true,
@@ -65,14 +69,14 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
       {
         initialDate: new Date(),
         finalDate: new Date(),
-        _id: '',
+        _id: "",
       },
     ],
-    url: '',
+    url: "",
   });
 
   React.useEffect(() => {
-    api.get('/events').then((response) => {
+    api.get("/events").then((response) => {
       setEvents(response.data);
     });
   }, []);
@@ -109,8 +113,8 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
 
   const filteredItens = searchValues
     ? Events.filter((item: any) => {
-      return item.title.toLowerCase().includes(searchValues.toLowerCase());
-    })
+        return item.title.toLowerCase().includes(searchValues.toLowerCase());
+      })
     : Events;
   const HandleOpenModalDetails = (obj: EventData) => {
     // console.log('Fazendo requisição..');
@@ -130,20 +134,20 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
       <Box className="itensBody">
         <Grid
           container
-          rowSpacing={'50px'}
+          rowSpacing={"50px"}
           columnSpacing={2}
           columns={{ xs: 2, sm: 4, md: 6 }}
         >
           {filteredItens.map((item) => (
             <Grid item xs={2} sm={4} md={3} key={item._id}>
               {/* {console.log()} */}
-              <Card sx={{ background: '#1C1B1F' }}>
+              <Card sx={{ background: "#1C1B1F" }}>
                 <CardContent>
                   <Typography
                     gutterBottom
                     variant="h5"
                     component="div"
-                    sx={{ color: '#E6E1E5' }}
+                    sx={{ color: "#E6E1E5" }}
                   >
                     {item.title}
                   </Typography>
@@ -152,14 +156,14 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
                   component="img"
                   height="400"
                   image={item.url}
-                // alt="green iguana"
+                  // alt="green iguana"
                 />
                 <CardContent>
                   <Typography
                     gutterBottom
                     variant="body1"
                     component="div"
-                    sx={{ color: '#E6E1E5' }}
+                    sx={{ color: "#E6E1E5" }}
                   >
                     <EventsDate itensData={item} />
                   </Typography>
@@ -167,19 +171,19 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
                     gutterBottom
                     variant="body1"
                     component="div"
-                    sx={{ color: '#E6E1E5' }}
+                    sx={{ color: "#E6E1E5" }}
                   >
                     Valor do ingreso: {item.value?.toFixed(2)}
                   </Typography>
                   <Typography
                     variant="body2"
                     color="text.secondary"
-                    sx={{ color: '#E6E1E5' }}
+                    sx={{ color: "#E6E1E5" }}
                   >
                     {item.description}
                   </Typography>
                 </CardContent>
-                <CardActions sx={{ justifyContent: 'flex-end' }}>
+                <CardActions sx={{ justifyContent: "flex-end" }}>
                   <Button size="small" variant="contained" color="secondary">
                     Compartilhar
                   </Button>

@@ -1,0 +1,13 @@
+.btns{
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-shrink: unset;
+}
+
+.titulo{
+    color: #DEC0F7;
+    font-weight: 900;
+    font-size: 2em;
+}

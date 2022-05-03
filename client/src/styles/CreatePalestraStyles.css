@@ -1,17 +1,11 @@
-.boxdiv{
-    margin-left: 10px;
+.box{
+    margin: 10px;
     padding: 10px;
     padding-top: 30px;
     word-wrap: break-word;
     color: white;
-}
-
-.titulo{
+    display: flex;
+    flex-direction: column;
     
-    color: #DEC0F7;
+    justify-content: center;
 }
-
-.cor{
-    color: #DEC0F7;
-}
-

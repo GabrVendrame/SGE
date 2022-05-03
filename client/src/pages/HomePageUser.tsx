@@ -1,24 +1,24 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import '../styles/HomePageUser.css';
-import Axios from 'axios';
+import "../styles/HomePageUser.css";
+import Axios from "axios";
 
-import { ThemeProvider } from '@mui/material/styles';
-import { Box } from '@material-ui/core';
-import { IconButton, InputAdornment } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
-import Header from '../components/HeaderLogged';
+import { ThemeProvider } from "@mui/material/styles";
+import { Box } from "@material-ui/core";
+import { IconButton, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import ClearIcon from "@mui/icons-material/Clear";
+import Header from "../components/HeaderLogged";
 // import ResponsiveDrawer from "../components/ResponsiveDrawer";
-import ResponsiveDrawer from '../components/ResponsiveDrawer';
-import Itens, { EventData } from '../components/Itens';
-import ButtonStyles from '../styles/MuiStyles';
-import SearchField from '../components/SearchField';
-import ResponsiveDrawerUsuarioComum from '../components/ResponsiveDrawerUsuarioComum';
-import api from '../services/api';
-import ResponsiveDrawerUsuarioPalestrante from '../components/ResponsiveDrawerUsuarioPalestrante';
-import ResponsiveDrawerUsuarioCE from '../components/ResponsiveDrawerUsuarioCE';
+import ResponsiveDrawer from "../components/ResponsiveDrawer";
+import Itens, { EventData } from "../components/Itens";
+import ButtonStyles from "../styles/MuiStyles";
+import SearchField from "../components/SearchField";
+import ResponsiveDrawerUsuarioComum from "../components/ResponsiveDrawerUsuarioComum";
+import api from "../services/api";
+import ResponsiveDrawerUsuarioPalestrante from "../components/ResponsiveDrawerUsuarioPalestrante";
+import ResponsiveDrawerUsuarioCE from "../components/ResponsiveDrawerUsuarioCE";
 
 export interface User {
   name: string;
@@ -41,30 +41,47 @@ export interface User {
   ];
 }
 
+export interface Presentation {
+  title: String;
+  description: String;
+  img: String;
+  value: Number;
+  remainingVacancies: Number;
+  isSingleDay: Boolean;
+  dateByDay: [
+    {
+      initialDate: Date;
+      finalDate: Date;
+    }
+  ];
+  eventId: String;
+}
+
 function HomePageUser() {
   const [Events, setEvents] = React.useState<EventData[]>([]);
+  const [presentation, setPresentation] = React.useState<Presentation[]>([]);
   const theme = ButtonStyles;
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-  const [searchValues, setSearchValues] = useState('');
-  const [userType, setUserType] = useState('');
+  const [searchValues, setSearchValues] = useState("");
+  const [userType, setUserType] = useState("");
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // console.log(event.target.value);
     setSearchValues(event.target.value);
   };
   const [user, setUser] = useState<User>({
-    name: '',
-    email: '',
-    password: '',
-    cpfCnpj: '',
-    cell: '',
-    userType: '',
+    name: "",
+    email: "",
+    password: "",
+    cpfCnpj: "",
+    cell: "",
+    userType: "",
     userRegisteredEvents: [
       {
-        eventId: '',
+        eventId: "",
         numEventTickets: 0,
         userRegisteredPresentationsId: [
           {
-            presentationId: '',
+            presentationId: "",
             numPresTickets: 0,
           },
         ],
@@ -74,25 +91,28 @@ function HomePageUser() {
   const [tk, setTk] = useState<any>();
   const navigate = useNavigate();
   const pages = [
-    { id: 0, text: 'Sobre nós' },
-    { id: 1, text: 'FAQ' },
-    { id: 2, text: 'Contato' },
+    { id: 0, text: "Sobre nós" },
+    { id: 1, text: "FAQ" },
+    { id: 2, text: "Contato" },
   ];
 
   useEffect(() => {
-    setTk(localStorage.getItem('token'));
+    setTk(localStorage.getItem("token"));
     Axios.get(
-      `http://localhost:3001/api/users/find/${localStorage.getItem('token')}`,
+      `http://localhost:3001/api/users/find/${localStorage.getItem("token")}`
     )
       .then((res) => {
         // console.log("req", res.data.user.userType);
 
         setUser(res.data.user);
         setUserType(res.data.user.userType);
-        if (res.data.user.userType === 'Usuario Criador de Evento') {
-          console.log('fon');
-          api.get('/events').then((response) => {
+        if (res.data.user.userType === "Usuario Criador de Evento") {
+          console.log("fon");
+          api.get("/events").then((response) => {
             setEvents(response.data);
+          });
+          api.get("/presentations").then((response) => {
+            setPresentation(response.data);
           });
         }
         // console.log(user);
@@ -106,13 +126,15 @@ function HomePageUser() {
   // console.log("fora", user);
   // console.log("Tipo do usuario ", userType);
   // console.log(user);
-  console.log('AAA', Events);
+
+  console.log("AAA", Events);
+  console.log("AAA", presentation);
   return (
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          width: '100%',
-          position: 'fixed',
+          width: "100%",
+          position: "fixed",
         }}
       >
         <Header
@@ -122,19 +144,20 @@ function HomePageUser() {
           setIsOpenDrawer={setIsOpenDrawer}
         />
 
-        {userType === 'Usuario Comum' ? (
+        {userType === "Usuario Comum" ? (
           <ResponsiveDrawerUsuarioComum
             pages={pages}
             isOpenDrawer={isOpenDrawer}
             setIsOpenDrawer={setIsOpenDrawer}
           />
-        ) : userType === 'Usuario Criador de Evento' ? (
+        ) : userType === "Usuario Criador de Evento" ? (
           <ResponsiveDrawerUsuarioCE
             pages={pages}
             isOpenDrawer={isOpenDrawer}
             setIsOpenDrawer={setIsOpenDrawer}
             user={user}
             events={Events}
+            presentations={presentation}
           />
         ) : (
           <ResponsiveDrawerUsuarioPalestrante
@@ -147,7 +170,7 @@ function HomePageUser() {
         <Box className="divSearchbarAndItens">
           <SearchField
             onChange={handleChange}
-            sx={{ marginTop: { sm: '35px' }, mb: '25px' }}
+            sx={{ marginTop: { sm: "35px" }, mb: "25px" }}
             fullWidth
             placeholder="Pesquisar evento ou apresentação"
             InputProps={{
