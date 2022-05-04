@@ -1,4 +1,3 @@
-import { InputAdornment } from '@mui/material';
 import React from 'react';
 import BoxInputStyle from '../styles/BoxInput';
 
@@ -34,11 +33,7 @@ export const BoxInputPadrao: React.FC<Props> = ({
         id="outlined-basic"
         variant="outlined"
         placeholder={placeHolder}
-      // InputProps={{
-      //   endAdornment: <InputAdornment position="end">kg</InputAdornment>,
-      // }}
       />
-
       <div>{helperText}</div>
     </>
   );

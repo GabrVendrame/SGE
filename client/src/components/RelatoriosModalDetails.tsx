@@ -1,8 +1,8 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import "../styles/EventsBoxStyles.css";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import '../styles/EventsBoxStyles.css';
 import {
   Button,
   Card,
@@ -13,20 +13,20 @@ import {
   MenuItem,
   Select,
   ThemeProvider,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import Axios from "axios";
-import MuiStyles from "../styles/MuiStyles";
-import "../styles/ProfileModalDetails.css";
-import "../styles/styleTitle.css";
-import { User } from "../pages/HomePageUser";
-import BoxInputPadrao from "./BoxInputPadrao";
-import { EventData } from "./Itens";
-import AlterarPalestraModalDetails from "./AlterarPalestraModalDetails";
-import "../styles/RelatorioStyles.css";
-import ScrollContainer from "react-indiana-drag-scroll";
-import AlterarEventoModalDetails from "./AlterarEventoModalDetails";
+} from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Axios from 'axios';
+import ScrollContainer from 'react-indiana-drag-scroll';
+import MuiStyles from '../styles/MuiStyles';
+import '../styles/ProfileModalDetails.css';
+import '../styles/styleTitle.css';
+import { User } from '../pages/HomePageUser';
+import BoxInputPadrao from './BoxInputPadrao';
+import { EventData } from './Itens';
+import AlterarPalestraModalDetails from './AlterarPalestraModalDetails';
+import '../styles/RelatorioStyles.css';
+import AlterarEventoModalDetails from './AlterarEventoModalDetails';
 
 interface Props {
   openModalDetails: boolean;
@@ -80,10 +80,10 @@ const RelatoriosModalDetails: React.FC<Props> = ({
 }) => {
   const theme = MuiStyles;
   const [presentation, setPresentation] = React.useState<Presentation>({
-    _id: "",
-    title: "",
-    description: "",
-    img: "",
+    _id: '',
+    title: '',
+    description: '',
+    img: '',
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
@@ -93,14 +93,14 @@ const RelatoriosModalDetails: React.FC<Props> = ({
         finalDate: new Date(),
       },
     ],
-    eventId: "",
+    eventId: '',
   });
 
   const [eventoselecionado, setEventoselecionado] = React.useState<EventData>({
-    _id: "",
-    title: "",
-    description: "",
-    img: "",
+    _id: '',
+    title: '',
+    description: '',
+    img: '',
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
@@ -108,38 +108,37 @@ const RelatoriosModalDetails: React.FC<Props> = ({
       {
         initialDate: new Date(),
         finalDate: new Date(),
-        _id: "",
+        _id: '',
       },
     ],
-    url: "",
+    url: '',
   });
 
-  const [palestraselecionada, setPalestraselecionada] =
-    React.useState<Presentation>({
-      _id: "",
-      title: "",
-      description: "",
-      img: "",
-      value: 0,
-      remainingVacancies: 0,
-      isSingleDay: false,
-      dateByDay: [
-        {
-          initialDate: new Date(),
-          finalDate: new Date(),
-        },
-      ],
-      eventId: "",
-    });
+  const [palestraselecionada, setPalestraselecionada] = React.useState<Presentation>({
+    _id: '',
+    title: '',
+    description: '',
+    img: '',
+    value: 0,
+    remainingVacancies: 0,
+    isSingleDay: false,
+    dateByDay: [
+      {
+        initialDate: new Date(),
+        finalDate: new Date(),
+      },
+    ],
+    eventId: '',
+  });
 
   const [alterarEvento, setAlterarEvento] = React.useState(false);
   const [alterarPalestra, setAlterarPalestra] = React.useState(false);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [event, setEvent] = React.useState<EventData>({
-    _id: "",
-    title: "",
-    description: "",
-    img: "",
+    _id: '',
+    title: '',
+    description: '',
+    img: '',
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
@@ -147,10 +146,10 @@ const RelatoriosModalDetails: React.FC<Props> = ({
       {
         initialDate: new Date(),
         finalDate: new Date(),
-        _id: "",
+        _id: '',
       },
     ],
-    url: "",
+    url: '',
   });
   const handleClose = () => {
     setOpenModalDetails(false);
@@ -159,50 +158,47 @@ const RelatoriosModalDetails: React.FC<Props> = ({
 
   const handleAlterarEvento = (evnt: EventData) => {
     setAlterarEvento(true);
-    console.log("tela de alterar evento");
+    console.log('tela de alterar evento');
     setEventoselecionado(evnt);
-
-    //console.log(evnt);
   };
 
   const handleAlterarPalestra = (evnt: Presentation) => {
     setAlterarPalestra(true);
-    console.log("tela de alterar palestra");
+    console.log('tela de alterar palestra');
     setPalestraselecionada(evnt);
-    //console.log(evnt);
   };
 
   const excluirPalestra = (evnt: Presentation) => {
-    console.log("fazer requisicao de excluir palestra");
+    console.log('fazer requisicao de excluir palestra');
     const { _id } = evnt;
     console.log(_id);
     Axios.delete(
-      `http://localhost:3001/api/presentations/deletePresentations/${_id}`
+      `http://localhost:3001/api/presentations/deletePresentations/${_id}`,
     )
       .then((res) => {
-        alert("Palestra removida");
+        alert('Palestra removida');
         window.location.reload();
       })
       .catch((error) => {
-        alert("Erro");
+        alert('Erro');
       });
   };
 
   const excluirEvento = (evnt: EventData) => {
-    console.log("fazer requisicao de excluir evento");
+    console.log('fazer requisicao de excluir evento');
     if (filteredItens2.length > 0) {
-      console.log("Aqui");
+      console.log('Aqui');
       filteredItens2.map((item) => {
         const { _id } = item;
         console.log(_id);
         Axios.delete(
-          `http://localhost:3001/api/presentations/deletePresentations/${_id}`
+          `http://localhost:3001/api/presentations/deletePresentations/${_id}`,
         )
           .then((res) => {
-            console.log("Palestra removida");
+            console.log('Palestra removida');
           })
           .catch((error) => {
-            console.log("Erro");
+            console.log('Erro');
           });
       });
     }
@@ -210,19 +206,19 @@ const RelatoriosModalDetails: React.FC<Props> = ({
     console.log(_id);
     Axios.delete(`http://localhost:3001/api/events/deleteEvents/${_id}`)
       .then((res) => {
-        alert("Evento removido");
+        alert('Evento removido');
         window.location.reload();
       })
       .catch((error) => {
-        alert("Erro");
+        alert('Erro');
       });
   };
 
   console.log(presentations);
   const filteredItens = user.cpfCnpj
     ? events.filter((item: any) => {
-        return item.createdBy == user.cpfCnpj.toLowerCase();
-      })
+      return item.createdBy == user.cpfCnpj.toLowerCase();
+    })
     : [];
 
   let filteredItens2: Presentation[] = [];
@@ -252,7 +248,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
               variant="h6"
               component="h2"
             >
-              {"Eventos e palestras"}
+              {'Eventos e palestras'}
             </Typography>
             <Divider color="#DEC0F7" />
             <div className="box">
@@ -263,22 +259,19 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                   {filteredItens.map((event) => (
                     <Card
                       sx={{
-                        background: "#1C1B1F",
-                        display: "flex",
-                        overflow: "initial",
+                        background: '#1C1B1F',
+                        display: 'flex',
+                        overflow: 'initial',
                       }}
                       key={event._id}
                     >
                       <CardMedia className="cardImg" image={event.url} />
-                      <CardActionArea
-                      // disabled={disableCard}
-                      //onClick={(e) => handlePresentationData(event, e)}
-                      >
+                      <CardActionArea>
                         <CardContent>
                           <Typography
                             gutterBottom
                             component="div"
-                            sx={{ color: "#E6E1E5" }}
+                            sx={{ color: '#E6E1E5' }}
                           >
                             {event.title}
                           </Typography>
@@ -286,7 +279,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             gutterBottom
                             variant="body2"
                             component="div"
-                            sx={{ color: "#E6E1E5" }}
+                            sx={{ color: '#E6E1E5' }}
                           >
                             Valor do ingresso - R$ {event.value?.toFixed(2)}
                           </Typography>
@@ -294,7 +287,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             gutterBottom
                             variant="body2"
                             component="div"
-                            sx={{ color: "#E6E1E5" }}
+                            sx={{ color: '#E6E1E5' }}
                           >
                             Vagas restantes - {event.remainingVacancies}
                           </Typography>
@@ -304,12 +297,12 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             type="button"
                             onClick={() => handleAlterarEvento(event)}
                             sx={{
-                              borderRadius: "15px",
+                              borderRadius: '15px',
                               // background: "#6750A4",
-                              width: "30%",
-                              paddingBottom: "10px",
-                              height: "30px",
-                              marginLeft: "10px",
+                              width: '30%',
+                              paddingBottom: '10px',
+                              height: '30px',
+                              marginLeft: '10px',
                             }}
                             color="secondary"
                             variant="contained"
@@ -320,12 +313,11 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             type="button"
                             onClick={() => excluirEvento(event)}
                             sx={{
-                              borderRadius: "15px",
-                              // background: "#6750A4",
-                              width: "30%",
-                              paddingBottom: "10px",
-                              height: "30px",
-                              marginLeft: "10px",
+                              borderRadius: '15px',
+                              width: '30%',
+                              paddingBottom: '10px',
+                              height: '30px',
+                              marginLeft: '10px',
                             }}
                             color="secondary"
                             variant="contained"
@@ -340,21 +332,18 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                   {filteredItens2.map((event) => (
                     <Card
                       sx={{
-                        background: "#1C1B1F",
-                        display: "flex",
-                        overflow: "initial",
+                        background: '#1C1B1F',
+                        display: 'flex',
+                        overflow: 'initial',
                       }}
                     >
                       <CardMedia className="cardImg" />
-                      <CardActionArea
-                      // disabled={disableCard}
-                      //onClick={(e) => handlePresentationData(event, e)}
-                      >
+                      <CardActionArea>
                         <CardContent>
                           <Typography
                             gutterBottom
                             component="div"
-                            sx={{ color: "#E6E1E5" }}
+                            sx={{ color: '#E6E1E5' }}
                           >
                             {event.title}
                           </Typography>
@@ -362,7 +351,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             gutterBottom
                             variant="body2"
                             component="div"
-                            sx={{ color: "#E6E1E5" }}
+                            sx={{ color: '#E6E1E5' }}
                           >
                             Valor do ingresso - R$ {event.value?.toFixed(2)}
                           </Typography>
@@ -370,7 +359,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             gutterBottom
                             variant="body2"
                             component="div"
-                            sx={{ color: "#E6E1E5" }}
+                            sx={{ color: '#E6E1E5' }}
                           >
                             Vagas restantes - {event.remainingVacancies}
                           </Typography>
@@ -380,12 +369,11 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             type="button"
                             onClick={() => handleAlterarPalestra(event)}
                             sx={{
-                              borderRadius: "15px",
-                              // background: "#6750A4",
-                              width: "30%",
-                              paddingBottom: "10px",
-                              height: "30px",
-                              marginLeft: "10px",
+                              borderRadius: '15px',
+                              width: '30%',
+                              paddingBottom: '10px',
+                              height: '30px',
+                              marginLeft: '10px',
                             }}
                             color="secondary"
                             variant="contained"
@@ -396,12 +384,11 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             type="button"
                             onClick={() => excluirPalestra(event)}
                             sx={{
-                              borderRadius: "15px",
-                              // background: "#6750A4",
-                              width: "30%",
-                              paddingBottom: "10px",
-                              height: "30px",
-                              marginLeft: "10px",
+                              borderRadius: '15px',
+                              width: '30%',
+                              paddingBottom: '10px',
+                              height: '30px',
+                              marginLeft: '10px',
                             }}
                             color="secondary"
                             variant="contained"

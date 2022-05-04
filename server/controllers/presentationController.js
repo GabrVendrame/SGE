@@ -55,7 +55,6 @@ const findRegisteredPresentationsInEvent = asyncHandler(async (req, res) => {
 });
 
 const changePresentationData = asyncHandler(async (req, res) => {
-  // const { user } = req.body;
   var { title, description, remainingVacancies, value, _id } = req.body;
 
   const presentationfind = await Presentation.findById(_id);

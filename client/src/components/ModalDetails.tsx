@@ -39,7 +39,6 @@ const ModalDetails: React.FC<Props> = ({
   setUser,
 }) => {
   const theme = MuiStyles;
-  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [openOkAlert, setOpenOkAlert] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState<boolean>(false);

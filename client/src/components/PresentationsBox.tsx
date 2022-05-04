@@ -7,9 +7,6 @@ import ScrollContainer from 'react-indiana-drag-scroll';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/Presentations.css';
 
-// import imgTeste from '../images/casa.jpg';
-// import api from '../services/api';
-
 export interface PresentationData {
   _id: string;
   title: string;
@@ -30,17 +27,12 @@ interface Props {
   Presentations: PresentationData[];
   disableCard: boolean;
 }
-// const PresentationsBox: React.FC<Props> = ({
-//   setSelectedPresentation,
-//   setPresentationData,
-// }) => {
 const PresentationsBox: React.FC<Props> = ({
   setSelectedPresentation,
   setPresentationData,
   Presentations,
   disableCard,
 }) => {
-  // formata para o tipo Date
   Presentations.forEach((presentation) => {
     presentation.dateByDay.forEach((date) => {
       date.initialDate = new Date(date.initialDate);
@@ -50,11 +42,9 @@ const PresentationsBox: React.FC<Props> = ({
   });
 
   for (let index = 0; index < Presentations.length; index++) {
-    // console.log('teste');
     Presentations[index].dateByDay[Presentations[index].dateByDay.length - 1]
       .finalDate.setHours(23);
   }
-  // console.log(Presentations);
   const theme = MuiStyles;
   const handlePresentationData = async (obj: PresentationData, e: React.MouseEvent) => {
     e.preventDefault();

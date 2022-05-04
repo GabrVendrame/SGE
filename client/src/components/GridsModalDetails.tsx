@@ -62,7 +62,6 @@ const GridsModalDetails: React.FC<Props> = ({
     }],
   });
 
-  // const [boxBuyTicketDisplay, setBoxBuyTicketDisplay] = React.useState<string>('none');
   const [showBoxBuyTicket, setShowBoxBuyTicket] = React.useState<boolean>(false);
 
   const handleDayClick = (e: React.MouseEvent, teste: ScheduleProps) => {
@@ -155,8 +154,6 @@ const GridsModalDetails: React.FC<Props> = ({
   });
 
   const InfoSection = (open: boolean) => {
-    // const InfoSection = ({ open }: { open: boolean }) => {
-    // console.log(open);
     return (
       <>
         <Box sx={{ mb: '23px' }}>
@@ -182,11 +179,9 @@ const GridsModalDetails: React.FC<Props> = ({
         </Box>
         <Collapse in={open}
           className="collapseContainer"
-        // sx={{ flex: '1 1 auto' }}
         >
           <PresentationDetailsAfterClick />
         </Collapse >
-        {/* <Collapse in={open} className='collapseContainer'> */}
         <Box className='buttonsWapper'>
           <Button color='secondary' >Adicionar ao carrinho</Button>
           <Button color='secondary' onClick={() => changeRightGrid()}>Comprar ingresso</Button>
@@ -212,7 +207,6 @@ const GridsModalDetails: React.FC<Props> = ({
         </Grid>
         <Grid item sm={8} md={4}>
           <Box
-            // ref={rightContainerGridRef}
             className='rightGridContainer'>
             {showBoxBuyTicket
               ? < BoxBuyTicket

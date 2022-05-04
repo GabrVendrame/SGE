@@ -15,7 +15,6 @@ const EventSchema = new mongoose.Schema({
     },
   ],
   url: String,
-  // registeredPresentations: [ Object ],
 });
 
 const Event = mongoose.model("Event", EventSchema);

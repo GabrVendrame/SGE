@@ -23,7 +23,6 @@ const ProfileModalDetails: React.FC<Props> = ({
   user,
 }) => {
   const theme = MuiStyles;
-  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const handleClose = () => {
     setOpenModalDetails(false);
@@ -49,21 +48,16 @@ const ProfileModalDetails: React.FC<Props> = ({
     return true;
   };
 
-  // const reqUpdate = (values) => {
-  //   console.log(values);
-  // };
-
   const formik = useFormik({
     initialValues: user,
     onSubmit: (values) => {
-      // console.log(validarReq(values));
       if (validarReq(values)) {
         values.cpfCnpj = user.cpfCnpj;
         console.log('Fazer requisicao do login aqui', values);
         Axios.put('http://localhost:3001/api/users/update', values)
           .then((res) => {
             console.log('fon');
-            alert('penis de camelo');
+            alert('Dados alterados');
             window.location.reload();
           })
           .catch((error) => {
@@ -149,7 +143,6 @@ const ProfileModalDetails: React.FC<Props> = ({
                   type="submit"
                   sx={{
                     borderRadius: '30px',
-                    // background: "#6750A4",
                     width: '100%',
                     paddingBottom: '10px',
                     height: '43px',
@@ -164,7 +157,6 @@ const ProfileModalDetails: React.FC<Props> = ({
                 onClick={() => handleClose()}
                 sx={{
                   borderRadius: '30px',
-                  // background: "#6750A4",
                   width: '100%',
                   marginTop: '10px',
                   paddingBottom: '10px',

@@ -4,10 +4,8 @@ import { Button, ThemeProvider } from '@mui/material';
 import '../styles/BoxLoginStyles.css';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import { log } from 'console';
 import HeaderLoginRegister from './HeaderLoginRegister';
 import BoxInputPadrao from './BoxInputPadrao';
-
 import ButtonStyles from '../styles/MuiStyles';
 
 export interface Props { }
@@ -31,41 +29,17 @@ export const BoxLogin: React.FC = () => {
   const reqLogion = (data: any) => {
     Axios.post('http://localhost:3001/api/users/login', data)
       .then((res: any) => {
-        // console.log(data);
         localStorage.setItem('token', res.data.tk.id.cpfCnpj);
-        // console.log(res.data);
         window.location.reload();
       })
       .catch((error: any) => {
         alert('Falha no login');
         console.log(error);
-
-        // window.location.reload();
       });
-
-    // Axios.get("http://localhost:3001/LoginAndRegister", { data })
-    //   .then((res: any) => {
-    //     console.log("asdasdasda", res.data);
-    //     if (!res) alert("penis");
-    //     else {
-    //       if (res.data.user) {
-    //         alert(
-    //           `Usuario ${res.data.res.name} do tipo ${res.data.res.userType} logado`
-    //         );
-    //         window.location.reload();
-    //       } else {
-    //         alert("Usuario nao encontrado");
-    //       }
-    //     }
-    //   })
-    //   .catch((error: any) => {
-    //     console.log(error);
-    //   });
   };
   const formik = useFormik({
     initialValues: data,
     onSubmit: (values) => {
-      // console.log("Fazer requisicao do login aqui", values);
       reqLogion(values);
     },
 
@@ -81,7 +55,6 @@ export const BoxLogin: React.FC = () => {
             subtitle={'Realize seu login'}
             local={'login'}
           />
-
           <BoxInputPadrao
             name={'email'}
             value={formik.values.email}
@@ -104,7 +77,6 @@ export const BoxLogin: React.FC = () => {
             type="submit"
             sx={{
               borderRadius: '30px',
-              // background: "#6750A4",
               width: '100%',
               paddingBottom: '10px',
               height: '43px',

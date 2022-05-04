@@ -33,7 +33,6 @@ const ResponsiveDrawer: React.FC<Props> = ({
   };
 
   const handleDrawerClick = (id: number) => {
-    // setIsOpenModalCreateProduct(true);
     console.log(id);
   };
   const itensDrawer = [
@@ -91,7 +90,6 @@ const ResponsiveDrawer: React.FC<Props> = ({
           <Drawer
             className='temporaryDrawer'
             variant="temporary"
-            // sx={{ backgroundColor: '#fff' }}
             open={isOpenDrawer}
             onClose={handleDrawerToggle}
             ModalProps={{

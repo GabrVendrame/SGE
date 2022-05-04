@@ -5,7 +5,6 @@ export interface Props {
   title: string;
   subtitle: string;
   local: string;
-  // handleclick
 }
 
 export const HeaderLoginRegister: React.FC<Props> = ({

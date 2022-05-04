@@ -9,8 +9,6 @@ const userSchema = mongoose.Schema({
   cell: String,
   userType: String,
   tk: String,
-  // presentationsId: [],
-  // eventsId: [],
   userRegisteredEvents: [
     {
       eventId: String,
@@ -23,7 +21,6 @@ const userSchema = mongoose.Schema({
       ],
     }
   ],
-  // presentationsId: [],
 });
 
 userSchema.pre("save", async function (next) {

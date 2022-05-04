@@ -35,10 +35,10 @@ function LoginAndRegister() {
     Axios.post('http://localhost:3001/api/users', data)
       .then((res: any) => {
         console.log(res);
-        alert('usuario registrado');
+        alert('Usuário Registrado');
       })
       .catch((error: any) => {
-        alert('Email ja utilizado');
+        alert('Email já utilizado');
         window.location.reload();
       });
   };
@@ -57,7 +57,6 @@ function LoginAndRegister() {
   ) => {
     setData((prev) => ({ ...prev, ...newData }));
     if (final) {
-      // makeRequest(newData);
       console.log('fazer o request no bd aqui', newData);
       reqRegister(newData);
       return;

@@ -1,24 +1,24 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import {
   Button,
   Divider,
   MenuItem,
   Select,
   ThemeProvider,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import Axios from "axios";
-import MuiStyles from "../styles/MuiStyles";
-import "../styles/ProfileModalDetails.css";
-import "../styles/styleTitle.css";
-import { User } from "../pages/HomePageUser";
-import BoxInputPadrao from "./BoxInputPadrao";
-import { EventData } from "./Itens";
-import "../styles/CreatePalestraStyles.css";
+} from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Axios from 'axios';
+import MuiStyles from '../styles/MuiStyles';
+import '../styles/ProfileModalDetails.css';
+import '../styles/styleTitle.css';
+import { User } from '../pages/HomePageUser';
+import BoxInputPadrao from './BoxInputPadrao';
+import { EventData } from './Itens';
+import '../styles/CreatePalestraStyles.css';
 
 interface Props {
   openModalDetails: boolean;
@@ -68,9 +68,9 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
 }) => {
   const theme = MuiStyles;
   const [presentation, setPresentation] = React.useState<Presentation>({
-    title: "",
-    description: "",
-    img: "",
+    title: '',
+    description: '',
+    img: '',
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
@@ -80,14 +80,13 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
         finalDate: new Date(),
       },
     ],
-    eventId: "",
+    eventId: '',
   });
-  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [event, setEvent] = React.useState<Event>({
-    title: "",
-    description: "",
-    img: "",
+    title: '',
+    description: '',
+    img: '',
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
@@ -98,7 +97,7 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
         finalDate: new Date(),
       },
     ],
-    url: "",
+    url: '',
   });
   const handleClose = () => {
     setOpenModalDetails(false);
@@ -106,37 +105,35 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
   };
 
   const validationSchema = yup.object({
-    eventId: yup.string().required("Campo Obrigatorio"),
-    title: yup.string().required("Campo Obrigatorio"),
-    description: yup.string().required("Campo Obrigatorio"),
+    eventId: yup.string().required('Campo Obrigatorio'),
+    title: yup.string().required('Campo Obrigatorio'),
+    description: yup.string().required('Campo Obrigatorio'),
     remainingVacancies: yup
       .number()
-      .required("Campo Obrigatorio")
-      .positive("numeo negativo invalido"),
+      .required('Campo Obrigatorio')
+      .positive('numeo negativo invalido'),
     value: yup
       .number()
-      .required("Campo Obrigatorio")
-      .positive("numeo negativo invalido"),
+      .required('Campo Obrigatorio')
+      .positive('numeo negativo invalido'),
   });
 
   const formik = useFormik({
     initialValues: presentation,
     onSubmit: (values) => {
-      console.log("requisicao de criar uma palestra aqui");
+      console.log('requisicao de criar uma palestra aqui');
       console.log(values);
-      // console.log(values);
       Axios.post(
-        "http://localhost:3001/api/presentations/CreatePresentations",
-        values
+        'http://localhost:3001/api/presentations/CreatePresentations',
+        values,
       )
         .then((res: any) => {
           console.log(res);
-          alert("Palestra criada");
+          alert('Palestra criada');
           window.location.reload();
         })
         .catch((error: any) => {
-          alert("Faio");
-          //window.location.reload();
+          alert('Erro');
         });
     },
 
@@ -145,8 +142,8 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
 
   const filteredItens = user.cpfCnpj
     ? events.filter((item: any) => {
-        return item.createdBy == user.cpfCnpj.toLowerCase();
-      })
+      return item.createdBy == user.cpfCnpj.toLowerCase();
+    })
     : [];
 
   return (
@@ -166,7 +163,7 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
               variant="h6"
               component="h2"
             >
-              {"Criar Palestra"}
+              {'Criar Palestra'}
             </Typography>
             <Divider color="#DEC0F7" />
             <div className="box">
@@ -179,18 +176,17 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                     error={
                       formik.touched.eventId && Boolean(formik.errors.eventId)
                     }
-                    // helperText={formik.touched.userType && formik.errors.userType}
                     sx={{
-                      textTransform: "inherit",
-                      textDecoration: "inherit",
+                      textTransform: 'inherit',
+                      textDecoration: 'inherit',
 
-                      width: "100%",
-                      border: "1px solid",
-                      borderColor: "#C3BFC3",
-                      color: "#C3BFC3",
-                      paddingBottom: "10px",
-                      height: "50px",
-                      marginBottom: "10px",
+                      width: '100%',
+                      border: '1px solid',
+                      borderColor: '#C3BFC3',
+                      color: '#C3BFC3',
+                      paddingBottom: '10px',
+                      height: '50px',
+                      marginBottom: '10px',
                     }}
                   >
                     {filteredItens.map((item) => (
@@ -200,23 +196,23 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                     ))}
                   </Select>
                   <BoxInputPadrao
-                    name={"title"}
+                    name={'title'}
                     value={formik.values.title}
                     onChange={formik.handleChange}
-                    tipo={"text"}
-                    placeHolder={"Nome da Palestra"}
+                    tipo={'text'}
+                    placeHolder={'Nome da Palestra'}
                     error={formik.touched.title && Boolean(formik.errors.title)}
                     helperText={formik.touched.title && formik.errors.title}
                   />
                   <BoxInputPadrao
-                    name={"description"}
+                    name={'description'}
                     value={formik.values.description}
                     onChange={formik.handleChange}
-                    tipo={"text"}
-                    placeHolder={"Descricao da Palestra"}
+                    tipo={'text'}
+                    placeHolder={'Descricao da Palestra'}
                     error={
-                      formik.touched.description &&
-                      Boolean(formik.errors.description)
+                      formik.touched.description
+                      && Boolean(formik.errors.description)
                     }
                     helperText={
                       formik.touched.description && formik.errors.description
@@ -224,29 +220,29 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                   />
                 </div>
                 <div className="row">
-                  <BoxInputPadrao // fazer um novo imput para int com min range em 0
-                    name={"remainingVacancies"}
+                  <BoxInputPadrao
+                    name={'remainingVacancies'}
                     value={formik.values.remainingVacancies}
                     onChange={formik.handleChange}
-                    tipo={"number"}
-                    placeHolder={"Número de vagas"}
+                    tipo={'number'}
+                    placeHolder={'Número de vagas'}
                     error={
-                      formik.touched.remainingVacancies &&
-                      Boolean(formik.errors.remainingVacancies)
+                      formik.touched.remainingVacancies
+                      && Boolean(formik.errors.remainingVacancies)
                     }
                     helperText={
-                      formik.touched.remainingVacancies &&
-                      formik.errors.remainingVacancies
+                      formik.touched.remainingVacancies
+                      && formik.errors.remainingVacancies
                     }
                   />
                 </div>
                 <div className="row">
-                  <BoxInputPadrao // fazer um novo imput para decimal com min range em 0
-                    name={"value"}
+                  <BoxInputPadrao
+                    name={'value'}
                     value={formik.values.value}
                     onChange={formik.handleChange}
-                    tipo={"number"}
-                    placeHolder={"preco de ingresso"}
+                    tipo={'number'}
+                    placeHolder={'preco de ingresso'}
                     error={formik.touched.value && Boolean(formik.errors.value)}
                     helperText={formik.touched.value && formik.errors.value}
                   />
@@ -255,11 +251,10 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                 <Button
                   type="submit"
                   sx={{
-                    borderRadius: "30px",
-                    // background: "#6750A4",
-                    width: "100%",
-                    paddingBottom: "10px",
-                    height: "43px",
+                    borderRadius: '30px',
+                    width: '100%',
+                    paddingBottom: '10px',
+                    height: '43px',
                   }}
                   color="secondary"
                   variant="contained"
@@ -270,12 +265,11 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
               <Button
                 onClick={() => handleClose()}
                 sx={{
-                  borderRadius: "30px",
-                  // background: "#6750A4",
-                  width: "100%",
-                  marginTop: "10px",
-                  paddingBottom: "10px",
-                  height: "43px",
+                  borderRadius: '30px',
+                  width: '100%',
+                  marginTop: '10px',
+                  paddingBottom: '10px',
+                  height: '43px',
                 }}
                 color="secondary"
                 variant="contained"
@@ -291,34 +285,3 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
 };
 
 export default CreatePalestraModalDetails;
-
-// const [presentation, setPresentation] = React.useState<Presentation>({
-//   title: "",
-//   description: "",
-//   img: "",
-//   value: 0,
-//   remainingVacancies: 0,
-//   isSingleDay: false,
-//   dateByDay: [
-//     {
-//       initialDate: new Date(),
-//       finalDate: new Date(),
-//     },
-//   ],
-//   eventId: "",
-// });
-// export interface Presentation {
-//   title: String;
-//   description: String;
-//   img: String;
-//   value: Number;
-//   remainingVacancies: Number;
-//   isSingleDay: Boolean;
-//   dateByDay: [
-//     {
-//       initialDate: Date;
-//       finalDate: Date;
-//     }
-//   ];
-//   eventId: String;
-// }

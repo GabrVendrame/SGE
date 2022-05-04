@@ -20,7 +20,6 @@ const createEvent = asyncHandler(async (req, res) => {
 });
 
 const changeEventsData = asyncHandler(async (req, res) => {
-  // const { user } = req.body;
   console.log("aqui");
   var { title, description, remainingVacancies, value, url, _id, dateByDay } =
     req.body;

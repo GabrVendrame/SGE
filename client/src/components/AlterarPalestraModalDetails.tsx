@@ -8,7 +8,6 @@ import * as yup from 'yup';
 import Axios from 'axios';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ProfileModalDetails.css';
-import { User } from '../pages/HomePageUser';
 import BoxInputPadrao from './BoxInputPadrao';
 
 interface Props {
@@ -59,7 +58,6 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
   });
 
   const theme = MuiStyles;
-  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const handleClose = () => {
     setOpenModalDetails(false);
@@ -86,10 +84,6 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
     return true;
   };
 
-  // const reqUpdate = (values) => {
-  //   console.log(values);
-  // };
-
   const formik = useFormik({
     initialValues: presentation,
     onSubmit: (values) => {
@@ -103,6 +97,8 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
           .then((res) => {
             console.log('fon');
             alert('penis de camelo');
+            console.log('fon');
+            alert('Palestra Alterada');
             window.location.reload();
           })
           .catch((error) => {
@@ -164,7 +160,7 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
                   />
                 </div>
                 <div className="row">
-                  <BoxInputPadrao // fazer um novo imput para int com min range em 0
+                  <BoxInputPadrao
                     name={'remainingVacancies'}
                     value={formik.values.remainingVacancies}
                     onChange={formik.handleChange}
@@ -181,7 +177,7 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
                   />
                 </div>
                 <div className="row">
-                  <BoxInputPadrao // fazer um novo imput para decimal com min range em 0
+                  <BoxInputPadrao
                     name={'value'}
                     value={formik.values.value}
                     onChange={formik.handleChange}
@@ -195,7 +191,6 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
                   type="submit"
                   sx={{
                     borderRadius: '30px',
-                    // background: "#6750A4",
                     width: '100%',
                     paddingBottom: '10px',
                     height: '43px',
@@ -210,7 +205,6 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
                 onClick={() => handleClose()}
                 sx={{
                   borderRadius: '30px',
-                  // background: "#6750A4",
                   width: '100%',
                   marginTop: '10px',
                   paddingBottom: '10px',

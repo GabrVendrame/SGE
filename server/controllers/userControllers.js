@@ -26,8 +26,6 @@ const registerUser = asyncHandler(async (req, res) => {
     cell,
     userType,
     tk: generateToken({ name, email, password, cpfCnpj, cell, userType }),
-    // presentationsId: [],
-    // eventsId: [],
     userRegisteredEvents: [],
   });
   console.log(user);
@@ -52,7 +50,6 @@ const userBuyTicket = asyncHandler(async (req, res) => {
     userEmail,
     numEventTickets,
     numPresTickets } = req.body;
-  // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
   const registeredEvent = await User.findOne({
     email: userEmail,
@@ -106,7 +103,6 @@ const userBuyTicket = asyncHandler(async (req, res) => {
           {
             email: userEmail,
             'userRegisteredEvents.eventId': eventId,
-            // 'userRegisteredEvents.userRegisteredPresentationsId.presentationId': presentationId
           },
           {
             $addToSet: {
@@ -224,7 +220,6 @@ const findUser = asyncHandler(async (req, res) => {
 });
 
 const changeUserData = asyncHandler(async (req, res) => {
-  // const { user } = req.body;
   var { name, password, cell, email, cpfCnpj } = req.body;
   console.log(cpfCnpj);
   const userFind = await User.findOne({ cpfCnpj: cpfCnpj });

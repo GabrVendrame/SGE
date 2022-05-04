@@ -17,12 +17,6 @@ import api from '../services/api';
 import MuiStyles from '../styles/MuiStyles';
 import { User } from '../pages/HomePageUser';
 import { PresentationData } from './PresentationsBox';
-
-// import ScrollContainer from 'react-indiana-drag-scroll';
-// import img1 from '../images/e3.jpeg';
-// import img2 from '../images/f8.png';
-// import img3 from '../images/gio.jpg';
-// import img4 from '../images/tga.jpg';
 import ModalDetails from './ModalDetails';
 
 export interface EventData {
@@ -88,14 +82,11 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
       return date;
     });
   });
-
-  // console.log(Events);
   const theme = MuiStyles;
 
   // só seta o valor 9 no último dia caso o evento durar mais que um dia
   for (let index = 0; index < Events.length; index++) {
     if (!Events[index].isSingleDay) {
-      // console.log('teste');
       Events[index].dateByDay[
         Events[index].dateByDay.length - 1
       ].finalDate.setDate(15);
@@ -103,7 +94,6 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
   }
 
   const EventsDate = (props: EventProps) => {
-    // console.log(`teste:${itensData._id}`);
     const eventsDate = props.itensData.dateByDay;
     const firstDay = eventsDate[0].initialDate.getDate();
     const lastDay = eventsDate[eventsDate.length - 1].finalDate.getDate();
@@ -117,16 +107,13 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
     })
     : Events;
   const HandleOpenModalDetails = (obj: EventData) => {
-    // console.log('Fazendo requisição..');
     api
       .get(`/presentations/registeredPresentations/${obj._id}`)
       .then((response) => {
         setPresentations(response.data);
-        // console.log(response.data);
       });
     setOpenModalDetails(true);
     setItensData(obj);
-    // console.log(`Apresentações: ${Presentations}`);
   };
 
   return (
@@ -140,7 +127,6 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
         >
           {filteredItens.map((item) => (
             <Grid item xs={2} sm={4} md={3} key={item._id}>
-              {/* {console.log()} */}
               <Card sx={{ background: '#1C1B1F' }}>
                 <CardContent>
                   <Typography
@@ -156,7 +142,6 @@ const Itens: React.FC<Props> = ({ searchValues, user, setUser }) => {
                   component="img"
                   height="400"
                   image={item.url}
-                  // alt="green iguana"
                 />
                 <CardContent>
                   <Typography

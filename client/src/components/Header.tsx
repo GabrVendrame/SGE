@@ -10,7 +10,6 @@ import React from 'react';
 import MuiStyles from '../styles/MuiStyles';
 import logo from '../images/logo.png';
 
-// const pages = ['Sobre nós', 'FAQ', 'Contato'];
 interface Props {
   isOpenDrawer: boolean;
   setIsOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +28,6 @@ const Header: React.FC<Props> = ({
   };
 
   const handlePageSelect = (id: number) => {
-    // setAnchorElNav(null);
     console.log(id);
   };
 

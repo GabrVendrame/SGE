@@ -5,11 +5,8 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Grid,
-  Portal,
-  Snackbar,
   ThemeProvider,
   Tooltip,
   Typography,
@@ -18,7 +15,6 @@ import * as React from 'react';
 import '../styles/BoxBuyTicket.css';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import TextField from '@mui/material/TextField';
-import { Link } from 'react-router-dom';
 import MuiStyles from '../styles/MuiStyles';
 import { PresentationData } from './PresentationsBox';
 import { EventData } from './Itens';
@@ -26,9 +22,6 @@ import api from '../services/api';
 import { User } from '../pages/HomePageUser';
 
 interface Props {
-  // boxBuyTicketDisplay: string;
-  // setBoxBuyTicketDisplay: React.Dispatch<React.SetStateAction<string>>;
-  // rightContainerGridRef: React.MutableRefObject<any>;
   setShowComponent: React.Dispatch<React.SetStateAction<boolean>>
   setOpenOkAlert: React.Dispatch<React.SetStateAction<boolean>>
   presentationData: PresentationData;
@@ -42,9 +35,6 @@ interface TicketsData {
 }
 
 const BoxBuyTicket: React.FC<Props> = ({
-  // boxBuyTicketDisplay,
-  // setBoxBuyTicketDisplay,
-  // rightContainerGridRef,
   setShowComponent,
   setOpenOkAlert,
   presentationData,
@@ -52,7 +42,6 @@ const BoxBuyTicket: React.FC<Props> = ({
   user,
   setUser,
 }) => {
-  // const displayBoxBuyTickectRef = React.useRef<any>(null);
   const [ticketData, setTicketData] = React.useState<TicketsData>({
     eventTicket: 0,
     presentationTicket: 0,
@@ -62,15 +51,9 @@ const BoxBuyTicket: React.FC<Props> = ({
     presentationTicket: 0,
   });
   const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
-
-  // const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
-  // const [disableBuyTicket, setDisableBuyTicket] = React.useState<boolean>(true);
   const theme = MuiStyles;
-  // console.log(`display: ${boxBuyTicketDisplay}`);
 
   const changeRightGrid = () => {
-    // setBoxBuyTicketDisplay('none');
-    // rightContainerGridRef.current.style.display = 'flex';
     setShowComponent(false);
   };
 
@@ -85,7 +68,6 @@ const BoxBuyTicket: React.FC<Props> = ({
   const buyTicket = () => {
     if (presentationData._id === '' || ticketData.presentationTicket === 0) {
       const data = {
-        // presentationId: presentationData._id,
         eventId: eventData._id,
         userEmail: user.email,
         numEventTickets: ticketData.eventTicket,
@@ -95,7 +77,6 @@ const BoxBuyTicket: React.FC<Props> = ({
           setOpenOkAlert(true);
           handleCloseConfirmDialog();
           setShowComponent(false);
-          // setTk(localStorage.getItem('token'));
           api.get(
             `/users/find/${user.cpfCnpj}`,
           ).then((res) => {
@@ -165,7 +146,6 @@ const BoxBuyTicket: React.FC<Props> = ({
   const ConfirmDialogBuyTicket: React.FC = () => {
     const totalPrice = (presentationData.value! * ticketData.presentationTicket!)
       + (eventData.value! * ticketData.eventTicket!);
-    // const dialogWidth
     return (
       <Dialog
         sx={{ '& .MuiDialog-paper': { maxHeight: 435 } }}
@@ -174,7 +154,6 @@ const BoxBuyTicket: React.FC<Props> = ({
       >
         <DialogTitle>Finalizar Compra</DialogTitle>
         <DialogContent dividers>
-          {/* <DialogContentText> */}
           <Box className='buyTicketsDialogInfo'>
             <ScrollContainer className='buyTicketsDialogInfo'>
               <DialogInfo category='evento' />
@@ -190,7 +169,6 @@ const BoxBuyTicket: React.FC<Props> = ({
             Preço total
             - <span style={{ color: '#4caf50' }}> R$ {totalPrice.toFixed(2)}</span>
           </Typography>
-          {/* </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Button color='secondary' autoFocus onClick={handleCloseConfirmDialog}>
@@ -315,7 +293,6 @@ const BoxBuyTicket: React.FC<Props> = ({
           ? <span>Apenas evento selecionado</span>
           : <span>Apresentação selecionada - {presentationData.title}</span>
         }
-        {/* <BoxTitle /> */}
       </Typography>
       <Box className='rightGridContent'>
         <Grid container rowGap={2} columns={{ sm: 8, md: 8 }}>
