@@ -111,11 +111,11 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
     remainingVacancies: yup
       .number()
       .required('Campo Obrigatorio')
-      .positive('numeo negativo invalido'),
+      .positive('Número negativo invalido'),
     value: yup
       .number()
       .required('Campo Obrigatorio')
-      .positive('numeo negativo invalido'),
+      .positive('Número negativo invalido'),
   });
 
   const formik = useFormik({

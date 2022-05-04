@@ -144,8 +144,8 @@ const BoxBuyTicket: React.FC<Props> = ({
   };
 
   const ConfirmDialogBuyTicket: React.FC = () => {
-    const totalPrice = (presentationData.value! * ticketData.presentationTicket!)
-      + (eventData.value! * ticketData.eventTicket!);
+    const totalPrice = (presentationData.value! * (ticketData.presentationTicket! - registeredTickets.presentationTicket))
+      + (eventData.value! * (ticketData.eventTicket! - registeredTickets.eventTicket));
     return (
       <Dialog
         sx={{ '& .MuiDialog-paper': { maxHeight: 435 } }}

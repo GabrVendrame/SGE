@@ -109,20 +109,26 @@ const GridsModalDetails: React.FC<Props> = ({
         console.log(error.response);
       });
 
-      if (user.userRegisteredEvents.some((e) => e.eventId === eventData._id)) {
-        // console.log('existe');
-        setOpenAlert(true);
-      }
+      if (user.userType === 'Usuario Comum') {
 
-      if (user.userRegisteredEvents.some((e) =>
-        e.userRegisteredPresentationsId.some((a) =>
-          a.presentationId === presentationData._id))) {
-        setIsPresRegistered(true);
+        if (user.userRegisteredEvents.some((e) => e.eventId === eventData._id)) {
+          // console.log('existe');
+          setOpenAlert(true);
+        }
+
+        if (user.userRegisteredEvents.some((e) =>
+          e.userRegisteredPresentationsId.some((a) =>
+            a.presentationId === presentationData._id))) {
+          setIsPresRegistered(true);
+        }
+        setShowBoxBuyTicket(true);
+      } else {
+        setOpenConfirmDialog(true);
       }
-      setShowBoxBuyTicket(true);
     } else {
       setOpenConfirmDialog(true);
     }
+
   };
 
   const PresentationDetailsAfterClick = React.memo(() => {
