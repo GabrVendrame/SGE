@@ -1,16 +1,16 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { Button, Divider, ThemeProvider } from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import Axios from "axios";
-import MuiStyles from "../styles/MuiStyles";
-import "../styles/ProfileModalDetails.css";
-import { User } from "../pages/HomePageUser";
-import BoxInputPadrao from "./BoxInputPadrao";
-import { EventData } from "./Itens";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { Button, Divider, ThemeProvider } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Axios from 'axios';
+import MuiStyles from '../styles/MuiStyles';
+import '../styles/ProfileModalDetails.css';
+import { User } from '../pages/HomePageUser';
+import BoxInputPadrao from './BoxInputPadrao';
+import { EventData } from './Itens';
 
 interface Props {
   openModalDetails: boolean;
@@ -43,10 +43,10 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
   setAlterarEvento,
 }) => {
   const [eventoselecionado, setEventoselecionado] = React.useState<EventData>({
-    _id: "",
-    title: "",
-    description: "",
-    img: "",
+    _id: '',
+    title: '',
+    description: '',
+    img: '',
     value: 0,
     remainingVacancies: 0,
     isSingleDay: false,
@@ -54,10 +54,10 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
       {
         initialDate: new Date(),
         finalDate: new Date(),
-        _id: "",
+        _id: '',
       },
     ],
-    url: "",
+    url: '',
   });
 
   const theme = MuiStyles;
@@ -79,10 +79,10 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
 
   const validarReq = (values: EventData) => {
     if (
-      values.title === "" &&
-      values.description === "" &&
-      values.remainingVacancies === -1 &&
-      values.value === -1
+      values.title === ''
+      && values.description === ''
+      && values.remainingVacancies === -1
+      && values.value === -1
     ) {
       return false;
     }
@@ -100,17 +100,17 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
       if (validarReq(values)) {
         values._id = evt._id;
 
-        Axios.put("http://localhost:3001/api/events/updateEvent", values)
+        Axios.put('http://localhost:3001/api/events/updateEvent', values)
           .then((res) => {
-            console.log("fon");
-            alert("penis de camelo");
+            console.log('fon');
+            alert('penis de camelo');
             window.location.reload();
           })
           .catch((error) => {
-            console.log("AAAAAAAAAAAAA", error);
+            console.log('AAAAAAAAAAAAA', error);
           });
       } else {
-        console.log("Sem alteracoes");
+        console.log('Sem alteracoes');
       }
     },
 
@@ -134,30 +134,30 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
               variant="h6"
               component="h2"
             >
-              {"Alterar informações do Evento"}
+              {'Alterar informações do Evento'}
             </Typography>
             <Divider color="#DEC0F7" />
 
             <form onSubmit={formik.handleSubmit}>
               <div className="row">
                 <BoxInputPadrao
-                  name={"title"}
+                  name={'title'}
                   value={formik.values.title}
                   onChange={formik.handleChange}
-                  tipo={"text"}
-                  placeHolder={"Nome do evento"}
+                  tipo={'text'}
+                  placeHolder={'Nome do evento'}
                   error={formik.touched.title && Boolean(formik.errors.title)}
                   helperText={formik.touched.title && formik.errors.title}
                 />
                 <BoxInputPadrao
-                  name={"description"}
+                  name={'description'}
                   value={formik.values.description}
                   onChange={formik.handleChange}
-                  tipo={"text"}
-                  placeHolder={"Descricao do evento"}
+                  tipo={'text'}
+                  placeHolder={'Descricao do evento'}
                   error={
-                    formik.touched.description &&
-                    Boolean(formik.errors.description)
+                    formik.touched.description
+                    && Boolean(formik.errors.description)
                   }
                   helperText={
                     formik.touched.description && formik.errors.description
@@ -166,63 +166,63 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
               </div>
               <div className="row">
                 <BoxInputPadrao // fazer um novo imput para int com min range em 0
-                  name={"remainingVacancies"}
+                  name={'remainingVacancies'}
                   value={formik.values.remainingVacancies}
                   onChange={formik.handleChange}
-                  tipo={"number"}
-                  placeHolder={"Número de vagas"}
+                  tipo={'number'}
+                  placeHolder={'Número de vagas'}
                   error={
-                    formik.touched.remainingVacancies &&
-                    Boolean(formik.errors.remainingVacancies)
+                    formik.touched.remainingVacancies
+                    && Boolean(formik.errors.remainingVacancies)
                   }
                   helperText={
-                    formik.touched.remainingVacancies &&
-                    formik.errors.remainingVacancies
+                    formik.touched.remainingVacancies
+                    && formik.errors.remainingVacancies
                   }
                 />
               </div>
               <div className="row">
                 <BoxInputPadrao // fazer um novo imput para decimal com min range em 0
-                  name={"value"}
+                  name={'value'}
                   value={formik.values.value}
                   onChange={formik.handleChange}
-                  tipo={"number"}
-                  placeHolder={"preco de ingresso"}
+                  tipo={'number'}
+                  placeHolder={'preco de ingresso'}
                   error={formik.touched.value && Boolean(formik.errors.value)}
                   helperText={formik.touched.value && formik.errors.value}
                 />
               </div>
               <div className="row">
                 <BoxInputPadrao
-                  name={"url"}
+                  name={'url'}
                   value={formik.values.url}
                   onChange={formik.handleChange}
-                  tipo={"text"}
-                  placeHolder={"Url da imagem de capa"}
+                  tipo={'text'}
+                  placeHolder={'Url da imagem de capa'}
                   error={formik.touched.url && Boolean(formik.errors.url)}
                   helperText={formik.touched.url && formik.errors.url}
                 />
               </div>
               <div className="row">
-                <div className="title2">{"Inicio do evento"}</div>
+                <div className="title2">{'Inicio do evento'}</div>
                 <BoxInputPadrao
-                  name={"initialDate"}
+                  name={'initialDate'}
                   value={formik.values.dateByDay[0].initialDate}
                   onChange={formik.handleChange}
-                  tipo={"date"}
-                  placeHolder={""}
+                  tipo={'date'}
+                  placeHolder={''}
                   error={formik.touched.url && Boolean(formik.errors.url)}
                   helperText={formik.touched.url && formik.errors.url}
                 />
               </div>
               <div className="row">
-                <div className="title2">{"Final do evento"}</div>
+                <div className="title2">{'Final do evento'}</div>
                 <BoxInputPadrao
-                  name={"finalDate"}
+                  name={'finalDate'}
                   value={formik.values.dateByDay[0].finalDate}
                   onChange={formik.handleChange}
-                  tipo={"date"}
-                  placeHolder={""}
+                  tipo={'date'}
+                  placeHolder={''}
                   error={formik.touched.url && Boolean(formik.errors.url)}
                   helperText={formik.touched.url && formik.errors.url}
                 />
@@ -230,11 +230,11 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
               <Button
                 type="submit"
                 sx={{
-                  borderRadius: "30px",
+                  borderRadius: '30px',
                   // background: "#6750A4",
-                  width: "100%",
-                  paddingBottom: "10px",
-                  height: "43px",
+                  width: '100%',
+                  paddingBottom: '10px',
+                  height: '43px',
                 }}
                 color="secondary"
                 variant="contained"
@@ -246,12 +246,12 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
             <Button
               onClick={() => handleClose()}
               sx={{
-                borderRadius: "30px",
+                borderRadius: '30px',
                 // background: "#6750A4",
-                width: "100%",
-                marginTop: "10px",
-                paddingBottom: "10px",
-                height: "43px",
+                width: '100%',
+                marginTop: '10px',
+                paddingBottom: '10px',
+                height: '43px',
               }}
               color="secondary"
               variant="contained"

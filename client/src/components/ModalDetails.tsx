@@ -4,8 +4,15 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {
   Alert,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Divider, Portal, Snackbar, ThemeProvider,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/ModalDetailsStyles.css';
 import { PresentationData } from './PresentationsBox';
@@ -36,6 +43,16 @@ const ModalDetails: React.FC<Props> = ({
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [openOkAlert, setOpenOkAlert] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState<boolean>(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
+  const [isPresRegistered, setIsPresRegistered] = React.useState(false);
+
+  const handleCloseConfirmDialog = () => {
+    setOpenConfirmDialog(false);
+  };
+
+  const handleOpenConfirmDialog = () => {
+    setOpenConfirmDialog(true);
+  };
 
   const handleClose = () => {
     setOpenModalDetails(false);
@@ -55,6 +72,37 @@ const ModalDetails: React.FC<Props> = ({
       return;
     }
     setOpenAlert(false);
+    setIsPresRegistered(false);
+  };
+
+  const ConfirmDialogLoginRequest: React.FC = () => {
+    return (
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+        maxWidth="xs"
+        open={openConfirmDialog}
+        onClose={handleCloseConfirmDialog}
+      >
+        <DialogTitle>Comprar ingresso</DialogTitle>
+        <DialogContent dividers>
+          <DialogContentText>
+            É necessário estar logado em uma conta como usuário comum para
+            realizar a compra de um ingresso.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button color='secondary' autoFocus onClick={handleCloseConfirmDialog}>
+            Cancelar
+          </Button>
+          <Link to={'/LoginAndRegister'} style={{ textDecoration: 'none' }}>
+            <Button
+              color='secondary'
+            >Realizar Login
+            </Button>
+          </Link>
+        </DialogActions>
+      </Dialog>
+    );
   };
 
   return (
@@ -68,7 +116,9 @@ const ModalDetails: React.FC<Props> = ({
           </Snackbar>
           <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
             <Alert onClose={handleCloseAlert} severity="info" sx={{ width: '100%' }}>
-              Você já está registrado nesse evento.
+              {isPresRegistered
+                ? <span>Você já está registrado nesse evento e nessa apresentação.</span>
+                : <span>Você já está registrado nesse evento.</span>}
             </Alert>
           </Snackbar>
 
@@ -96,7 +146,10 @@ const ModalDetails: React.FC<Props> = ({
               setUser={setUser}
               setOpenOkAlert={setOpenOkAlert}
               setOpenAlert={setOpenAlert}
+              setOpenConfirmDialog={setOpenConfirmDialog}
+              setIsPresRegistered={setIsPresRegistered}
             />
+            <ConfirmDialogLoginRequest />
           </Box>
         </Modal>
       </Box >

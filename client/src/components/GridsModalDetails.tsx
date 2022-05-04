@@ -23,6 +23,8 @@ interface Props {
   setSelectedPresentation: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenOkAlert: React.Dispatch<React.SetStateAction<boolean>>;
   setOpenAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenConfirmDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsPresRegistered: React.Dispatch<React.SetStateAction<boolean>>;
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
 }
@@ -40,6 +42,8 @@ const GridsModalDetails: React.FC<Props> = ({
   setSelectedPresentation,
   setOpenOkAlert,
   user,
+  setOpenConfirmDialog,
+  setIsPresRegistered,
   setOpenAlert,
   setUser,
 }) => {
@@ -96,19 +100,30 @@ const GridsModalDetails: React.FC<Props> = ({
     //     setBoxBuyTicketDisplay('flex');
     //   }
     // }
-    api.get(
-      `/users/find/${user.cpfCnpj}`,
-    ).then((res) => {
-      setUser(res.data.user);
-    }).catch((error) => {
-      console.log(error.response);
-    });
 
-    if (user.userRegisteredEvents.some((e) => e.eventId === eventData._id)) {
-      // console.log('existe');
-      setOpenAlert(true);
+    if (user) {
+      api.get(
+        `/users/find/${user.cpfCnpj}`,
+      ).then((res) => {
+        setUser(res.data.user);
+      }).catch((error) => {
+        console.log(error.response);
+      });
+
+      if (user.userRegisteredEvents.some((e) => e.eventId === eventData._id)) {
+        // console.log('existe');
+        setOpenAlert(true);
+      }
+
+      if (user.userRegisteredEvents.some((e) =>
+        e.userRegisteredPresentationsId.some((a) =>
+          a.presentationId === presentationData._id))) {
+        setIsPresRegistered(true);
+      }
+      setShowBoxBuyTicket(true);
+    } else {
+      setOpenConfirmDialog(true);
     }
-    setShowBoxBuyTicket(true);
   };
 
   const PresentationDetailsAfterClick = React.memo(() => {

@@ -1,15 +1,15 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { Button, Divider, ThemeProvider } from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import Axios from "axios";
-import MuiStyles from "../styles/MuiStyles";
-import "../styles/ProfileModalDetails.css";
-import { User } from "../pages/HomePageUser";
-import BoxInputPadrao from "./BoxInputPadrao";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import { Button, Divider, ThemeProvider } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import Axios from 'axios';
+import MuiStyles from '../styles/MuiStyles';
+import '../styles/ProfileModalDetails.css';
+import { User } from '../pages/HomePageUser';
+import BoxInputPadrao from './BoxInputPadrao';
 
 interface Props {
   openModalDetails: boolean;
@@ -42,10 +42,10 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
   setAlterarPalestra,
 }) => {
   const [presentation, setPresentation] = React.useState<Presentation>({
-    _id: "",
-    title: "",
-    description: "",
-    img: "",
+    _id: '',
+    title: '',
+    description: '',
+    img: '',
     value: -1,
     remainingVacancies: -1,
     isSingleDay: false,
@@ -55,7 +55,7 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
         finalDate: new Date(),
       },
     ],
-    eventId: "",
+    eventId: '',
   });
 
   const theme = MuiStyles;
@@ -76,10 +76,10 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
 
   const validarReq = (values: Presentation) => {
     if (
-      values.title === "" &&
-      values.description === "" &&
-      values.remainingVacancies === -1 &&
-      values.value === -1
+      values.title === ''
+      && values.description === ''
+      && values.remainingVacancies === -1
+      && values.value === -1
     ) {
       return false;
     }
@@ -97,19 +97,19 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
       if (validarReq(values)) {
         values._id = pres._id;
         Axios.put(
-          "http://localhost:3001/api/presentations/updatePalestra",
-          values
+          'http://localhost:3001/api/presentations/updatePalestra',
+          values,
         )
           .then((res) => {
-            console.log("fon");
-            alert("penis de camelo");
+            console.log('fon');
+            alert('penis de camelo');
             window.location.reload();
           })
           .catch((error) => {
             console.log(error);
           });
       } else {
-        console.log("Sem alteracoes");
+        console.log('Sem alteracoes');
       }
     },
 
@@ -133,30 +133,30 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
               variant="h6"
               component="h2"
             >
-              {"Alterar informações da palestra"}
+              {'Alterar informações da palestra'}
             </Typography>
             <Divider color="#DEC0F7" />
             <div className="box">
               <form onSubmit={formik.handleSubmit}>
                 <div className="row">
                   <BoxInputPadrao
-                    name={"title"}
+                    name={'title'}
                     value={formik.values.title}
                     onChange={formik.handleChange}
-                    tipo={"text"}
+                    tipo={'text'}
                     placeHolder={pres.title}
                     error={formik.touched.title && Boolean(formik.errors.title)}
                     helperText={formik.touched.title && formik.errors.title}
                   />
                   <BoxInputPadrao
-                    name={"description"}
+                    name={'description'}
                     value={formik.values.description}
                     onChange={formik.handleChange}
-                    tipo={"text"}
+                    tipo={'text'}
                     placeHolder={pres.description}
                     error={
-                      formik.touched.description &&
-                      Boolean(formik.errors.description)
+                      formik.touched.description
+                      && Boolean(formik.errors.description)
                     }
                     helperText={
                       formik.touched.description && formik.errors.description
@@ -165,28 +165,28 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
                 </div>
                 <div className="row">
                   <BoxInputPadrao // fazer um novo imput para int com min range em 0
-                    name={"remainingVacancies"}
+                    name={'remainingVacancies'}
                     value={formik.values.remainingVacancies}
                     onChange={formik.handleChange}
-                    tipo={"number"}
-                    placeHolder={"Número de vagas"}
+                    tipo={'number'}
+                    placeHolder={'Número de vagas'}
                     error={
-                      formik.touched.remainingVacancies &&
-                      Boolean(formik.errors.remainingVacancies)
+                      formik.touched.remainingVacancies
+                      && Boolean(formik.errors.remainingVacancies)
                     }
                     helperText={
-                      formik.touched.remainingVacancies &&
-                      formik.errors.remainingVacancies
+                      formik.touched.remainingVacancies
+                      && formik.errors.remainingVacancies
                     }
                   />
                 </div>
                 <div className="row">
                   <BoxInputPadrao // fazer um novo imput para decimal com min range em 0
-                    name={"value"}
+                    name={'value'}
                     value={formik.values.value}
                     onChange={formik.handleChange}
-                    tipo={"number"}
-                    placeHolder={"preco de ingresso"}
+                    tipo={'number'}
+                    placeHolder={'preco de ingresso'}
                     error={formik.touched.value && Boolean(formik.errors.value)}
                     helperText={formik.touched.value && formik.errors.value}
                   />
@@ -194,11 +194,11 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
                 <Button
                   type="submit"
                   sx={{
-                    borderRadius: "30px",
+                    borderRadius: '30px',
                     // background: "#6750A4",
-                    width: "100%",
-                    paddingBottom: "10px",
-                    height: "43px",
+                    width: '100%',
+                    paddingBottom: '10px',
+                    height: '43px',
                   }}
                   color="secondary"
                   variant="contained"
@@ -209,12 +209,12 @@ const AlterarPalestraModalDetails: React.FC<Props> = ({
               <Button
                 onClick={() => handleClose()}
                 sx={{
-                  borderRadius: "30px",
+                  borderRadius: '30px',
                   // background: "#6750A4",
-                  width: "100%",
-                  marginTop: "10px",
-                  paddingBottom: "10px",
-                  height: "43px",
+                  width: '100%',
+                  marginTop: '10px',
+                  paddingBottom: '10px',
+                  height: '43px',
                 }}
                 color="secondary"
                 variant="contained"

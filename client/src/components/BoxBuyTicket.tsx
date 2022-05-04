@@ -57,7 +57,13 @@ const BoxBuyTicket: React.FC<Props> = ({
     eventTicket: 0,
     presentationTicket: 0,
   });
+  const [registeredTickets, setRegisteredTickets] = React.useState<TicketsData>({
+    eventTicket: 0,
+    presentationTicket: 0,
+  });
   const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
+
+  // const [openConfirmDialog, setOpenConfirmDialog] = React.useState(false);
   // const [disableBuyTicket, setDisableBuyTicket] = React.useState<boolean>(true);
   const theme = MuiStyles;
   // console.log(`display: ${boxBuyTicketDisplay}`);
@@ -123,36 +129,6 @@ const BoxBuyTicket: React.FC<Props> = ({
         console.log(err);
       });
     }
-  };
-
-  const ConfirmDialogLoginRequest: React.FC = () => {
-    return (
-      <Dialog
-        sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-        maxWidth="xs"
-        open={openConfirmDialog}
-        onClose={handleCloseConfirmDialog}
-      >
-        <DialogTitle>Comprar ingresso</DialogTitle>
-        <DialogContent dividers>
-          <DialogContentText>
-            É necessário estar logado em uma conta como usuário comum para
-            realizar a compra de um ingresso.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button color='secondary' autoFocus onClick={handleCloseConfirmDialog}>
-            Cancelar
-          </Button>
-          <Link to={'/LoginAndRegister'} style={{ textDecoration: 'none' }}>
-            <Button
-              color='secondary'
-            >Realizar Login
-            </Button>
-          </Link>
-        </DialogActions>
-      </Dialog>
-    );
   };
 
   const DialogInfo: React.FC<{ category: string }> = ({ category }) => {
@@ -230,21 +206,58 @@ const BoxBuyTicket: React.FC<Props> = ({
     );
   };
 
-  const RightTicketInputs = (category: string) => {
-    let ticket: number = 0;
-    let disableButton = true;
+  React.useEffect(() => {
+    const filteredEventUserData = user.userRegisteredEvents.find((obj) => {
+      return obj.eventId === eventData._id;
+    });
+    const filteredPresUserData = filteredEventUserData?.userRegisteredPresentationsId
+      .find((obj) => {
+        return obj.presentationId === presentationData._id;
+      });
 
+    // console.log(filteredEventUserData);
+    // console.log(filteredPresUserData);
+
+    if (filteredEventUserData) {
+      setTicketData({
+        ...ticketData,
+        eventTicket: filteredEventUserData.numEventTickets,
+      });
+
+      setRegisteredTickets({
+        ...registeredTickets,
+        eventTicket: filteredEventUserData.numEventTickets,
+      });
+
+      if (filteredPresUserData) {
+        setTicketData({
+          ...ticketData,
+          eventTicket: filteredEventUserData.numEventTickets,
+          presentationTicket: filteredPresUserData.numPresTickets,
+        });
+        setRegisteredTickets({
+          ...registeredTickets,
+          eventTicket: filteredEventUserData.numEventTickets,
+          presentationTicket: filteredPresUserData.numPresTickets,
+        });
+      }
+    }
+  }, []);
+  // console.log(ticketData.eventTicket);
+
+  const RightTicketInputs = (category: string) => {
+    let newTicket: number = 0;
+    let disableButton = true;
     category === 'evento'
-      ? (ticket = ticketData.eventTicket,
-      ticket > 0
+      ? (newTicket = ticketData.eventTicket,
+      newTicket > registeredTickets.eventTicket
         ? disableButton = false
         : disableButton = true
       )
-      : (ticket = ticketData.presentationTicket,
-      ticket > 0
+      : (newTicket = ticketData.presentationTicket,
+      newTicket > registeredTickets.presentationTicket
         ? disableButton = false
         : disableButton = true);
-
     return (
       <Box className='buyTicketInputs'>
         <Grid item md={5}>
@@ -259,7 +272,7 @@ const BoxBuyTicket: React.FC<Props> = ({
               variant="outlined"
               type="number"
               inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', readOnly: true }}
-              value={ticket}
+              value={newTicket}
             />
             <Box className='ticketButtonsWrapper'>
               <Button
@@ -311,7 +324,7 @@ const BoxBuyTicket: React.FC<Props> = ({
           {RightTicketInputs('evento')}
           {presentationData._id === ''
             ? null
-            : RightTicketInputs('apresentação')
+            : (RightTicketInputs('apresentação'))
           }
         </Grid>
       </Box>
@@ -336,9 +349,7 @@ const BoxBuyTicket: React.FC<Props> = ({
             disabled={false}
             color='secondary'>Finalizar Compra</Button>
         }
-        {user
-          ? <ConfirmDialogBuyTicket />
-          : <ConfirmDialogLoginRequest />}
+        <ConfirmDialogBuyTicket />
       </Box>
     </ThemeProvider>
   );
