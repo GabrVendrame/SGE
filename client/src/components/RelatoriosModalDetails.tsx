@@ -161,15 +161,12 @@ const RelatoriosModalDetails: React.FC<Props> = ({
     setAlterarEvento(true);
     console.log("tela de alterar evento");
     setEventoselecionado(evnt);
-
-    //console.log(evnt);
   };
 
   const handleAlterarPalestra = (evnt: Presentation) => {
     setAlterarPalestra(true);
     console.log("tela de alterar palestra");
     setPalestraselecionada(evnt);
-    //console.log(evnt);
   };
 
   const excluirPalestra = (evnt: Presentation) => {
@@ -270,10 +267,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                       key={event._id}
                     >
                       <CardMedia className="cardImg" image={event.url} />
-                      <CardActionArea
-                      // disabled={disableCard}
-                      //onClick={(e) => handlePresentationData(event, e)}
-                      >
+                      <CardActionArea>
                         <CardContent>
                           <Typography
                             gutterBottom
@@ -321,7 +315,6 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             onClick={() => excluirEvento(event)}
                             sx={{
                               borderRadius: "15px",
-                              // background: "#6750A4",
                               width: "30%",
                               paddingBottom: "10px",
                               height: "30px",
@@ -346,10 +339,7 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                       }}
                     >
                       <CardMedia className="cardImg" />
-                      <CardActionArea
-                      // disabled={disableCard}
-                      //onClick={(e) => handlePresentationData(event, e)}
-                      >
+                      <CardActionArea>
                         <CardContent>
                           <Typography
                             gutterBottom
@@ -381,7 +371,6 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             onClick={() => handleAlterarPalestra(event)}
                             sx={{
                               borderRadius: "15px",
-                              // background: "#6750A4",
                               width: "30%",
                               paddingBottom: "10px",
                               height: "30px",
@@ -397,7 +386,6 @@ const RelatoriosModalDetails: React.FC<Props> = ({
                             onClick={() => excluirPalestra(event)}
                             sx={{
                               borderRadius: "15px",
-                              // background: "#6750A4",
                               width: "30%",
                               paddingBottom: "10px",
                               height: "30px",

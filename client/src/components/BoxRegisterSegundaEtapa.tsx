@@ -7,7 +7,6 @@ import { ThemeProvider } from '@material-ui/system';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ButtonStyles from '../styles/MuiStyles';
-import InputField from '../styles/BoxInput';
 import BoxInputPadrao from './BoxInputPadrao';
 import HeaderLoginRegister from './HeaderLoginRegister';
 
@@ -99,11 +98,9 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
             value={formik.values.userType}
             onChange={formik.handleChange}
             error={formik.touched.userType && Boolean(formik.errors.userType)}
-            // helperText={formik.touched.userType && formik.errors.userType}
             sx={{
               textTransform: 'inherit',
               textDecoration: 'inherit',
-
               width: '100%',
               border: '1px solid',
               borderColor: '#C3BFC3',
@@ -126,7 +123,6 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
             type="submit"
             sx={{
               borderRadius: '30px',
-              // background: "#6750A4",
               width: '100%',
               paddingBottom: '10px',
               height: '43px',
@@ -150,7 +146,6 @@ export const BoxRegisterSegundaEtapa: React.FC<Props> = ({
             }
             sx={{
               borderRadius: '30px',
-              // background: "#6750A4",
               width: '100%',
               paddingBottom: '10px',
               height: '43px',

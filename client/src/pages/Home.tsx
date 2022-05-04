@@ -16,7 +16,6 @@ function Home() {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const [searchValues, setSearchValues] = useState('');
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(event.target.value);
     setSearchValues(event.target.value);
   };
 

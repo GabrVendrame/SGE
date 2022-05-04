@@ -1,17 +1,8 @@
-import { InputAdornment, TextField } from '@mui/material';
 import React from 'react';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
-import BoxInputStyle from '../styles/BoxInput';
 import InputField from '../styles/BoxInput';
-
-// export interface Props {
-//   tipo: string;
-//   placeHolder: string;
-//   onchange: (e: React.ChangeEvent<any>) => void;
-//   name: string;
-// }
 
 export const TextInputFormik: React.FC = () => {
   return (

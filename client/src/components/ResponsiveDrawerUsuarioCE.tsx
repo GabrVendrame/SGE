@@ -62,9 +62,7 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
     React.useState(false);
 
   const handleDrawerClick = (id: number) => {
-    // setIsOpenModalCreateProduct(true);
     if (id === 1) {
-      console.log("mostrar aqui a tela de criar eventos");
       setCriarEvento(true);
       console.log(criarEvento);
       setOpenModalDetailsEvento(true);
@@ -154,7 +152,6 @@ const ResponsiveDrawerUsuarioCE: React.FC<Props> = ({
           <Drawer
             className="temporaryDrawer"
             variant="temporary"
-            // sx={{ backgroundColor: '#fff' }}
             open={isOpenDrawer}
             onClose={handleDrawerToggle}
             ModalProps={{

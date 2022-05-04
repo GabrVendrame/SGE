@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import ScrollContainer from 'react-indiana-drag-scroll';
-import api from '../services/api';
 import { EventData } from './Itens';
 import MuiStyles from '../styles/MuiStyles';
 import '../styles/EventsBoxStyles.css';
@@ -31,8 +30,6 @@ export interface Event {
   url: String;
 }
 
-// import { Container } from './styles';
-
 interface Props {
   cpfCnpj?: string;
   setSelectedEvent: React.Dispatch<React.SetStateAction<EventData>>;
@@ -43,12 +40,6 @@ const EventsBox: React.FC<Props> = ({ cpfCnpj, setSelectedEvent, events }) => {
   const [Events, setEvents] = React.useState<EventData[]>([]);
   const [filterEvents, setFilterEvents] = React.useState<EventData[]>([]);
   const theme = MuiStyles;
-
-  // useEffect(() => {
-  //   api.get("/events").then((response) => {
-  //     setEvents(response.data);
-  //   });
-  // }, []);
   const filteredItens = cpfCnpj
     ? events.filter((item: any) => {
       return item.createdBy == cpfCnpj.toLowerCase();
@@ -61,12 +52,10 @@ const EventsBox: React.FC<Props> = ({ cpfCnpj, setSelectedEvent, events }) => {
     e: React.MouseEvent,
   ) => {
     e.preventDefault();
-    // await setSelectedEvent(obj);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      {/* <div>teste</div> */}
       <ScrollContainer className="eventsScollContainer">
         {filteredItens.map((event) => (
           <Card
@@ -75,7 +64,6 @@ const EventsBox: React.FC<Props> = ({ cpfCnpj, setSelectedEvent, events }) => {
           >
             <CardMedia className="cardImg" image={event.url} />
             <CardActionArea
-              // disabled={disableCard}
               onClick={(e) => handlePresentationData(event, e)}
             >
               <CardContent>

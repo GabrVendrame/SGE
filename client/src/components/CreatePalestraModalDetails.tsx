@@ -82,7 +82,6 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
     ],
     eventId: "",
   });
-  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const [event, setEvent] = React.useState<Event>({
     title: "",
@@ -124,7 +123,6 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
     onSubmit: (values) => {
       console.log("requisicao de criar uma palestra aqui");
       console.log(values);
-      // console.log(values);
       Axios.post(
         "http://localhost:3001/api/presentations/CreatePresentations",
         values
@@ -135,8 +133,7 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
           window.location.reload();
         })
         .catch((error: any) => {
-          alert("Faio");
-          //window.location.reload();
+          alert("Erro");
         });
     },
 
@@ -179,7 +176,6 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                     error={
                       formik.touched.eventId && Boolean(formik.errors.eventId)
                     }
-                    // helperText={formik.touched.userType && formik.errors.userType}
                     sx={{
                       textTransform: "inherit",
                       textDecoration: "inherit",
@@ -224,7 +220,7 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                   />
                 </div>
                 <div className="row">
-                  <BoxInputPadrao // fazer um novo imput para int com min range em 0
+                  <BoxInputPadrao
                     name={"remainingVacancies"}
                     value={formik.values.remainingVacancies}
                     onChange={formik.handleChange}
@@ -241,7 +237,7 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                   />
                 </div>
                 <div className="row">
-                  <BoxInputPadrao // fazer um novo imput para decimal com min range em 0
+                  <BoxInputPadrao
                     name={"value"}
                     value={formik.values.value}
                     onChange={formik.handleChange}
@@ -256,7 +252,6 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                   type="submit"
                   sx={{
                     borderRadius: "30px",
-                    // background: "#6750A4",
                     width: "100%",
                     paddingBottom: "10px",
                     height: "43px",
@@ -271,7 +266,6 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
                 onClick={() => handleClose()}
                 sx={{
                   borderRadius: "30px",
-                  // background: "#6750A4",
                   width: "100%",
                   marginTop: "10px",
                   paddingBottom: "10px",
@@ -291,34 +285,3 @@ const CreatePalestraModalDetails: React.FC<Props> = ({
 };
 
 export default CreatePalestraModalDetails;
-
-// const [presentation, setPresentation] = React.useState<Presentation>({
-//   title: "",
-//   description: "",
-//   img: "",
-//   value: 0,
-//   remainingVacancies: 0,
-//   isSingleDay: false,
-//   dateByDay: [
-//     {
-//       initialDate: new Date(),
-//       finalDate: new Date(),
-//     },
-//   ],
-//   eventId: "",
-// });
-// export interface Presentation {
-//   title: String;
-//   description: String;
-//   img: String;
-//   value: Number;
-//   remainingVacancies: Number;
-//   isSingleDay: Boolean;
-//   dateByDay: [
-//     {
-//       initialDate: Date;
-//       finalDate: Date;
-//     }
-//   ];
-//   eventId: String;
-// }

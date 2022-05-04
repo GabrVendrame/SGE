@@ -8,7 +8,6 @@ import * as yup from "yup";
 import Axios from "axios";
 import MuiStyles from "../styles/MuiStyles";
 import "../styles/ProfileModalDetails.css";
-import { User } from "../pages/HomePageUser";
 import BoxInputPadrao from "./BoxInputPadrao";
 import { EventData } from "./Itens";
 
@@ -61,7 +60,6 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
   });
 
   const theme = MuiStyles;
-  // const [Presentations, setPresentations] = React.useState<PresentationData[]>([]);
   const [selectedPresentation, setSelectedPresentation] = React.useState(false);
   const handleClose = () => {
     setOpenModalDetails(false);
@@ -89,10 +87,6 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
     return true;
   };
 
-  // const reqUpdate = (values) => {
-  //   console.log(values);
-  // };
-
   const formik = useFormik({
     initialValues: eventoselecionado,
     onSubmit: (values) => {
@@ -103,7 +97,7 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
         Axios.put("http://localhost:3001/api/events/updateEvent", values)
           .then((res) => {
             console.log("fon");
-            alert("penis de camelo");
+            alert("Evento alterado");
             window.location.reload();
           })
           .catch((error) => {
@@ -134,7 +128,7 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
               variant="h6"
               component="h2"
             >
-              {"Alterar informações do Evento"}
+              {"Alterar Informações do Evento"}
             </Typography>
             <Divider color="#DEC0F7" />
 
@@ -145,7 +139,7 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
                   value={formik.values.title}
                   onChange={formik.handleChange}
                   tipo={"text"}
-                  placeHolder={"Nome do evento"}
+                  placeHolder={"Nome do Evento"}
                   error={formik.touched.title && Boolean(formik.errors.title)}
                   helperText={formik.touched.title && formik.errors.title}
                 />
@@ -154,7 +148,7 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
                   value={formik.values.description}
                   onChange={formik.handleChange}
                   tipo={"text"}
-                  placeHolder={"Descricao do evento"}
+                  placeHolder={"Descricao do Evento"}
                   error={
                     formik.touched.description &&
                     Boolean(formik.errors.description)
@@ -165,7 +159,7 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
                 />
               </div>
               <div className="row">
-                <BoxInputPadrao // fazer um novo imput para int com min range em 0
+                <BoxInputPadrao
                   name={"remainingVacancies"}
                   value={formik.values.remainingVacancies}
                   onChange={formik.handleChange}
@@ -182,7 +176,7 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
                 />
               </div>
               <div className="row">
-                <BoxInputPadrao // fazer um novo imput para decimal com min range em 0
+                <BoxInputPadrao
                   name={"value"}
                   value={formik.values.value}
                   onChange={formik.handleChange}
@@ -231,7 +225,6 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
                 type="submit"
                 sx={{
                   borderRadius: "30px",
-                  // background: "#6750A4",
                   width: "100%",
                   paddingBottom: "10px",
                   height: "43px",
@@ -247,7 +240,6 @@ const AlterarEventoModalDetails: React.FC<Props> = ({
               onClick={() => handleClose()}
               sx={{
                 borderRadius: "30px",
-                // background: "#6750A4",
                 width: "100%",
                 marginTop: "10px",
                 paddingBottom: "10px",

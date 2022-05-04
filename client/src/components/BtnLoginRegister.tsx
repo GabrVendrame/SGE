@@ -4,8 +4,6 @@ import React from 'react';
 export interface Props {
   onclick: Function;
   name: string;
-
-  // handleclick
 }
 
 export const BtnLoginRegister: React.FC<Props> = ({ onclick, name }) => {

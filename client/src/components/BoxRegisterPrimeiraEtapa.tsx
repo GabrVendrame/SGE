@@ -5,7 +5,6 @@ import { ThemeProvider } from '@material-ui/system';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import ButtonStyles from '../styles/MuiStyles';
-import InputField from '../styles/BoxInput';
 import BoxInputPadrao from './BoxInputPadrao';
 import HeaderLoginRegister from './HeaderLoginRegister';
 
@@ -109,7 +108,6 @@ export const BoxRegisterPrimeiraEtapa: React.FC<Props> = ({ next, data }) => {
             type="submit"
             sx={{
               borderRadius: '30px',
-              // background: "#6750A4",
               width: '100%',
               paddingBottom: '10px',
               height: '43px',

@@ -12,7 +12,6 @@ import MuiStyles from '../styles/MuiStyles';
 import logo from '../images/logo.png';
 import ModalDetails from './ProfileModalDetails';
 
-// const pages = ['Sobre nós', 'FAQ', 'Contato'];
 interface Props {
   isOpenDrawer: boolean;
   setIsOpenDrawer: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,7 +31,7 @@ const HeaderLogged: React.FC<Props> = ({
   const logout = () => {
     localStorage.removeItem('token');
     console.log('saindo');
-    alert('saindo');
+    alert('Saindo');
     navigate('/');
   };
 
@@ -41,20 +40,17 @@ const HeaderLogged: React.FC<Props> = ({
   };
 
   const handlePageSelect = (id: number) => {
-    // setAnchorElNav(null);
     console.log(id);
   };
 
   const HandleOpenModalDetails = () => {
     setOpenModalDetails(true);
     console.log('fon');
-    // console.log(`Apresentações: ${Presentations}`);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
-        {/* <Container className='containerHeader'> */}
         <Toolbar disableGutters>
           <Box
             className="logoAndName"
@@ -114,7 +110,6 @@ const HeaderLogged: React.FC<Props> = ({
           </Button>
           <Button
             onClick={() => HandleOpenModalDetails()}
-            // onClick={() => HandleOpenModalDetails(item)}
             color="secondary"
             variant="contained"
             sx={{
@@ -132,7 +127,6 @@ const HeaderLogged: React.FC<Props> = ({
           openModalDetails={openModalDetails}
           setOpenModalDetails={setOpenModalDetails}
         />
-        {/* </Container> */}
       </AppBar>
     </ThemeProvider>
   );
