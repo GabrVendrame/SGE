@@ -10,7 +10,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Divider, Portal, Snackbar, ThemeProvider,
+  Divider,
+  Portal,
+  Snackbar,
+  ThemeProvider,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import MuiStyles from '../styles/MuiStyles';
@@ -49,14 +52,11 @@ const ModalDetails: React.FC<Props> = ({
     setOpenConfirmDialog(false);
   };
 
-  const handleOpenConfirmDialog = () => {
-    setOpenConfirmDialog(true);
-  };
-
   const handleClose = () => {
     setOpenModalDetails(false);
     setSelectedPresentation(false);
     setOpenAlert(false);
+    setIsPresRegistered(false);
   };
 
   const handleCloseOkAlert = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -120,7 +120,6 @@ const ModalDetails: React.FC<Props> = ({
                 : <span>Você já está registrado nesse evento.</span>}
             </Alert>
           </Snackbar>
-
         </Portal>
         <Modal
           open={openModalDetails}
